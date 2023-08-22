@@ -1,0 +1,27 @@
+<div class="flex-container">
+    <mat-card class="example-card flex-item">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Login</mat-card-title>
+                <mat-card-subtitle>Acceso al sistema</mat-card-subtitle>
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            <form class="example-form">
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput placeholder="Ingrese su usuario" name="username" [(ngModel)]="username">
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput placeholder="Ingrese su contraseña" value="" name="password" type="password"
+                        [(ngModel)]="password">
+                </mat-form-field>
+                <div class="button-container">
+                    <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+                    <span *ngIf="show"> <button mat-button color="accent">Login success !!</button></span>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

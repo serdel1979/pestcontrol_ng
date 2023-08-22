@@ -1,0 +1,11 @@
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  flex: 1 1 300px; /* Cambia 300px por el ancho deseado de cada card */
+  margin: 10px; /* Ajusta el margen según tus necesidades */
+}

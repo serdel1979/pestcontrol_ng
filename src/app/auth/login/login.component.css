@@ -1,0 +1,23 @@
+.flex-container {
+    padding: 20px;
+    display: flex;
+    justify-content: left; /* Centrar horizontalmente */
+    align-items: left; /* Centrar verticalmente */
+    height: 50vh; /* La mitad de la altura de la pantalla */
+  }
+  
+  .example-card {
+    width: 100%; /* Ocupar todo el ancho disponible */
+    max-width: 400px; /* Establecer un ancho máximo para el card */
+  }
+  
+  .example-form {
+    display: flex;
+    flex-direction: column; /* Alinear elementos uno encima del otro */
+    align-items: left; /* Centrar elementos horizontalmente */
+  }
+  
+  .button-container {
+    margin-top: 16px; /* Espacio entre inputs y botones */
+  }
+  
