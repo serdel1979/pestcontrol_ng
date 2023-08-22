@@ -3,23 +3,29 @@
         <mat-card-header>
             <mat-card-title-group>
                 <mat-card-title>Login</mat-card-title>
-                <mat-card-subtitle>Acceso al sistema</mat-card-subtitle>
+                <mat-card-subtitle></mat-card-subtitle>
             </mat-card-title-group>
         </mat-card-header>
-        <mat-card-content>
-            <form class="example-form">
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Usuario</mat-label>
-                    <input matInput placeholder="Ingrese su usuario" name="username" [(ngModel)]="username">
-                </mat-form-field>
-                <mat-form-field class="example-full-width" appearance="fill">
-                    <mat-label>Contraseña</mat-label>
-                    <input matInput placeholder="Ingrese su contraseña" value="" name="password" type="password"
-                        [(ngModel)]="password">
-                </mat-form-field>
+        <mat-card-content style="margin-top: 20px;">
+            <form [formGroup]="formLogin" class="example-form">
+                <div *ngIf="!showSpinner">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Usuario</mat-label>
+                        <input matInput placeholder="Ingrese su usuario" formControlName="user">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Contraseña</mat-label>
+                        <input matInput placeholder="Ingrese su contraseña" formControlName="password" type="password">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="showSpinner">
+                    <mat-spinner></mat-spinner>
+                </div>
                 <div class="button-container">
-                    <button mat-raised-button color="primary" (click)="submit()">Submit</button>
-                    <span *ngIf="show"> <button mat-button color="accent">Login success !!</button></span>
+                    <button mat-raised-button color="primary" [disabled]="!formLogin.valid && formLogin.touched || !formLogin.valid && !formLogin.touched"
+                        (click)="submit()">
+                        Submit
+                    </button>
                 </div>
             </form>
         </mat-card-content>
