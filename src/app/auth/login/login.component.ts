@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogErrComponent } from 'src/app/alerts/dialog-err/dialog-err.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,10 @@ export class LoginComponent implements OnInit {
   });
 
 
-  constructor(private fb: FormBuilder, private userService: UserService, private dialog: MatDialog){}
+  constructor(private fb: FormBuilder, 
+    private userService: UserService,
+    private dialog: MatDialog,
+    private router: Router){}
 
   ngOnInit(): void {
     throw new Error('Method not implemented.');
@@ -39,6 +43,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('token', token);
       localStorage.setItem('usrlog', JSON.stringify(resp));
       this.userService.loginOk();
+      this.router.navigateByUrl('/pages/page1');
     },
     (err)=>{
       this.showSpinner = false;

@@ -14,8 +14,9 @@ import { Page3Component } from './pages/page3/page3.component';
 import { MatModule } from './material/mat.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DialogErrComponent } from './alerts/dialog-err/dialog-err.component';
+import { AuthInterceptor } from './middleware/auth.interceptor';
 
 
 
@@ -39,7 +40,11 @@ import { DialogErrComponent } from './alerts/dialog-err/dialog-err.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

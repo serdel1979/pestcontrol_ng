@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 
 
@@ -26,6 +27,7 @@ public MENU: any[] = [
 
   private breakpointObserver = inject(BreakpointObserver);
   private authService = inject(UserService);
+  private router = inject(Router);
 
 
 
@@ -37,9 +39,16 @@ public MENU: any[] = [
   ngOnInit(): void {
     this.authService.subsLogued
     .subscribe((logued)=>{
-      console.log('logueado');
       this.logued = logued;
     })
+
+    this.logued = this.authService.isLogued();
+  }
+
+
+  logout(){
+    this.authService.logout();
+    this.router.navigateByUrl('/auth/login');
   }
 
 

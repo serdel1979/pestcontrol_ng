@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatModule } from '../material/mat.module';
 
 const routes: Routes = [
-  { path: '',  component: LoginComponent }, 
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirigir a 'login'
   { path: 'login', component: LoginComponent }
 ];
 

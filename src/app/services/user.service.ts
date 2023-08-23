@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +32,27 @@ export class UserService {
     localStorage.clear();
     this.isLogging.next(false);
   }
+
+
+  isLogued(){
+    let token = localStorage.getItem('token');
+    if (token != null) {
+      let jwt: any;
+      jwt = jwt_decode(token);
+  
+      let fechaExpira = new Date(jwt.exp * 1000);
+      let currentDate = new Date();
+      
+      let dif = fechaExpira.getTime() - currentDate.getTime(); // Diferencia en milisegundos
+      if (fechaExpira  > currentDate) return true;
+    }
+    return false;
+  }
+
+
+
+
+
 }
+
+
