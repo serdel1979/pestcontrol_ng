@@ -18,6 +18,11 @@ export class UserService {
     return this.http.post<any>(`${this.baseUrl}/users/login`,values);
   }
 
+
+  get subsLogued(){
+    return this.isLogging;
+  }
+
   loginOk(){
     this.isLogging.next(true);
   }
