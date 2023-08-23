@@ -2,16 +2,10 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
+    <mat-nav-list *ngIf="logued">
       <mat-list>
-        <mat-list-item>
-          <a mat-line [routerLink]='"/pages/page1"'>UNO</a>
-        </mat-list-item>
-        <mat-list-item>
-          <a mat-line [routerLink]='"/pages/page2"'>DOS</a>
-        </mat-list-item>
-        <mat-list-item>
-          <a mat-line [routerLink]='"/pages/page3"'>TRES</a>
+        <mat-list-item *ngFor="let menu of MENU">
+          <a mat-line [routerLink]='menu.path'>{{menu.title}}</a>
         </mat-list-item>
       </mat-list>
     </mat-nav-list>
