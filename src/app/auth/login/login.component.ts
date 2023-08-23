@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogErrComponent } from 'src/app/alerts/dialog-err/dialog-err.component';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
   });
 
 
-  constructor(private fb: FormBuilder, private userService: UserService){}
+  constructor(private fb: FormBuilder, private userService: UserService, private dialog: MatDialog){}
 
   ngOnInit(): void {
     throw new Error('Method not implemented.');
@@ -40,7 +42,8 @@ export class LoginComponent implements OnInit {
     },
     (err)=>{
       this.showSpinner = false;
-      console.log(err);
+      this.dialog.open(DialogErrComponent);
+      //console.log(err);
     })
   }
 
