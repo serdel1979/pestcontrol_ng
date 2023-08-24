@@ -9,9 +9,24 @@
       </div>
     </mat-toolbar>
     <mat-nav-list *ngIf="logued">
+      <hr />
       <mat-list>
         <mat-list-item *ngFor="let menu of MENU">
-          <a mat-line [routerLink]='menu.path'>{{menu.title}}</a>
+          <div class="example-menu" cdkMenu>
+            <button (click)="goTo(menu.path)" class="example-menu-item" cdkMenuItem>
+              <mat-icon>dashboard</mat-icon> 
+              <span class="menu-title">{{menu.title | uppercase}}</span>
+            </button>
+          </div>
+        </mat-list-item>
+        <hr />
+        <mat-list-item>
+          <div class="example-menu" cdkMenu>
+            <button (click)="logout()" class="example-menu-item" cdkMenuItem>
+              <mat-icon>exit_to_app</mat-icon> 
+              <span class="menu-title">SALIR</span>
+            </button>
+          </div>
         </mat-list-item>
       </mat-list>
     </mat-nav-list>
@@ -23,9 +38,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>Sistema de control</span>
-      <span class="exit-icon">
-        <mat-icon class="exit-icon-inner" (click)="logout()">exit_to_app</mat-icon>
-      </span>
+
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

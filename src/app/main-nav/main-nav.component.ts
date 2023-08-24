@@ -18,9 +18,9 @@ export class MainNavComponent implements OnInit{
 
   
 public MENU: any[] = [
-  { path: '/pages/page1', title: 'Solicitudes'},
-  { path: '/pages/page2', title: 'Historial'},
-  { path: '/pages/page3', title: 'Usuarios'},
+  { path: '/pages/page1', title: 'Ordenes de Compras'},
+  { path: '/pages/page2', title: 'Clientes'},
+  { path: '/pages/page3', title: 'Opcion ...'},
 ];
 
 
@@ -49,6 +49,10 @@ public MENU: any[] = [
   logout(){
     this.authService.logout();
     this.router.navigateByUrl('/auth/login');
+  }
+
+  goTo(path: string){
+    this.router.navigateByUrl(path);
   }
 
 

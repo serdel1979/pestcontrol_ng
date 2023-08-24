@@ -75,3 +75,46 @@
 .exit-icon-inner:hover {
   font-size: 28px; /* Tamaño cuando el mouse está encima */
 }
+
+
+/* agregado para el menu*/
+
+.example-menu {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 180px;
+  max-width: 280px;
+  background-color: rgb(255, 255, 255);
+  padding: 6px 0;
+}
+
+.example-menu-item {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+
+  user-select: none;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+}
+
+.example-menu-item:hover {
+  background-color: rgb(208, 208, 208);
+}
+
+.example-menu-item:active {
+  background-color: rgb(170, 170, 170);
+}
+
+.menu-title {
+  font-weight: bold;
+  color: #929090; /* Color gris oscuro */
+  font-size: 16px; /* Cambia el tamaño de fuente según tu preferencia */
+  margin-left: 8px; /* Agrega espacio entre el ícono y el título */
+}

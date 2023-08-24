@@ -12,12 +12,22 @@
   }
   
   .example-form {
+    width: 100%;
     display: flex;
-    flex-direction: column; /* Alinear elementos uno encima del otro */
-    align-items: left; /* Centrar elementos horizontalmente */
-  }
+    flex-direction: column; /* Cambiar la dirección de los elementos */
+    align-items: stretch; /* Hacer que los elementos se estiren para ocupar el ancho */
+}
   
-  .button-container {
-    margin-top: 16px; /* Espacio entre inputs y botones */
-  }
+.button-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+ /* align-items: center;  Centrar horizontalmente */
+}
   
+  /*modificacion*/
+
+
+.example-full-width {
+    width: 100%; /* Para que los campos de entrada ocupen todo el ancho */
+}
