@@ -16,6 +16,7 @@ const routes: Routes = [
     AllContactsComponent
   ],
   imports: [
+    CommonModule,
     MatModule,
     RouterModule.forChild(routes)
   ]
