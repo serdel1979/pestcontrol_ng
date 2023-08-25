@@ -45,7 +45,7 @@ const ELEMENT_DATA: Contact[] = [
 })
 export class AllContactsComponent implements AfterViewInit{
 
-  displayedColumns: string[] = ['Nombre', 'Apellido', 'Email', 'Acción'];
+  displayedColumns: string[] = ['name', 'surname', 'email', 'id'];
   dataSource = new MatTableDataSource<Contact>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
