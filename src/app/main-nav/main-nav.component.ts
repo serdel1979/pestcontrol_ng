@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class MainNavComponent implements OnInit{
 
-
+//<mat-icon>perm_contact_calendar</mat-icon>
   
 public MENU: any[] = [
   { path: '/pages/page1', title: 'Ordenes de Compras'},
