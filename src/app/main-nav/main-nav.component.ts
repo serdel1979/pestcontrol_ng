@@ -18,8 +18,6 @@ export class MainNavComponent implements OnInit{
 //<mat-icon>perm_contact_calendar</mat-icon>
   
 public MENU: any[] = [
-  { path: '/pages/page1', title: 'Ordenes de Compras'},
-  { path: '/pages/page3', title: 'Opcion ...'},
   { path: '/clients/allclients', title: 'Clientes'},
   { path: '/contacts/allcontacts', title: 'Contactos'}
 ];

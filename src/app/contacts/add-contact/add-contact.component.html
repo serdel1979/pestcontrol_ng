@@ -6,8 +6,41 @@
                 <mat-card-subtitle>Agregar nuevo contacto</mat-card-subtitle>
             </mat-card-title-group>
         </mat-card-header>
-        <mat-card-content>
-          
+        <mat-card-content style="margin-top: 20px;">
+
+            <form [formGroup]="contactForm" fxLayout="column" class="form-container">
+                <mat-form-field>
+                    <input matInput placeholder="Name" formControlName="name" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Surname" formControlName="surname" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+
+                <div class="phone-container" formArrayName="phones"
+                    *ngFor="let phone of phoneControls.controls; let i = index">
+                    <div [formGroupName]="i">
+                        <mat-form-field>
+                            <input matInput placeholder="Phone Number" formControlName="number" required>
+                        </mat-form-field>
+                        <button mat-icon-button color="warn" (click)="removePhone(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="buttons-container">
+                    <button mat-raised-button color="primary" (click)="addPhone()">
+                        <mat-icon>contact_phone</mat-icon> Agregar Telefono
+                    </button>
+                    <button mat-raised-button color="primary" (click)="saveContact()">
+                        <mat-icon>save</mat-icon> Guardar Contacto
+                    </button>
+                </div>
+            </form>
+
         </mat-card-content>
     </mat-card>
 </div>

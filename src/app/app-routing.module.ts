@@ -10,8 +10,8 @@ const routes: Routes = [
     canActivate: [loguedGuard]
   },
   { 
-    path: 'pages', 
-    loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule),
+    path: 'clients', 
+    loadChildren: () => import('./clients/clients.module').then(m => m.ClientsModule),
     canActivate: [loginGuard]
   },
   { 
@@ -19,13 +19,8 @@ const routes: Routes = [
     loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule),
     canActivate: [loginGuard]
   },
-  { 
-    path: 'clients', 
-    loadChildren: () => import('./clients/clients.module').then(m => m.ClientsModule),
-    canActivate: [loginGuard]
-  },
-  { path: '', redirectTo: '/pages/page1', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages/page1' }
+  { path: '', redirectTo: '/clients/allclients', pathMatch: 'full' },
+  { path: '**', redirectTo: 'clients/allclients' }
 ];
 
 

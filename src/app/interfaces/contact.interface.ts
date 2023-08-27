@@ -5,3 +5,7 @@ export interface Contact {
     email: string;
   }
   
+  export interface Phone {
+    id?: number;
+    number: number;
+  }

@@ -7,7 +7,7 @@ import { MatModule } from '../material/mat.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'allclients', pathMatch: 'full' }, 
-  { path: 'allcontacts', component: AllClientsComponent },
+  { path: 'allclients', component: AllClientsComponent },
 ];
 
 
