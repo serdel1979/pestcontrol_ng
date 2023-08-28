@@ -18,8 +18,8 @@ export class MainNavComponent implements OnInit{
 //<mat-icon>perm_contact_calendar</mat-icon>
   
 public MENU: any[] = [
-  { path: '/clients/allclients', title: 'Clientes'},
-  { path: '/contacts/allcontacts', title: 'Contactos'}
+  { path: '/clients/allclients', title: 'Clientes', icon: 'perm_identity'},
+  { path: '/contacts/allcontacts', title: 'Contactos', icon: 'contacts'}
 ];
 
 

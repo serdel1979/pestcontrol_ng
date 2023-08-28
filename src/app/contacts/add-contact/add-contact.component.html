@@ -23,7 +23,7 @@
                     *ngFor="let phone of phoneControls.controls; let i = index">
                     <div [formGroupName]="i">
                         <mat-form-field>
-                            <input matInput placeholder="Phone Number" formControlName="number" required>
+                            <input matInput type="number" placeholder="Phone Number" formControlName="number" required>
                         </mat-form-field>
                         <button mat-icon-button color="warn" (click)="removePhone(i)">
                             <mat-icon>delete</mat-icon>
