@@ -4,17 +4,20 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllClientsComponent } from './all-clients/all-clients.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatModule } from '../material/mat.module';
+import { AddClientComponent } from './add-client/add-client.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'allclients', pathMatch: 'full' }, 
   { path: 'allclients', component: AllClientsComponent },
+  { path: 'addclient', component: AddClientComponent },
 ];
 
 
 @NgModule({
   declarations: [
-    AllClientsComponent
+    AllClientsComponent,
+    AddClientComponent
   ],
   imports: [
     CommonModule,

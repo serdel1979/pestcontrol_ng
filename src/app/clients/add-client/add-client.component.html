@@ -1,0 +1,75 @@
+<div class="flex-container">
+    <mat-card class="example-card flex-item">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Agregar</mat-card-title>
+                <mat-card-subtitle>Agregar un cliente</mat-card-subtitle>
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content style="margin-top: 20px;">
+
+            <form [formGroup]="clientForm" fxLayout="column" class="form-container">
+
+
+                <mat-tab-group>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">perm_identity</mat-icon>
+                            Cliente
+                        </ng-template>
+                        <div>
+                            <mat-form-field>
+                                <input matInput placeholder="Business Name" formControlName="businessName" required>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput placeholder="CUIT" formControlName="cuit" required>
+                            </mat-form-field>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">contacts</mat-icon>
+                            Contacto
+                        </ng-template>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Name" formControlName="name" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Surname" formControlName="surname" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Email" formControlName="email" required>
+                        </mat-form-field>
+
+                        <div class="phone-container" formArrayName="phones"
+                            *ngFor="let phone of phoneControls.controls; let i = index">
+                            <div [formGroupName]="i">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Phone Number" formControlName="number"
+                                        required>
+                                </mat-form-field>
+                                <button mat-icon-button color="warn" (click)="removePhone(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="buttons-container">
+                            <button mat-raised-button color="primary" (click)="addPhone()">
+                                <mat-icon>contact_phone</mat-icon> Agregar Telefono
+                            </button>
+                            <button mat-raised-button color="primary" (click)="saveContact()">
+                                <mat-icon>save</mat-icon> Guardar Cliente
+                            </button>
+                        </div>
+
+                    </mat-tab>
+
+                </mat-tab-group>
+
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

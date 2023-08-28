@@ -29,7 +29,7 @@ export class AllClientsComponent {
 
 
   addClient(){
-    //this.router.navigateByUrl('contacts/addcontact');
+    this.router.navigateByUrl('clients/addclient');
   }
 
 
