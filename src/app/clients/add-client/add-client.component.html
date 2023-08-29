@@ -10,7 +10,6 @@
 
             <form [formGroup]="clientForm" fxLayout="column" class="form-container">
 
-
                 <mat-tab-group>
                     <mat-tab>
                         <ng-template mat-tab-label>
@@ -51,47 +50,87 @@
                                 <mat-card-header>
                                     <mat-card-title-group>
                                         <mat-card-title>Datos de contacto</mat-card-title>
-                                        <mat-card-subtitle>Contactos de cliente</mat-card-subtitle>
+                                        <mat-card-subtitle>Contactos del cliente</mat-card-subtitle>
                                     </mat-card-title-group>
                                 </mat-card-header>
                                 <mat-card-content style="margin-top: 20px;">
-                                    <div class="mat-elevation-z8">
-                                        <mat-form-field>
-                                            <input matInput placeholder="Nombre" formControlName="name" required>
-                                        </mat-form-field>
-
-                                        <mat-form-field>
-                                            <input matInput placeholder="Apellido" formControlName="surname" required>
-                                        </mat-form-field>
-                                        <mat-form-field>
-                                            <input matInput placeholder="Email" formControlName="email" required>
-                                        </mat-form-field>
-                                        <mat-form-field>
-                                            <input matInput type="number" placeholder="Teléfono"
-                                                formControlName="newPhoneNumber">
-                                        </mat-form-field>
-                                        <button mat-icon-button color="primary" (click)="addPhone()">
-                                            <mat-icon>add</mat-icon>
-                                        </button>
-                                        <mat-list role="list">
-                                            <mat-list-item role="listitem" *ngFor="let phone of phones; let i = index">
-                                                {{ phone }}
-                                                <button mat-icon-button color="warn" (click)="removePhone(i)">
-                                                    <mat-icon>delete</mat-icon>
-                                                </button>
-                                            </mat-list-item>
-                                        </mat-list>
-                                    </div>
-
-                                    <button mat-raised-button color="primary" (click)="saveContact()">
-                                        <mat-icon>save</mat-icon> Guardar Cliente
-                                    </button>
+                                    <mat-grid-list [cols]="gridCols" gutterSize="16px">
+                                        <mat-grid-tile>
+                                            <div fxFlex="33%">
+                                                <mat-card>
+                                                    <mat-card-content>
+                                                        <mat-form-field>
+                                                            <input matInput placeholder="Nombre" formControlName="name"
+                                                                required>
+                                                        </mat-form-field>
+                                                        <mat-form-field>
+                                                            <input matInput placeholder="Apellido"
+                                                                formControlName="surname" required>
+                                                        </mat-form-field>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </mat-grid-tile>
+                                        <mat-grid-tile>
+                                            <div fxFlex="33%">
+                                                <mat-card>
+                                                    <mat-card-content>
+                                                        <mat-form-field>
+                                                            <input matInput placeholder="Email" formControlName="email"
+                                                                required>
+                                                        </mat-form-field>
+                                                        <div class="mat-form-field">
+                                                            <mat-form-field style="width: 80%;">
+                                                                <input matInput type="number" placeholder="Teléfono"
+                                                                    formControlName="newPhoneNumber" min="1" max="9999999999">
+                                                            </mat-form-field>
+                                                            <div class="mat-form-button">
+                                                                <button mat-icon-button color="primary"
+                                                                    (click)="addPhone()">
+                                                                    <mat-icon>add</mat-icon>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </mat-grid-tile>
+                                        <mat-grid-tile *ngIf="phones.length > 0">
+                                            <div fxFlex="33%">
+                                                <mat-card>
+                                                    <mat-card-header>
+                                                        <mat-card-title-group>
+                                                            <mat-card-title>Teléfonos</mat-card-title>
+                                                            <mat-card-subtitle>Lista de teléfonos agregados</mat-card-subtitle>
+                                                        </mat-card-title-group>
+                                                    </mat-card-header>
+                                                    <mat-card-content>
+                                                        <mat-list role="list" fxFlex="100%">
+                                                            <mat-list-item role="listitem"
+                                                                *ngFor="let phone of phones; let i = index"
+                                                                fxFlex="33%">
+                                                                {{ phone }}
+                                                                <button mat-icon-button color="warn"
+                                                                    (click)="removePhone(i)">
+                                                                    <mat-icon>delete</mat-icon>
+                                                                </button>
+                                                            </mat-list-item>
+                                                        </mat-list>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </div>
+                                        </mat-grid-tile>
+                                    </mat-grid-list>
                                 </mat-card-content>
                             </mat-card>
                         </div>
                     </mat-tab>
-
                 </mat-tab-group>
+
+                <button mat-raised-button color="primary" (click)="saveContact()">
+                    <mat-icon>save</mat-icon> Guardar Cliente
+                </button>
+
             </form>
         </mat-card-content>
     </mat-card>

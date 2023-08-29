@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Client } from 'src/app/interfaces/client.interface';
 
 @Component({
@@ -14,8 +15,30 @@ export class AddClientComponent implements OnInit{
   public newPhoneNumber!: number; // Nuevo número de teléfono a agregar
   public phones: number[] = []; // Array de números de teléfono
 
+  public gridCols!: number;
+  public grid1Cols!: number;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
+
+    this.breakpointObserver.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Medium,
+      Breakpoints.Large,
+    ]).subscribe(result => {
+      if (result.breakpoints[Breakpoints.XSmall]) {
+        this.gridCols = 1;
+        this.grid1Cols = 1;
+      } else if (result.breakpoints[Breakpoints.Small]) {
+        this.gridCols = 2;
+        this.grid1Cols = 1;
+      } else {
+        this.gridCols = 3;
+        this.grid1Cols = 1;
+      }
+    });
+
+  }
 
   ngOnInit(): void {
     this.clientForm = this.fb.group({

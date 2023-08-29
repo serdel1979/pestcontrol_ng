@@ -1,4 +1,30 @@
+
+/*
+
 .form-container {
   display: flex;
   flex-direction: column;
 }
+*/
+.card {
+  width: 100%;
+  max-width: 400px; /* Ajusta este valor según tus necesidades */
+}
+
+
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+  display: flex;
+}
+
+.mat-form-button {
+  width: 20%;
+  align-self: center;
+}
+
+

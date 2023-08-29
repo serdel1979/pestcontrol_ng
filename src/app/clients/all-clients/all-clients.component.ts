@@ -13,7 +13,7 @@ export class AllClientsComponent {
 
   public clients: Client[] = []
 
-  public displayedColumns: string[] = ['Empresa', 'Cuit', 'Contacto'];
+  public displayedColumns: string[] = ['businessName', 'cuit', 'contact'];
   public dataSource = new MatTableDataSource<Client>(this.clients);
 
   constructor(private router: Router){}
