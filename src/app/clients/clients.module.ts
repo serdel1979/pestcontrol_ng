@@ -5,19 +5,22 @@ import { AllClientsComponent } from './all-clients/all-clients.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatModule } from '../material/mat.module';
 import { AddClientComponent } from './add-client/add-client.component';
+import { AddClient2Component } from './add-client2/add-client2.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'allclients', pathMatch: 'full' }, 
   { path: 'allclients', component: AllClientsComponent },
-  { path: 'addclient', component: AddClientComponent },
+ // { path: 'addclient', component: AddClientComponent },
+  { path: 'addclient', component: AddClient2Component }
 ];
 
 
 @NgModule({
   declarations: [
     AllClientsComponent,
-    AddClientComponent
+    AddClientComponent,
+    AddClient2Component
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,50 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%" fxFlex.gt-md="30%"
+        fxFlex.gt-lg="20%">
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+              <input matInput placeholder="Business Name" formControlName="businessName">
+              <mat-error *ngIf="clientForm.get('businessName')?.hasError('required')">Business Name is required</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field>
+              <input matInput placeholder="CUIT" formControlName="cuit">
+              <mat-error *ngIf="clientForm.get('cuit')?.hasError('required')">CUIT is required</mat-error>
+            </mat-form-field>
+          
+            <div formGroupName="contact">
+              <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name">
+                <mat-error *ngIf="clientForm.get('contact.name')?.hasError('required')">Name is required</mat-error>
+              </mat-form-field>
+              
+              <mat-form-field>
+                <input matInput placeholder="Surname" formControlName="surname">
+                <mat-error *ngIf="clientForm.get('contact.surname')?.hasError('required')">Surname is required</mat-error>
+              </mat-form-field>
+              
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="clientForm.get('contact.email')?.hasError('required')">Email is required</mat-error>
+                <mat-error *ngIf="clientForm.get('contact.email')?.hasError('email')">Invalid email format</mat-error>
+              </mat-form-field>
+
+              <button mat-button type="button" (click)="addPhone()">Agregar Teléfono</button>
+              <div formArrayName="phones">
+                <div *ngFor="let phone of phoneForms.controls; let i = index" [formGroupName]="i">
+                  <mat-form-field>
+                    <input matInput placeholder="Phone Number" formControlName="number">
+                    <button mat-icon-button color="warn" type="button" (click)="removePhone(i)">
+                      <mat-icon>remove</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+            </div>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </form>
+          
+    </form>
+</div>
