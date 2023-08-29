@@ -11,6 +11,10 @@ export class AddClientComponent implements OnInit{
 
   public clientForm!: FormGroup;
 
+  public newPhoneNumber!: number; // Nuevo número de teléfono a agregar
+  public phones: number[] = []; // Array de números de teléfono
+
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -20,6 +24,7 @@ export class AddClientComponent implements OnInit{
       name: ['', Validators.required],
       surname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      newPhoneNumber: [null],
       phones: this.fb.array([])
     });
   }
@@ -28,15 +33,34 @@ export class AddClientComponent implements OnInit{
     return this.clientForm.get('phones') as FormArray;
   }
 
+  // addPhone() {
+  //   const phoneGroup = this.fb.group({
+  //     number: ['', Validators.required]
+  //   });
+  //   this.phoneControls.push(phoneGroup);
+  // }
+
+  // removePhone(index: number) {
+  //   this.phoneControls.removeAt(index);
+  // }
+
+  // addPhone() {
+  //   if (this.newPhoneNumber) {
+  //     this.phones.push(this.newPhoneNumber);
+  //     this.newPhoneNumber = 0; // Limpiar el input
+  //   }
+  // }
   addPhone() {
-    const phoneGroup = this.fb.group({
-      number: ['', Validators.required]
-    });
-    this.phoneControls.push(phoneGroup);
+    const newPhone = this.clientForm.get('newPhoneNumber')?.value;
+    if (newPhone) {
+      this.phones.push(newPhone);
+      this.clientForm.get('newPhoneNumber')?.reset(); // Reiniciar el control
+    }
   }
+  
 
   removePhone(index: number) {
-    this.phoneControls.removeAt(index);
+    this.phones.splice(index, 1);
   }
 
   saveContact() {
