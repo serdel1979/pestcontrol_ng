@@ -15,7 +15,7 @@ import { MatModule } from './material/mat.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { DialogErrComponent } from './alerts/dialog-err/dialog-err.component';
+import { DialogComponent } from './alerts/dialog-err/dialog-err.component';
 import { AuthInterceptor } from './middleware/auth.interceptor';
 
 
@@ -28,7 +28,7 @@ import { AuthInterceptor } from './middleware/auth.interceptor';
     Page1Component,
     Page2Component,
     Page3Component,
-    DialogErrComponent
+    DialogComponent
   ],
   imports: [
     BrowserModule,

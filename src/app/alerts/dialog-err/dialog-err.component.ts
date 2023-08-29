@@ -6,12 +6,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './dialog-err.component.html',
   styleUrls: ['./dialog-err.component.css']
 })
-export class DialogErrComponent {
+export class DialogComponent {
 
 
   constructor(
-    public dialogRef: MatDialogRef<DialogErrComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    public dialogRef: MatDialogRef<DialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { message: string }
   ) {}
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 
 }

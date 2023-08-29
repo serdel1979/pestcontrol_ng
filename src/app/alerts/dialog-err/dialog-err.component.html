@@ -1,5 +1,5 @@
 <mat-dialog-content>
-    <p style="color: red;">Error</p><p> Por favor, verifica tus credenciales.</p>
+    <p style="color: red;">Error</p><p>{{data.message}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button (click)="dialogRef.close()">Cerrar</button>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Client } from 'src/app/interfaces/client.interface';
+import { debounceTime } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-add-client',
@@ -18,7 +20,8 @@ export class AddClientComponent implements OnInit{
   public gridCols!: number;
   public grid1Cols!: number;
 
-  constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
+  constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
+    private alertDialogService: AlertService) {
 
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
@@ -42,7 +45,7 @@ export class AddClientComponent implements OnInit{
 
   ngOnInit(): void {
     this.clientForm = this.fb.group({
-      businessName: ['', Validators.required],
+      businesName: ['', Validators.required],
       cuit: ['', Validators.required],
       name: ['', Validators.required],
       surname: ['', Validators.required],
@@ -50,29 +53,38 @@ export class AddClientComponent implements OnInit{
       newPhoneNumber: [null],
       phones: this.fb.array([])
     });
+
+    this.subscribeToInputChanges();
   }
+
+
+
+  private subscribeToInputChanges() {
+    const inputFields = ['businesName', 'cuit', 'name', 'surname']; // Add more fields if needed
+
+    inputFields.forEach(fieldName => {
+      const control = this.clientForm.get(fieldName);
+
+      control?.valueChanges.pipe(
+        debounceTime(300)
+      ).subscribe(newValue => {
+        const uppercaseValue = newValue.toUpperCase();
+        if (uppercaseValue !== control.value) {
+          control.setValue(uppercaseValue, { emitEvent: false });
+        }
+      });
+    });
+  }
+
+
+
 
   get phoneControls() {
     return this.clientForm.get('phones') as FormArray;
   }
 
-  // addPhone() {
-  //   const phoneGroup = this.fb.group({
-  //     number: ['', Validators.required]
-  //   });
-  //   this.phoneControls.push(phoneGroup);
-  // }
 
-  // removePhone(index: number) {
-  //   this.phoneControls.removeAt(index);
-  // }
 
-  // addPhone() {
-  //   if (this.newPhoneNumber) {
-  //     this.phones.push(this.newPhoneNumber);
-  //     this.newPhoneNumber = 0; // Limpiar el input
-  //   }
-  // }
   addPhone() {
     const newPhone = this.clientForm.get('newPhoneNumber')?.value;
     if (newPhone) {
@@ -88,18 +100,23 @@ export class AddClientComponent implements OnInit{
 
   saveContact() {
     if (this.clientForm.valid) {
-      // const client = {
-      //   businessName: this.clientForm.get('businessName')?.value,
-      //   cuit: this.clientForm.get('cuit')?.value,
-      //   contact: {
-      //     name: this.clientForm.get('name')?.value,
-      //     surname: this.clientForm.get('surname')?.value,
-      //     email: this.clientForm.get('email')?.value,
-      //   },
-      //   phones: this.clientForm.get('phones')?.value
-      // };
-      // console.log(client);
-      console.log(this.clientForm.value);
+      const newPhone = this.clientForm.get('newPhoneNumber')?.value;
+      if(newPhone){
+        this.phones.push(newPhone);
+      }
+      const client = {
+        businesName: this.clientForm.get('businesName')?.value,
+        cuit: this.clientForm.get('cuit')?.value,
+        contact: {
+          name: this.clientForm.get('name')?.value,
+          surname: this.clientForm.get('surname')?.value,
+          email: this.clientForm.get('email')?.value,
+          phones: this.phones
+        },
+      
+      };
+      console.log(client);
+      this.alertDialogService.openAlertDialog('Error en el formulario');
     }
   }
 

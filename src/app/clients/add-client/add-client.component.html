@@ -28,8 +28,8 @@
                                 <mat-card-content style="margin-top: 20px;">
                                     <div class="mat-elevation-z8">
                                         <mat-form-field>
-                                            <input matInput placeholder="Business Name" formControlName="businessName"
-                                                required>
+                                            <input matInput placeholder="Nombre de la empresa" formControlName="businesName"
+                                            [value]="clientForm.get('businesName')?.value | uppercase"  required>
                                         </mat-form-field>
                                         <mat-form-field>
                                             <input matInput placeholder="CUIT" formControlName="cuit" required>
@@ -61,11 +61,13 @@
                                                     <mat-card-content>
                                                         <mat-form-field>
                                                             <input matInput placeholder="Nombre" formControlName="name"
-                                                                required>
+                                                                required
+                                                                [value]="clientForm.get('name')?.value | uppercase" >
                                                         </mat-form-field>
                                                         <mat-form-field>
                                                             <input matInput placeholder="Apellido"
-                                                                formControlName="surname" required>
+                                                                formControlName="surname" required
+                                                                [value]="clientForm.get('surname')?.value | uppercase" >
                                                         </mat-form-field>
                                                     </mat-card-content>
                                                 </mat-card>

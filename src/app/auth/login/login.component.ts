@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogErrComponent } from 'src/app/alerts/dialog-err/dialog-err.component';
+import { DialogComponent } from 'src/app/alerts/dialog-err/dialog-err.component';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,11 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder, 
     private userService: UserService,
-    private dialog: MatDialog,
-    private router: Router){}
+    private router: Router,
+    private alertDialogService: AlertService){}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+   
   }
 
 
@@ -47,7 +48,8 @@ export class LoginComponent implements OnInit {
     },
     (err)=>{
       this.showSpinner = false;
-      this.dialog.open(DialogErrComponent);
+     // this.dialog.open(DialogComponent);
+      this.alertDialogService.openAlertDialog('Usuario incorrecto');
       //console.log(err);
     })
   }
