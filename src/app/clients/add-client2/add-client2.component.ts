@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { Client } from 'src/app/interfaces/client.interface';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-add-client2',
@@ -12,7 +13,7 @@ export class AddClient2Component {
 
   public clientForm!: FormGroup;
 
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder, private clients: ClientService){}
 
   get phoneForms() {
     return this.clientForm.get('contact.phones') as FormArray;
@@ -67,7 +68,13 @@ export class AddClient2Component {
   onSubmit() {
     if (this.clientForm.valid) {
       const client: Client = this.clientForm.value;
-      console.log(client); // Puedes hacer lo que quieras con el objeto client aquí
+      this.clients.newClient(this.clientForm.value)
+      .subscribe(resp=>{
+        console.log(resp);
+      },
+      err=>{
+        console.log(err);
+      })
     }
   }
 
