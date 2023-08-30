@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 import { Client } from 'src/app/interfaces/client.interface';
 
 @Component({
@@ -19,7 +20,7 @@ export class AddClient2Component {
         name: ['', Validators.required],
         surname: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        phones: this.fb.array([]) // FormArray for multiple phones
+        phones: this.fb.array([]) 
       }),
     });
   }
@@ -40,6 +41,25 @@ export class AddClient2Component {
   }
 
   ngOnInit(): void {
+    this.subscribeToInputChanges();
+  }
+
+
+  private subscribeToInputChanges() {
+    const inputFields = ['businesName', 'cuit', 'name', 'surname']; // Add more fields if needed
+
+    inputFields.forEach(fieldName => {
+      const control = this.clientForm.get(fieldName);
+
+      control?.valueChanges.pipe(
+        debounceTime(300)
+      ).subscribe(newValue => {
+        const uppercaseValue = newValue.toUpperCase();
+        if (uppercaseValue !== control.value) {
+          control.setValue(uppercaseValue, { emitEvent: false });
+        }
+      });
+    });
   }
 
   onSubmit() {
