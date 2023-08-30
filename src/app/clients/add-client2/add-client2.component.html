@@ -7,8 +7,8 @@
         <mat-card-content style="padding: 20px;">
           <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
             <mat-form-field style="margin: 10px;">
-              <input matInput placeholder="Nombre de la empresa" formControlName="businessName">
-              <mat-error *ngIf="clientForm.get('businessName')?.hasError('required')">Debe especificar un
+              <input matInput placeholder="Nombre de la empresa" formControlName="businesName">
+              <mat-error *ngIf="clientForm.get('businesName')?.hasError('required')">Debe especificar un
                 nombre</mat-error>
             </mat-form-field>
 
@@ -34,7 +34,7 @@
                 <input matInput placeholder="Email" formControlName="email">
                 <mat-error *ngIf="clientForm.get('contact.email')?.hasError('required')">Debe especificar un
                   email</mat-error>
-                <mat-error *ngIf="clientForm.get('contact.email')?.hasError('email')">Invalid email format</mat-error>
+                <mat-error *ngIf="clientForm.get('contact.email')?.hasError('email')">El formato de email es inválido</mat-error>
               </mat-form-field>
 
               <button mat-button type="button" (click)="addPhone()">Agregar Teléfono</button>
