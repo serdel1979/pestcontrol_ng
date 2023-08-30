@@ -32,7 +32,7 @@ export class AddClient2Component {
 
   ngOnInit(): void {
     this.clientForm = this.fb.group({
-      businesName: ['', Validators.required],
+      businessName: ['', Validators.required],
       cuit: ['', Validators.required],
       contact: this.fb.group({
         name: ['', Validators.required],
@@ -46,7 +46,7 @@ export class AddClient2Component {
 
 
   private subscribeToInputChanges() {
-    const inputFields = ['businesName', 'cuit', 'contact.name', 'contact.surname'];
+    const inputFields = ['businessName', 'cuit', 'contact.name', 'contact.surname'];
   
     inputFields.forEach(fieldName => {
       const control = this.clientForm.get(fieldName);
@@ -66,8 +66,8 @@ export class AddClient2Component {
   
 
   onSubmit() {
+    console.log(this.clientForm.value);
     if (this.clientForm.valid) {
-      const client: Client = this.clientForm.value;
       this.clients.newClient(this.clientForm.value)
       .subscribe(resp=>{
         console.log(resp);

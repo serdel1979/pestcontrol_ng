@@ -14,7 +14,6 @@ export class ClientService {
 
 
   newClient(values:any){
-    console.log(`${this.baseUrl}/clients/new`,values);
     return this.http.post<any>(`${this.baseUrl}/clients/new`,values);
   }
 
