@@ -1,52 +1,71 @@
-<div class="flex-container">
-    <mat-card class="example-card flex-item">
-      <mat-card-header>
-        <mat-card-title-group>
-          <mat-card-title>Clientes</mat-card-title>
-          <mat-card-subtitle style="margin-top: 10px;">Lista de clientes</mat-card-subtitle>
-        </mat-card-title-group>
-        <button mat-raised-button color="primary" (click)="addClient()" style="margin-left: auto;"
-          matTooltip="Agregar un nuevo contacto">
-          <mat-icon>add_box</mat-icon>
-          <mat-icon>perm_identity</mat-icon>
-        </button>
-      </mat-card-header>
-      <mat-card-content style="margin-top: 20px;">
-  
-        <div class="table-container">
-          <div class="mat-elevation-z8">
-  
-            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-  
-              <!-- Name Column -->
-              <ng-container matColumnDef="businessName">
-                <th mat-header-cell *matHeaderCellDef> Empresa </th>
-                <td mat-cell *matCellDef="let element"> {{element.businessName}} </td>
-              </ng-container> 
-  
-              <!-- Weight Column -->
-              <ng-container matColumnDef="cuit">
-                <th mat-header-cell *matHeaderCellDef> Cuit </th>
-                <td mat-cell *matCellDef="let element"> {{element.cuit}} </td>
-              </ng-container>
-  
-              <ng-container matColumnDef="contact">
-                <th mat-header-cell *matHeaderCellDef> Contacto </th>
-                <td mat-cell *matCellDef="let element"> {{element.contact.email}} </td>
-              </ng-container>
-  
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-  
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-              aria-label="Select page of periodic elements">
-            </mat-paginator>
-          </div>
+<mat-card class="example-card flex-item">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>Clientes</mat-card-title>
+      <mat-card-subtitle style="margin-top: 10px;">Lista de clientes</mat-card-subtitle>
+    </mat-card-title-group>
+    <button mat-raised-button color="primary" (click)="addClient()" style="margin-left: auto;"
+      matTooltip="Agregar un nuevo contacto">
+      <mat-icon>add_box</mat-icon>
+      <mat-icon>perm_identity</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content style="margin-top: 20px;">
+
+    <div class="table-container">
+      <div *ngIf="load">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div *ngIf="!load">
+        <div *ngIf="clients.length > 0" class="mat-elevation-z8">
+
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="businessName">
+              <th mat-header-cell *matHeaderCellDef> Empresa </th>
+              <td mat-cell *matCellDef="let element"> {{element.businessName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="cuit">
+              <th mat-header-cell *matHeaderCellDef> Cuit </th>
+              <td mat-cell *matCellDef="let element"> {{element.cuit}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="contact">
+              <th mat-header-cell *matHeaderCellDef> Contacto </th>
+              <td mat-cell *matCellDef="let element"> {{element.contact.email}} </td>
+            </ng-container>
+
+            <!-- Agrega esta sección dentro de la definición de tu tabla -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Contacto </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary" (click)="showDetails(element.contact)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+            aria-label="Select page of periodic elements">
+          </mat-paginator>
         </div>
-  
-  
-      </mat-card-content>
-    </mat-card>
-  </div>
+        <div *ngIf="clients.length == 0">
+          <mat-label>No hay clientes cargados</mat-label>
+        </div>
+      </div>
+      <button mat-raised-button color="secundary" (click)="back()"
+        style="margin-top: 20px;"><mat-icon>arrow_back</mat-icon></button>
+    </div>
+
+
+  </mat-card-content>
+</mat-card>

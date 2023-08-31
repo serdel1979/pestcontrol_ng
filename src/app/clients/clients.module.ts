@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatModule } from '../material/mat.module';
 import { AddClientComponent } from './add-client/add-client.component';
 import { AddClient2Component } from './add-client2/add-client2.component';
+import { SeeDetailComponent } from './see-detail/see-detail.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   declarations: [
     AllClientsComponent,
     AddClientComponent,
-    AddClient2Component
+    AddClient2Component,
+    SeeDetailComponent
   ],
   imports: [
     CommonModule,

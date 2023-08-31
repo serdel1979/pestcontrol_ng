@@ -4,6 +4,9 @@
 
     <div fxLayout="row" fxLayoutAlign="center center">
       <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
+        <mat-card-title>
+            Agrega cliente
+        </mat-card-title>
         <mat-card-content style="padding: 20px;">
           <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
             <mat-form-field style="margin: 10px;">
@@ -52,7 +55,8 @@
 
             </div>
             <button mat-raised-button color="primary" type="submit" style="margin-top: 20px;">Guardar</button>
-          </form>
+           </form>
+          <button mat-raised-button color="secundary" (click)="back()" style="margin-top: 20px;"><mat-icon>arrow_back</mat-icon></button>
         </mat-card-content>
       </mat-card>
     </div>

@@ -65,6 +65,10 @@ export class AddClient2Component {
   }
   
 
+  back() {
+    window.history.back();
+  }
+
   onSubmit() {
     console.log(this.clientForm.value);
     if (this.clientForm.valid) {
