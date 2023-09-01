@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { Client } from '../interfaces/client.interface';
+import { Contact } from '../interfaces/contact.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,11 @@ export class ClientService {
 
   getClients(){
     return this.http.get<Client[]>(`${this.baseUrl}/clients/allclients`);
+  }
+
+
+  getContacts(){
+    return this.http.get<Contact[]>(`${this.baseUrl}/clients/allcontacts`);
   }
 
 
