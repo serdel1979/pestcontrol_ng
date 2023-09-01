@@ -1,33 +1,19 @@
 
-.flex-container {
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  .flex-item {
-    flex: 1 1 300px; /* Cambia 300px por el ancho deseado de cada card */
-    margin: 10px; /* Ajusta el margen según tus necesidades */
-  }
+.custom-card {
+  flex-grow: 1;
+  box-sizing: border-box;
+}
 
-  .example-card {
-    width: 500px; /* Cambia el ancho según tus necesidades */
+@media screen and (min-width: 792px) {
+  /* Pantallas grandes: El card ocupa la mitad de la pantalla */
+  .custom-card {
+    max-width: 50%;
   }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
+}
+
+@media screen and (max-width: 325px) {
+  /* Pantallas pequeñas: El card ocupa el 100% del ancho */
+  .custom-card {
+    max-width: 100%;
   }
-  
-  .phone-container {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .buttons-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  
+}

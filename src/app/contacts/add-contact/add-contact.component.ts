@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-add-contact',
@@ -19,10 +20,39 @@ export class AddContactComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phones: this.fb.array([])
     });
+    this.subscribeToInputChanges();
   }
+
+
+  private subscribeToInputChanges() {
+    const inputFields = ['name', 'surname', 'email'];
+  
+    inputFields.forEach(fieldName => {
+      const control = this.contactForm.get(fieldName);
+  
+      if (control) {
+        control.valueChanges.pipe(
+          debounceTime(200)
+        ).subscribe(newValue => {
+          const uppercaseValue = newValue.toUpperCase();
+          if (uppercaseValue !== control.value) {
+            control.setValue(uppercaseValue, { emitEvent: false });
+          }
+        });
+      }
+    });
+  }
+  
+
+
 
   get phoneControls() {
     return this.contactForm.get('phones') as FormArray;
+  }
+
+
+  back() {
+    window.history.back();
   }
 
   addPhone() {

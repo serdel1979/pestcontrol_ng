@@ -1,46 +1,54 @@
-<div class="flex-container">
-    <mat-card class="example-card flex-item">
-        <mat-card-header>
-            <mat-card-title-group>
-                <mat-card-title>Agregar</mat-card-title>
-                <mat-card-subtitle>Agregar nuevo contacto</mat-card-subtitle>
-            </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content style="margin-top: 20px;">
+<div fxLayout="row" fxLayoutAlign="center center">
 
-            <form [formGroup]="contactForm" fxLayout="column" class="form-container">
-                <mat-form-field>
-                    <input matInput placeholder="Name" formControlName="name" required>
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput placeholder="Surname" formControlName="surname" required>
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput placeholder="Email" formControlName="email" required>
-                </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
+            <mat-card-title>
+                Agrega contacto
+            </mat-card-title>
+            <mat-card-content style="padding: 20px;">
+                <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
 
-                <div class="phone-container" formArrayName="phones"
-                    *ngFor="let phone of phoneControls.controls; let i = index">
-                    <div [formGroupName]="i">
-                        <mat-form-field>
-                            <input matInput type="number" placeholder="Phone Number" formControlName="number" required>
-                        </mat-form-field>
-                        <button mat-icon-button color="warn" (click)="removePhone(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
+                    <mat-form-field style="margin: 10px;">
+                        <input matInput placeholder="Nombre del contacto" formControlName="name">
+                        <mat-error *ngIf="contactForm.get('name')?.hasError('required')">Debe especificar el nombre
+                            de
+                            contacto</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin: 10px;">
+                        <input matInput placeholder="Apellido" formControlName="surname">
+                        <mat-error *ngIf="contactForm.get('surname')?.hasError('required')">Debe especificar el
+                            apellido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin: 10px;">
+                        <input matInput placeholder="Email" formControlName="email">
+                        <mat-error *ngIf="contactForm.get('email')?.hasError('required')">Debe especificar un
+                            email</mat-error>
+                        <mat-error *ngIf="contactForm.get('email')?.hasError('email')">El formato de email es
+                            inválido</mat-error>
+                    </mat-form-field>
+
+                    <button mat-button type="button" (click)="addPhone()">Agregar Teléfono</button>
+                    <div formArrayName="phones">
+                        <div *ngFor="let phone of phoneControls.controls; let i = index" [formGroupName]="i">
+                            <mat-form-field style="margin: 10px;">
+                                <input matInput placeholder="Número de teléfono" formControlName="number" type="number"
+                                    min="1" max="9999999999">
+                                <button mat-icon-button color="warn" type="button" (click)="removePhone(i)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>                        
                     </div>
-                </div>
 
-                <div class="buttons-container">
-                    <button mat-raised-button color="primary" (click)="addPhone()">
-                        <mat-icon>contact_phone</mat-icon> Agregar Telefono
-                    </button>
-                    <button mat-raised-button color="primary" (click)="saveContact()">
-                        <mat-icon>save</mat-icon> Guardar Contacto
-                    </button>
-                </div>
-            </form>
+                    <button mat-raised-button color="primary" type="submit"
+                        style="margin-top: 20px;"><mat-icon>save</mat-icon></button>
+                </form>
+                <button mat-raised-button color="secundary" (click)="back()"
+                    style="margin-top: 20px;"><mat-icon>arrow_back</mat-icon></button>
+            </mat-card-content>
+        </mat-card>
+    </div>
 
-        </mat-card-content>
-    </mat-card>
 </div>
