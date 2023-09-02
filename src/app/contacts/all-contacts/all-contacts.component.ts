@@ -23,7 +23,7 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class AllContactsComponent implements AfterViewInit, OnInit{
 
-  public displayedColumns: string[] = ['id', 'name', 'surname', 'email'];
+  public displayedColumns: string[] = ['name', 'surname', 'email'];
   public contacts : Contact[] = [];
   public dataSource = new MatTableDataSource<Contact>(this.contacts);
 
