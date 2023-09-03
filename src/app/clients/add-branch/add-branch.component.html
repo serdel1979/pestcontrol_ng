@@ -1,0 +1,20 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
+            <mat-card-title>
+                Agrega Sucursal de {{businessName}}
+            </mat-card-title>
+            <form [formGroup]="branchForm" (ngSubmit)="onSubmit(idClient)" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%"
+                fxFlex.gt-md="30%" fxFlex.gt-lg="20%">
+
+
+               
+
+
+            </form>
+            <button mat-raised-button color="secundary" (click)="back()"
+                style="margin-top: 20px;"><mat-icon>arrow_back</mat-icon></button>
+        </mat-card>
+    </div>
+
+</div>

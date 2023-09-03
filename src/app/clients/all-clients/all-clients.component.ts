@@ -52,6 +52,10 @@ export class AllClientsComponent implements OnInit{
     this.router.navigateByUrl('clients/addclient');
   }
 
+  newBranch(id: number, businessName: string){
+    this.router.navigateByUrl(`clients/${id}/newbranch/${businessName}`);
+  }
+
   showDetails(contact: Contact) {
     this.dialog.open(SeeDetailComponent, {
       width: '400px',

@@ -34,24 +34,37 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.showSpinner = true;
-    console.log(this.formLogin.value);
-    this.userService.login(this.formLogin.value)
-    .subscribe((resp)=>{
-      this.showSpinner = false;
-      let token = JSON.stringify(resp.token);
-      token = token.slice(1);
-      token = token.slice(0, -1);
-      localStorage.setItem('token', token);
-      localStorage.setItem('usrlog', JSON.stringify(resp));
-      this.userService.loginOk();
-      this.router.navigateByUrl('/pages/page1');
-    },
-    (err)=>{
-      this.showSpinner = false;
-     // this.dialog.open(DialogComponent);
-      this.alertDialogService.openAlertDialog('Usuario incorrecto');
-      //console.log(err);
-    })
+    const loginSubscription = this.userService.login(this.formLogin.value)
+      .subscribe(
+        (resp) => {
+          this.showSpinner = false;
+          let token = JSON.stringify(resp.token);
+          token = token.slice(1);
+          token = token.slice(0, -1);
+          localStorage.setItem('token', token);
+          localStorage.setItem('usrlog', JSON.stringify(resp));
+          this.userService.loginOk();
+          this.router.navigateByUrl('/clients/allclients');
+        },
+        (err) => {
+          this.showSpinner = false;
+          if (err.status === 400) {
+            this.alertDialogService.openAlertDialog('Usuario o contraseña incorrecto');
+          } else {
+            // Otro tipo de error (error de red u otro)
+            this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+          }
+        }
+      );
+  
+    setTimeout(() => {
+      if (!loginSubscription.closed) {
+        loginSubscription.unsubscribe();
+        this.alertDialogService.openAlertDialog('Tiempo de espera agotado. Por favor, inténtalo de nuevo más tarde.');
+        this.showSpinner = false;
+      }
+    }, 10000); // 10 segundos de tiempo de espera
   }
+  
 
 }
