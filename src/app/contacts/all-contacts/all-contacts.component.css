@@ -20,6 +20,11 @@ flex-grow: 1;
 box-sizing: border-box;
 }
 
+.custom-card mat-form-field {
+  width: 100%; /* Asegura que el input se extienda al 100% del ancho de custom-card */
+}
+
+
 @media screen and (min-width: 792px) {
 /* Pantallas grandes: El card ocupa la mitad de la pantalla */
 .custom-card {

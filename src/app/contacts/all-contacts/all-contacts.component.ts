@@ -25,7 +25,9 @@ export class AllContactsComponent implements AfterViewInit, OnInit{
 
   public displayedColumns: string[] = ['name', 'surname', 'email'];
   public contacts : Contact[] = [];
-  public dataSource = new MatTableDataSource<Contact>(this.contacts);
+  public contactsFilter : Contact[] = [];
+  public filter!:string;
+  public dataSource = new MatTableDataSource<Contact>(this.contactsFilter);
 
  
   public loading: boolean = false;
@@ -34,13 +36,31 @@ export class AllContactsComponent implements AfterViewInit, OnInit{
 
   constructor(private router: Router, private clientServices: ClientService){}
 
+  applyFilter() {
+    if (this.filter.trim() === '') {
+      this.contactsFilter = this.contacts;
+    } else {
+      const filterValue = this.filter.toLowerCase();
+      this.contactsFilter = this.contacts.filter((contact: Contact) => {
+        // Comprueba si el filtro coincide con el nombre, surname o email
+        return (
+          contact.name.toLowerCase().includes(filterValue) ||
+          contact.surname.toLowerCase().includes(filterValue) ||
+          contact.email.toLowerCase().includes(filterValue)
+        );
+      });
+    }
+    this.dataSource.data = this.contactsFilter;
+  }
+  
 
   ngOnInit(): void {
     this.loading = true;
     this.clientServices.getContacts()
     .subscribe(resp=>{
       this.contacts = resp;
-      this.dataSource.data = this.contacts;
+      this.contactsFilter = resp;
+      this.dataSource.data = this.contactsFilter;
       this.loading = false;
     },
     err=>{

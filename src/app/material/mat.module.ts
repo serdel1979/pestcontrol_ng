@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 
@@ -41,7 +42,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTableModule, 
     MatPaginatorModule,
     MatTabsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatMenuModule
   ]
 })
 export class MatModule { }

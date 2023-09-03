@@ -19,7 +19,7 @@ export class AllClientsComponent implements OnInit{
 
   public load: boolean = false;
 
-  public displayedColumns: string[] = ['businessName', 'cuit', 'contact','actions'];
+  public displayedColumns: string[] = ['businessName', 'cuit', 'contact','actions','branchs'];
   public dataSource = new MatTableDataSource<Client>(this.clients);
 
   constructor(private router: Router, 

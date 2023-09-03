@@ -1,4 +1,14 @@
 <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
+  <mat-card-content>
+      <mat-form-field class="example-full-width">
+          <mat-label>Contacto a buscar</mat-label>
+          <input matInput placeholder="Buscar" [(ngModel)]="filter"
+          (ngModelChange)="applyFilter()">
+      </mat-form-field>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="custom-card" style="margin: 10px; padding: 10px;">
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>Contactos</mat-card-title>
