@@ -22,7 +22,7 @@
                     <mat-spinner></mat-spinner>
                 </div>
                 <div class="button-container">
-                    <button mat-raised-button color="primary" [disabled]="!formLogin.valid && formLogin.touched || !formLogin.valid && !formLogin.touched"
+                    <button mat-raised-button color="primary" [disabled]="!formLogin.valid && formLogin.touched || !formLogin.valid && !formLogin.touched || showSpinner"
                         (click)="submit()">
                         Submit
                     </button>
