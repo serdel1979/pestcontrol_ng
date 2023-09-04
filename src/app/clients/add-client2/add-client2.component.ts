@@ -93,6 +93,7 @@ export class AddClient2Component {
     if (this.clientForm.valid) {
       this.clients.newClient(this.clientForm.value)
         .subscribe(resp => {
+          this.sending = false;
           this.openDialog();
         },
         err => {

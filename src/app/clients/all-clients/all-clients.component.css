@@ -20,12 +20,6 @@
   box-sizing: border-box;
 }
 
-@media screen and (min-width: 792px) {
-  /* Pantallas grandes: El card ocupa la mitad de la pantalla */
-  .custom-card {
-    max-width: 100%;
-  }
-}
 
 @media screen and (max-width: 599px) {
   /* Pantallas pequeñas: El card ocupa el 100% del ancho */
@@ -33,3 +27,14 @@
     max-width: 100%;
   }
 }
+
+.paginator-custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginator-custom mat-paginator-page {
+  margin: 0 4px; /* Ajusta el espaciado entre los botones */
+}
+

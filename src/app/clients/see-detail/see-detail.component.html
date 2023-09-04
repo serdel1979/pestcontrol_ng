@@ -9,7 +9,7 @@
         <p><strong>Email:</strong> {{ contact.email }}</p>
         <p *ngIf="contact.phones.length > 0"><strong>Teléfonos:</strong></p>
         <mat-list *ngIf="contact.phones.length > 0">
-            <mat-list-item *ngFor="let phone of contact.phones" role="listitem">Número: {{ phone.number }}</mat-list-item>
+            <mat-list-item *ngFor="let phone of contact.phones" role="listitem">{{ phone.number }}</mat-list-item>
         </mat-list>
         <div *ngIf="contact.phones.length == 0">
             <mat-label>No se cargaron teléfonos</mat-label>
