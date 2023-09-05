@@ -21,15 +21,17 @@ export class AllClientsComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25];
 
   public displayedColumns: string[] = ['businessName', 'cuit', 'contact', 'actions', 'branchs'];
-  public dataSource = new MatTableDataSource<Client>([]); // Inicializa el dataSource vacío
+  public dataSource = new MatTableDataSource<Client>(); // Inicializa el dataSource vacío
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  //@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+@ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
+        this.dataSource.paginator = paginator;
+}
+
 
   constructor(private router: Router,
-              private clientService: ClientService,
-              private dialog: MatDialog) {}
-
-  ngOnInit(): void {
+    private clientService: ClientService,
+    private dialog: MatDialog) {
     this.load = true;
     this.clientService.getClients().subscribe(resp => {
       this.clients = resp;
@@ -37,14 +39,20 @@ export class AllClientsComponent implements OnInit {
       this.dataSource.paginator = this.paginator; // Configura el paginador
       this.load = false;
     },
-    () => {
-      this.load = false;
-    });
+      () => {
+        this.load = false;
+      });
+  }
+
+  ngOnInit(): void {
   }
 
   onPageChange(event: any): void {
     this.currentPage = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    console.log(this.currentPage, this.pageSize);
   }
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

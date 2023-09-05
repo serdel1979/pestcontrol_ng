@@ -32,7 +32,11 @@ export class AllContactsComponent implements AfterViewInit, OnInit{
  
   public loading: boolean = false;
   
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  //@ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
+    this.dataSource.paginator = paginator;
+}
 
   constructor(private router: Router, private clientServices: ClientService){}
 
