@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-add-branch',
@@ -32,14 +33,47 @@ export class AddBranchComponent implements OnInit {
         city: ['', Validators.required]
       }),
     });
+    this.subscribeToInputChanges();
   }
+
+
+
+  private subscribeToInputChanges() {
+    const inputFields = [
+      'name',
+      'address.street',
+      'address.number',
+      'address.floor',
+      'address.zipcode',
+      'address.apartment',
+      'address.city',
+    ];
+  
+    inputFields.forEach(fieldName => {
+      const control = this.branchForm.get(fieldName);
+  
+      if (control) {
+        control.valueChanges.pipe(
+          debounceTime(200)
+        ).subscribe(newValue => {
+          const uppercaseValue = newValue.toUpperCase();
+          if (uppercaseValue !== control.value) {
+            control.setValue(uppercaseValue, { emitEvent: false });
+          }
+        });
+      }
+    });
+  }
+  
+
+
 
   onSubmit() {
     this.sending = true; 
     setTimeout(() => {
       console.log(this.branchForm.value);
 
-      this.branchForm.reset();
+     // this.branchForm.reset();
       this.sending = false;
       this.openSnackBar("Datos guardados","OK");
       window.history.back();
