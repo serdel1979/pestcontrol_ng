@@ -13,46 +13,48 @@ import { Contact } from 'src/app/interfaces/contact.interface';
   templateUrl: './all-clients.component.html',
   styleUrls: ['./all-clients.component.css']
 })
-export class AllClientsComponent implements OnInit{
-
-  public clients: Client[] = []
-
+export class AllClientsComponent implements OnInit {
+  public clients: Client[] = [];
   public load: boolean = false;
+  pageSize: number = 5;
+  currentPage: number = 1;
+  pageSizeOptions: number[] = [5, 10, 25];
 
-  public displayedColumns: string[] = ['businessName', 'cuit', 'contact','actions','branchs'];
-  public dataSource = new MatTableDataSource<Client>(this.clients);
+  public displayedColumns: string[] = ['businessName', 'cuit', 'contact', 'actions', 'branchs'];
+  public dataSource = new MatTableDataSource<Client>([]); // Inicializa el dataSource vacío
 
-  constructor(private router: Router, 
-              private clientService: ClientService, 
-              private dialog: MatDialog){}
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  constructor(private router: Router,
+              private clientService: ClientService,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.load = true;
     this.clientService.getClients().subscribe(resp => {
       this.clients = resp;
-      this.dataSource.data = this.clients; 
+      this.dataSource = new MatTableDataSource<Client>(this.clients); // Actualiza el dataSource con los datos
+      this.dataSource.paginator = this.paginator; // Configura el paginador
       this.load = false;
     },
-    ()=>{
+    () => {
       this.load = false;
     });
-  }  
+  }
 
-  
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-
+  onPageChange(event: any): void {
+    this.currentPage = event.pageIndex + 1;
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-
-  addClient(){
+  addClient() {
     this.router.navigateByUrl('clients/addclient');
   }
 
-  newBranch(id: number, businessName: string){
+  newBranch(id: number, businessName: string) {
     this.router.navigateByUrl(`clients/${id}/newbranch/${businessName}`);
   }
 
@@ -66,6 +68,4 @@ export class AllClientsComponent implements OnInit{
   back() {
     window.history.back();
   }
-
-
 }

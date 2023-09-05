@@ -73,8 +73,17 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
 
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-            aria-label="Select page of periodic elements" style="flex-grow: 1;">
+          <mat-paginator
+           [pageSizeOptions]="[5, 10, 20]" 
+            showFirstLastButtons
+            [length]="clients.length"
+            [pageSize]="pageSize"
+            [pageIndex]="currentPage"
+            [pageSizeOptions]="pageSizeOptions"
+            class="paginator-custom"
+            (page)="onPageChange($event)"
+            aria-label="Select page of clients" 
+            style="flex-grow: 1;">
           </mat-paginator>
         </div>
         <div *ngIf="clients.length == 0">

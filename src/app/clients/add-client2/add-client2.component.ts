@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
 import { DialogCancelComponent } from 'src/app/alerts/dialog-cancel/dialog-cancel.component';
@@ -14,21 +14,21 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class AddClient2Component {
 
-  public clientForm: FormGroup  = this.fb.group({
+  public clientForm: FormGroup = this.fb.group({
     businessName: ['', Validators.required],
     cuit: ['', Validators.required],
     contact: this.fb.group({
       name: ['', Validators.required],
       surname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phones: this.fb.array([]) 
+      phones: this.fb.array([])
     }),
   });
 
   public sending: boolean = false;
 
   constructor(private fb: FormBuilder, private clients: ClientService, public dialog: MatDialog,
-    private alertDialogService: AlertService){}
+    private alertDialogService: AlertService) { }
 
   get phoneForms() {
     return this.clientForm.get('contact.phones') as FormArray;
@@ -46,32 +46,34 @@ export class AddClient2Component {
   }
 
   ngOnInit(): void {
-  //  this.subscribeToInputChanges();
-    this.clientForm.reset();
-   // this.clientForm.markAsUntouched();
+    this.subscribeToInputChanges();
+    //this.clientForm.reset();
+    //this.clientForm.markAsUntouched();
   }
 
 
-  // private subscribeToInputChanges() {
-  //   const inputFields = ['businessName', 'cuit', 'contact.name', 'contact.surname'];
-  
-  //   inputFields.forEach(fieldName => {
-  //     const control = this.clientForm.get(fieldName);
-  
-  //     if (control) {
-  //       control.valueChanges.pipe(
-  //         debounceTime(200)
-  //       ).subscribe(newValue => {
-  //         const uppercaseValue = newValue.toUpperCase();
-  //         if (uppercaseValue !== control.value) {
-  //           control.setValue(uppercaseValue, { emitEvent: false });
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
-  
-  resetForm(){
+  private subscribeToInputChanges() {
+    const inputFields = ['businessName', 'cuit', 'contact.name', 'contact.surname'];
+
+    inputFields.forEach(fieldName => {
+      const control = this.clientForm.get(fieldName);
+
+      if (control) {
+        control.valueChanges.pipe(
+          debounceTime(200)
+        ).subscribe(newValue => {
+          const uppercaseValue = newValue.toUpperCase();
+          if (uppercaseValue !== control.value) {
+            control.setValue(uppercaseValue, { emitEvent: false });
+          }
+        });
+      }
+    });
+  }
+
+
+
+  resetForm() {
     this.clientForm = this.fb.group({
       businessName: ['', Validators.required],
       cuit: ['', Validators.required],
@@ -79,10 +81,12 @@ export class AddClient2Component {
         name: ['', Validators.required],
         surname: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
-        phones: this.fb.array([]) 
+        phones: this.fb.array([])
       }),
     });
   }
+
+
 
   back() {
     window.history.back();
@@ -96,35 +100,35 @@ export class AddClient2Component {
           this.sending = false;
           this.openDialog();
         },
-        err => {
-          this.sending = false;
-          if (err.status === 400) {
-            this.alertDialogService.openAlertDialog(err.error);
-          } else {
-            // Otro tipo de error (error de red u otro)
-            this.alertDialogService.openAlertDialog('Error desconocido');
-          }
-        });
+          err => {
+            this.sending = false;
+            if (err.status === 400) {
+              this.alertDialogService.openAlertDialog(err.error);
+            } else {
+              // Otro tipo de error (error de red u otro)
+              this.alertDialogService.openAlertDialog('Error desconocido');
+            }
+          });
     }
   }
-  
+
   openDialog() {
     const dialogRef = this.dialog.open(DialogCancelComponent, {
       data: { message: '¿Deseas agregar otro cliente?' }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.resetForm();
-        this.clientForm.reset();
-        this.clientForm.markAsUntouched();
+        // this.clientForm.reset();
+        // this.clientForm.markAsUntouched();
       } else {
         this.back();
       }
       this.sending = false;
     });
   }
-  
+
 
 
 
