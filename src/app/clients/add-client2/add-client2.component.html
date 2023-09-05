@@ -1,15 +1,14 @@
 <mat-progress-bar *ngIf="sending" mode="indeterminate"></mat-progress-bar>
 
 <div fxLayout="row" fxLayoutAlign="center center">
-  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%" fxFlex.gt-md="30%"
-    fxFlex.gt-lg="20%">
     <div fxLayout="row" fxLayoutAlign="center center">
       <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
         <mat-card-title>
             Agrega cliente
         </mat-card-title>
         <mat-card-content style="padding: 20px;">
-          <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="clientForm" (ngSubmit)="onSubmit()"fxFlex.gt-xs="50%" fxFlex.gt-sm="40%" fxFlex.gt-md="30%"
+          fxFlex.gt-lg="20%">
             <mat-form-field style="margin: 10px;">
               <input matInput placeholder="Nombre de la empresa" formControlName="businessName">
               <mat-error *ngIf="clientForm.valid && clientForm.touched && clientForm.get('businessName')?.hasError('required')">Debe especificar un
@@ -61,5 +60,4 @@
         </mat-card-content>
       </mat-card>
     </div>
-  </form>
 </div>
