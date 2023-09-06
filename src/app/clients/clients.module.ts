@@ -9,6 +9,7 @@ import { AddClient2Component } from './add-client2/add-client2.component';
 import { SeeDetailComponent } from './see-detail/see-detail.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { AddContactComponent } from '../contacts/add-contact/add-contact.component';
+import { BranchesComponent } from './branches/branches.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
     AddClientComponent,
     AddClient2Component,
     SeeDetailComponent,
-    AddBranchComponent
+    AddBranchComponent,
+    BranchesComponent
   ],
   imports: [
     CommonModule,

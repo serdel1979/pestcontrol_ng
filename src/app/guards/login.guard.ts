@@ -22,7 +22,7 @@ export const loginGuard: CanActivateFn = (route, state) => {
   // }
 
 
-
+  authService.logout();
   router.navigateByUrl('/auth/login');
   return false;
 };

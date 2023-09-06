@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs';
+import { AlertService } from 'src/app/services/alert.service';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-add-branch',
@@ -16,7 +18,9 @@ export class AddBranchComponent implements OnInit {
   public businessName!: string;
   public sending: boolean = false; // Agrega esta variable para el ngIf del progressBar
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private _snackBar: MatSnackBar,
+    private clientService: ClientService,
+    private alertDialogService: AlertService) { }
 
   ngOnInit(): void {
     this.idClient = this.route.snapshot.params['id'];
@@ -70,14 +74,21 @@ export class AddBranchComponent implements OnInit {
 
   onSubmit() {
     this.sending = true; 
-    setTimeout(() => {
-      console.log(this.branchForm.value);
-
-     // this.branchForm.reset();
+    this.clientService.addBranch(this.branchForm.value).subscribe(()=>{
       this.sending = false;
       this.openSnackBar("Datos guardados","OK");
       window.history.back();
-    }, 2000);
+    },
+    (err)=>{
+        this.sending = false;
+        if (err.status === 400) {
+          this.alertDialogService.openAlertDialog('Operación erronea');
+        } else {
+          // Otro tipo de error (error de red u otro)
+          this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+        }
+    })
+
   }
 
   back() {
