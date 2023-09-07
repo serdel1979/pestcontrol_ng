@@ -32,5 +32,9 @@ export class ClientService {
     return this.http.get<Contact[]>(`${this.baseUrl}/clients/allcontacts`);
   }
 
+  getBranches(clientId: number){
+    return this.http.get<any[]>(`${this.baseUrl}/clients/branches/${clientId}`);
+  }
+
 
 }

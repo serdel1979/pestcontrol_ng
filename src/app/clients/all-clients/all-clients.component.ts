@@ -7,6 +7,7 @@ import { ClientService } from '../../services/client.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SeeDetailComponent } from '../see-detail/see-detail.component';
 import { Contact } from 'src/app/interfaces/contact.interface';
+import { BranchesComponent } from '../branches/branches.component';
 
 @Component({
   selector: 'app-all-clients',
@@ -31,7 +32,8 @@ export class AllClientsComponent implements OnInit {
 
   constructor(private router: Router,
     private clientService: ClientService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog
+    ) {
     this.load = true;
     this.clientService.getClients().subscribe(resp => {
       this.clients = resp;
@@ -68,8 +70,16 @@ export class AllClientsComponent implements OnInit {
 
   showDetails(contact: Contact) {
     this.dialog.open(SeeDetailComponent, {
-      width: '400px',
+      width: '500px',
       data: contact
+    });
+  }
+
+
+  showBranches(client: Client) {
+    this.dialog.open(BranchesComponent, {
+      width: '90%',
+      data: client
     });
   }
 

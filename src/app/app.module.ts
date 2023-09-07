@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './middleware/auth.interceptor';
 import { DialogComponent } from './alerts/dialog-err/dialog-err.component';
 import { DialogCancelComponent } from './alerts/dialog-cancel/dialog-cancel.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -26,13 +27,15 @@ import { DialogCancelComponent } from './alerts/dialog-cancel/dialog-cancel.comp
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     MatModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(AppRoutes,{
+      useHash: true
+    }),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

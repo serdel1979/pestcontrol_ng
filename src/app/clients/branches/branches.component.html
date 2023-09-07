@@ -1,10 +1,18 @@
 <mat-card style="padding: 20px;margin: 20px;">
     <mat-card-title>
-        Sucursales
+        Sucursales de {{client.businessName}}
     </mat-card-title>
     <mat-card-content>
 
-
-
+        <mat-list *ngIf="branches.length > 0">
+            <mat-list-item *ngFor="let branche of branches">
+                <mat-label>
+                    <b>Sucursal </b> {{branche.name}} <b>Calle</b> {{ branche.address.street }} <b>N° </b> {{ branche.address.number }} <b>Dpto.</b> {{ branche.address.apartment }}  <b>Piso</b> {{ branche.address.floor }} {{ branche.address.city }} <b>C.P.</b> {{ branche.address.zipCode }}
+                </mat-label>
+            </mat-list-item>
+        </mat-list>
+        <div *ngIf="branches.length == 0">
+            <mat-label>No existen sucursales</mat-label>
+        </div>
     </mat-card-content>
 </mat-card>

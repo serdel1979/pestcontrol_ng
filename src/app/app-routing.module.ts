@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { loginGuard } from './guards/login.guard';
 import { loguedGuard } from './guards/logued.guard';
 
-const routes: Routes = [
+export const AppRoutes: Routes = [
   { 
     path: 'auth', 
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
@@ -24,8 +24,8 @@ const routes: Routes = [
 ];
 
 
-@NgModule({
-  imports:[RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+// @NgModule({
+//   imports:[RouterModule.forRoot(routes)],
+//   exports: [RouterModule]
+// })
+// export class AppRoutingModule { }
