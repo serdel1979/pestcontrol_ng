@@ -1,0 +1,5 @@
+/* styles.css o el archivo de estilos del componente */
+.scrollable-item {
+    overflow-x: auto; /* Agrega una barra de desplazamiento horizontal cuando sea necesario */
+    white-space: nowrap; /* Evita que el contenido se divida en varias líneas */
+}
