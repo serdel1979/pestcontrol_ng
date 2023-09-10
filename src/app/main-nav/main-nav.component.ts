@@ -20,7 +20,7 @@ export class MainNavComponent implements OnInit{
 public MENU: any[] = [
   { path: '/clients/allclients', title: 'Clientes', icon: 'supervisor_account'},
   { path: '/contacts/allcontacts', title: 'Contactos', icon: 'contacts'},
-  { path: '', title: 'Tareas', icon: 'work'},
+  { path: '/tasks/alltasks', title: 'Tareas', icon: 'work'},
   { path: '', title: 'Novedades', icon: 'fiber_new'}
 ];
 

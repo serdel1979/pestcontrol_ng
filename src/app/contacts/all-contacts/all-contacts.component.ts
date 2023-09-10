@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Contact } from 'src/app/interfaces/contact.interface';
 import { Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
@@ -21,24 +21,24 @@ import { ClientService } from 'src/app/services/client.service';
   templateUrl: './all-contacts.component.html',
   styleUrls: ['./all-contacts.component.css']
 })
-export class AllContactsComponent implements AfterViewInit, OnInit{
+export class AllContactsComponent implements AfterViewInit, OnInit {
 
   public displayedColumns: string[] = ['name', 'surname', 'email'];
-  public contacts : Contact[] = [];
-  public contactsFilter : Contact[] = [];
-  public filter!:string;
+  public contacts: Contact[] = [];
+  public contactsFilter: Contact[] = [];
+  public filter!: string;
   public dataSource = new MatTableDataSource<Contact>(this.contactsFilter);
 
- 
+
   public loading: boolean = false;
-  
+
   //@ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
     this.dataSource.paginator = paginator;
-}
+  }
 
-  constructor(private router: Router, private clientServices: ClientService){}
+  constructor(private router: Router, private clientServices: ClientService) { }
 
   applyFilter() {
     if (this.filter.trim() === '') {
@@ -56,20 +56,20 @@ export class AllContactsComponent implements AfterViewInit, OnInit{
     }
     this.dataSource.data = this.contactsFilter;
   }
-  
+
 
   ngOnInit(): void {
     this.loading = true;
     this.clientServices.getContacts()
-    .subscribe(resp=>{
-      this.contacts = resp;
-      this.contactsFilter = resp;
-      this.dataSource.data = this.contactsFilter;
-      this.loading = false;
-    },
-    err=>{
-      this.loading = false;
-    })
+      .subscribe(resp => {
+        this.contacts = resp;
+        this.contactsFilter = resp;
+        this.dataSource.data = this.contactsFilter;
+        this.loading = false;
+      },
+        err => {
+          this.loading = false;
+        })
   }
 
   ngAfterViewInit() {
@@ -77,7 +77,7 @@ export class AllContactsComponent implements AfterViewInit, OnInit{
   }
 
 
-  addContact(){
+  addContact() {
     this.router.navigateByUrl('contacts/addcontact');
   }
 

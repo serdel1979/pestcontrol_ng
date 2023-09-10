@@ -1,0 +1,41 @@
+.flex-item {
+    flex: 1 1 300px; /* Cambia 300px por el ancho deseado de cada card */
+    margin: 10px; /* Ajusta el margen según tus necesidades */
+  }
+  /*
+  table {
+    width: 100%;
+  }*/
+  
+  /* Estilos para el contenedor de la tabla */
+  /* Estilos para el contenedor de la tabla */
+  .table-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  }
+  
+  .custom-card {
+  flex-grow: 1;
+  box-sizing: border-box;
+  }
+  
+  .custom-card mat-form-field {
+    width: 100%; /* Asegura que el input se extienda al 100% del ancho de custom-card */
+  }
+  
+  
+  @media screen and (min-width: 792px) {
+  /* Pantallas grandes: El card ocupa la mitad de la pantalla */
+  .custom-card {
+    max-width: 100%;
+  }
+  }
+  
+  @media screen and (max-width: 599px) {
+  /* Pantallas pequeñas: El card ocupa el 100% del ancho */
+  .custom-card {
+    max-width: 100%;
+  }
+  }
+  

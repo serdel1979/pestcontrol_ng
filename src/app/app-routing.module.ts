@@ -19,6 +19,11 @@ export const AppRoutes: Routes = [
     loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule),
     canActivate: [loginGuard]
   },
+  { 
+    path: 'tasks', 
+    loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule),
+    canActivate: [loginGuard]
+  },
   { path: '', redirectTo: '/clients/allclients', pathMatch: 'full' },
   { path: '**', redirectTo: 'clients/allclients' }
 ];
