@@ -11,7 +11,7 @@ import { TasksService } from 'src/app/services/tasks.service';
 })
 export class AllTasksComponent implements AfterViewInit, OnInit {
   
-  public displayedColumns: string[] = ['description', 'type'];
+  public displayedColumns: string[] = ['description', 'type', 'detail'];
   public tasks : any[] = [];
   public tasksFilter : any[] = [];
   public filter!:string;
@@ -39,9 +39,12 @@ export class AllTasksComponent implements AfterViewInit, OnInit {
           this.loading = false;
         })
   }
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
+
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
+
 
   @ViewChild(MatPaginator) set paginator(paginator: MatPaginator) {
     this.dataSource.paginator = paginator;
@@ -67,6 +70,9 @@ export class AllTasksComponent implements AfterViewInit, OnInit {
 
 
 
+  showDetails(id: number){
+    this.router.navigateByUrl(`/tasks/task/${id}`);
+  }
 
 
 

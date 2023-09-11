@@ -16,5 +16,16 @@ export class TasksService {
     return this.http.get<any[]>(`${this.baseUrl}/jobs`);
   }
 
+  getTask(id: number){
+    return this.http.get<any>(`${this.baseUrl}/jobs/${id}`);
+  }
+
+  getSubTask(id: number){
+    return this.http.get<any>(`${this.baseUrl}/jobs/subjob/${id}`);
+  }
+
+  addNoveltie(noveltie: any){
+    return this.http.post(`${this.baseUrl}/jobs/newnovelty`,noveltie);
+  }
   
 }

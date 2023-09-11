@@ -1,0 +1,23 @@
+<mat-card style="padding: 20px;margin: 20px;">
+    <mat-card-title>
+        Agrega novedad
+    </mat-card-title>
+    <mat-card-content>
+        <mat-label>
+            <h2>Describa una novedad</h2>
+        </mat-label>
+
+        <form [formGroup]="noveltieForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%"
+        fxFlex.gt-md="30%" fxFlex.gt-lg="20%">
+        <mat-form-field>
+            <mat-label>Novedad</mat-label>
+            <textarea matInput placeholder="Escriba la novedad" formControlName="observation"></textarea>
+            <mat-error *ngIf="noveltieForm.get('observaion')?.hasError('required')">Debe especificar una novedad</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" [disabled]="!noveltieForm.valid || sending" type="submit"
+            style="margin: 10px;"><mat-icon>save</mat-icon>Guardar</button>
+    </form>
+
+    </mat-card-content>
+</mat-card>
