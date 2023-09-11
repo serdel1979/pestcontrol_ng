@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TasksService } from 'src/app/services/tasks.service';
 import { AddNoveltieComponent } from '../add-noveltie/add-noveltie.component';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-sub-task-detail',
@@ -18,48 +19,39 @@ export class SubTaskDetailComponent {
 
   constructor(private tasksService:  TasksService,
     private route: ActivatedRoute,
+    private shared: SharedDataService,
     private dialog: MatDialog){}
 
 
   ngOnInit(): void {
       this.id = this.route.snapshot.params['id'];
-      this.loading = true;
-      this.tasksService.getSubTask(this.id)
-      .subscribe(resp=>{
-        this.loading = false;
-        this.subtask = resp;
-      },
-      ()=>this.loading = false)
+      this.loadData();
+      this.shared.subtask$.subscribe((updated) => {
+        this.loadData();
+      });
   }
 
-  addNoveltie(id: number): MatDialogRef<AddNoveltieComponent> {
-    return this.dialog.open(AddNoveltieComponent, {
+
+  loadData(){
+    this.loading = true;
+    this.tasksService.getSubTask(this.id)
+    .subscribe(resp=>{
+      this.loading = false;
+      this.subtask = resp;
+    },
+    ()=>this.loading = false)
+  }
+
+  addNoveltie(id: number){
+    this.dialog.open(AddNoveltieComponent, {
       width: '500px',
-      data: { id }
+      data: {id}
     });
   }
-  
 
-  // addNoveltie(id: number){
-  //   this.dialog.open(AddNoveltieComponent, {
-  //     width: '500px',
-  //     data: {id}
-  //   });
-  // }
 
-  openNoveltieDialog(id: number): void {
-    const dialogRef = this.addNoveltie(id);
-  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('actualizar');
-      this.loading = true;
-      this.tasksService.getSubTask(this.id)
-        .subscribe(resp => {
-          this.loading = false;
-          this.subtask = resp;
-        }, () => this.loading = false);
-    });
-  }
+
+
   
 
   back() {

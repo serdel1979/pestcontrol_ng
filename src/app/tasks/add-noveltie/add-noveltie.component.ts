@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TasksService } from '../../services/tasks.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-add-noveltie',
@@ -22,6 +24,7 @@ export class AddNoveltieComponent{
   constructor(@Inject(MAT_DIALOG_DATA) public novelty: any, private fb: FormBuilder,
   private tasksService: TasksService,
   private _snackBar: MatSnackBar,
+  private shared: SharedDataService,
   private dialogRef: MatDialogRef<AddNoveltieComponent>) {
     this.noveltieForm = this.fb.group({
       subjobid: [this.novelty.id, Validators.required], // Se asigna el valor de idClient aquí
@@ -34,15 +37,10 @@ export class AddNoveltieComponent{
     this.sending = true;
     this.tasksService.addNoveltie(this.noveltieForm.value)
     .subscribe(
-      (resp)=>{
+      ()=>{
         this.sending = false;
         this.openSnackBar("Novedad agregada","Ok");
-        this.dialogRef.close();
-      }
-      ,
-      (err)=>{
-        this.sending = false;
-        this.openSnackBar("No se agregó la novedad","Ok");
+        this.shared.updateSubtask(true);
         this.dialogRef.close();
       }
     )
