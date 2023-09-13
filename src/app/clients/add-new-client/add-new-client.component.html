@@ -1,0 +1,71 @@
+<mat-card class="custom-card" style="margin: 10px; padding: 10px;">
+    <mat-card-title>
+        Agrega cliente
+    </mat-card-title>
+    <mat-card-content>
+
+        <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Cliente">
+                <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%"
+                    fxFlex.gt-md="30%" fxFlex.gt-lg="20%">
+                    <mat-form-field style="margin: 10px; display: block;">
+                        <input matInput placeholder="Nombre de la empresa" formControlName="businessName">
+                        <mat-error *ngIf="clientForm.get('businessName')?.hasError('required')">Debe especificar un
+                            nombre</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin: 10px; display: block;">
+                        <input matInput placeholder="CUIT" formControlName="cuit" (keyup.enter)="onSubmit()">
+                        <mat-error *ngIf="clientForm.get('cuit')?.hasError('required')">Debe especificar el
+                            cuit</mat-error>
+                    </mat-form-field>
+                </form>
+            </mat-tab>
+            <mat-tab label="Contacto">
+                <form [formGroup]="contactForm" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%" fxFlex.gt-md="30%"
+                    fxFlex.gt-lg="20%">
+                    <mat-form-field style="margin: 10px; display: block;">
+                        <input matInput placeholder="Nombre" formControlName="name">
+                        <mat-error *ngIf="clientForm.get('contact.name')?.hasError('required')">Debe especificar el
+                            nombre</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin: 10px; display: block;">
+                        <input matInput placeholder="Apellido" formControlName="surname">
+                        <mat-error *ngIf="clientForm.get('contact.surname')?.hasError('required')">Debe especificar el
+                            apellido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field style="margin: 10px; display: block;">
+                        <input matInput placeholder="Email" formControlName="email" (keyup.enter)="submitContact()">
+                        <mat-error *ngIf="clientForm.get('contact.email')?.hasError('required')">Debe especificar un
+                            email</mat-error>
+                        <mat-error *ngIf="clientForm.get('contact.email')?.hasError('email')">El email no es
+                            válido</mat-error>
+                    </mat-form-field>
+
+                    <button mat-button type="button" (click)="addPhone()">Agregar Teléfono</button>
+                    <div formArrayName="phones">
+                        <div *ngFor="let phone of phoneForms.controls; let i = index" [formGroupName]="i">
+                            <mat-form-field style="margin: 10px;">
+                                <input matInput placeholder="Número de teléfono" formControlName="number" type="number"
+                                    min="1" max="9999999999" (keyup.enter)="submitContact()">
+                                <button mat-icon-button color="warn" type="button" (click)="removePhone(i)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </mat-tab>
+            <mat-tab label="Sucursales">
+                <!-- Contenido del tercer tab -->
+            </mat-tab>
+        </mat-tab-group>
+        <button mat-raised-button color="primary"(click)="save()"><mat-icon>save</mat-icon></button>
+        <button mat-raised-button color="secundary" (click)="back()" style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
+    </mat-card-content>
+</mat-card>

@@ -10,13 +10,15 @@ import { SeeDetailComponent } from './see-detail/see-detail.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { AddContactComponent } from '../contacts/add-contact/add-contact.component';
 import { BranchesComponent } from './branches/branches.component';
+import { AddNewClientComponent } from './add-new-client/add-new-client.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'allclients', pathMatch: 'full' }, 
   { path: 'allclients', component: AllClientsComponent },
  // { path: 'addclient', component: AddClientComponent },
-  { path: 'addclient', component: AddClient2Component },
+ // { path: 'addclient', component: AddClient2Component },
+  { path: 'addclient', component: AddNewClientComponent },
   { path: ':id/newbranch/:clientname', component: AddBranchComponent }
 ];
 
@@ -28,7 +30,8 @@ const routes: Routes = [
     AddClient2Component,
     SeeDetailComponent,
     AddBranchComponent,
-    BranchesComponent
+    BranchesComponent,
+    AddNewClientComponent
   ],
   imports: [
     CommonModule,
