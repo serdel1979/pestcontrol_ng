@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
 import { AlertService } from 'src/app/services/alert.service';
 import { ClientService } from 'src/app/services/client.service';
@@ -27,6 +28,32 @@ export class AddNewClientComponent {
       email: ['', [Validators.required, Validators.email]],
       phones: this.fb.array([])
   })
+
+  public branchForm: FormGroup = this.fb.group({
+    clientId: [0, Validators.required], 
+    name: ['', Validators.required],
+    address: this.fb.group({
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      floor: ['', Validators.required],
+      zipcode: ['', Validators.required],
+      apartment: ['', Validators.required],
+      city: ['', Validators.required]
+    }),
+  });
+
+
+  
+  showFormAndTable: boolean = false; 
+
+
+  branches: any[] = [];
+
+  displayedColumns: string[] = ['name', 'street', 'number', 'floor','zipcode','apartment','city'];
+  public dataSource = new MatTableDataSource<any>();
+  
+
+
 
 
 
@@ -69,8 +96,20 @@ export class AddNewClientComponent {
       window.history.back();
     }
 
+    addBranche(){
+      console.log(this.branchForm.value);
+      this.branches.push(this.branchForm.value);
+      this.dataSource = new MatTableDataSource<any>(this.branches);
+      console.log(this.branches);
+      this.branchForm.reset();
+    }
+
     save(){
       
+    }
+
+    toggleFormAndTable() {
+      this.showFormAndTable = !this.showFormAndTable;
     }
 
 

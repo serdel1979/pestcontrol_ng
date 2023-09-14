@@ -11,7 +11,7 @@
   @media screen and (min-width: 792px) {
     /* Pantallas grandes: El card ocupa la mitad de la pantalla */
     .custom-card {
-      max-width: 80%;
+      max-width: 100%;
     }
   }
   
