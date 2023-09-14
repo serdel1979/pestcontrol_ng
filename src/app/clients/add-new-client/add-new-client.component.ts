@@ -97,10 +97,8 @@ export class AddNewClientComponent {
     }
 
     addBranche(){
-      console.log(this.branchForm.value);
       this.branches.push(this.branchForm.value);
       this.dataSource = new MatTableDataSource<any>(this.branches);
-      console.log(this.branches);
       this.branchForm.reset();
     }
 

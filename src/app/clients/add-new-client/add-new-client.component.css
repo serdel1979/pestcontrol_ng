@@ -5,7 +5,7 @@
 
   .custom-card {
     flex-grow: 1;
-    box-sizing: border-box;
+  /*  box-sizing: border-box; */
   }
   
   @media screen and (min-width: 792px) {
