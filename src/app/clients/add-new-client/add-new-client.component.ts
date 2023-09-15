@@ -102,16 +102,10 @@ export class AddNewClientComponent {
       }
     }
 
-
-    
-    
-
-    
-
     clearFormErrors(formGroup: FormGroup) {
       Object.keys(formGroup.controls).forEach(key => {
         formGroup.get(key)?.setErrors(null);
-        formGroup.get(key)?.markAsUntouched(); // Marcar como no tocados
+        formGroup.get(key)?.markAsUntouched(); 
       });
       this.cdr.detectChanges();
     }
