@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -32,19 +32,16 @@ export class AddNewClientComponent {
   public branchForm: FormGroup = this.fb.group({
     clientId: [0, Validators.required], 
     name: ['', Validators.required],
-    address: this.fb.group({
-      street: ['', Validators.required],
-      number: ['', Validators.required],
-      floor: ['', Validators.required],
-      zipcode: ['', Validators.required],
-      apartment: ['', Validators.required],
-      city: ['', Validators.required]
-    }),
+    street: ['', Validators.required],
+    number: ['', Validators.required],
+    floor: ['', Validators.required],
+    zipcode: ['', Validators.required],
+    apartment: ['', Validators.required],
+    city: ['', Validators.required]  
   });
 
 
   
-  showFormAndTable: boolean = false; 
 
 
   branches: any[] = [];
@@ -58,7 +55,7 @@ export class AddNewClientComponent {
 
 
   constructor(private fb: FormBuilder, private clients: ClientService, public dialog: MatDialog,
-    private alertDialogService: AlertService) { }
+    private alertDialogService: AlertService, private cdr: ChangeDetectorRef) { }
 
 
     get phoneForms() {
@@ -96,19 +93,38 @@ export class AddNewClientComponent {
       window.history.back();
     }
 
-    addBranche(){
-      this.branches.push(this.branchForm.value);
-      this.dataSource = new MatTableDataSource<any>(this.branches);
-      this.branchForm.reset();
+    addBranche() {
+      if (this.branchForm.valid) {
+        this.branches.push(this.branchForm.value);
+        this.dataSource.data = this.branches;
+        //this.branchForm.reset();
+        this.clearFormErrors(this.branchForm);
+      }
     }
+
+
+    
+    
+
+    
+
+    clearFormErrors(formGroup: FormGroup) {
+      Object.keys(formGroup.controls).forEach(key => {
+        formGroup.get(key)?.setErrors(null);
+        formGroup.get(key)?.markAsUntouched(); // Marcar como no tocados
+      });
+      this.cdr.detectChanges();
+    }
+    
+    
+    
 
     save(){
       
     }
 
-    toggleFormAndTable() {
-      this.showFormAndTable = !this.showFormAndTable;
-    }
+
+
 
 
 }
