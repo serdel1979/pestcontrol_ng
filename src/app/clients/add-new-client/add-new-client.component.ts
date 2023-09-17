@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -32,21 +32,24 @@ export class AddNewClientComponent {
   public branchForm: FormGroup = this.fb.group({
     clientId: [0, Validators.required], 
     name: ['', Validators.required],
-    street: ['', Validators.required],
-    number: ['', Validators.required],
-    floor: ['', Validators.required],
-    zipcode: ['', Validators.required],
-    apartment: ['', Validators.required],
-    city: ['', Validators.required]  
+    address: this.fb.group({
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      floor: ['', Validators.required],
+      zipcode: ['', Validators.required],
+      apartment: ['', Validators.required],
+      city: ['', Validators.required]
+    }),
   });
 
 
   
+  showFormAndTable: boolean = false; 
 
 
   branches: any[] = [];
 
-  displayedColumns: string[] = ['name', 'street', 'number', 'floor','zipcode','apartment','city'];
+  displayedColumns: string[] = ['name', 'street', 'number', 'floor','zipcode','apartment','city','action'];
   public dataSource = new MatTableDataSource<any>();
   
 
@@ -55,7 +58,7 @@ export class AddNewClientComponent {
 
 
   constructor(private fb: FormBuilder, private clients: ClientService, public dialog: MatDialog,
-    private alertDialogService: AlertService, private cdr: ChangeDetectorRef) { }
+    private alertDialogService: AlertService) { }
 
 
     get phoneForms() {
@@ -97,28 +100,38 @@ export class AddNewClientComponent {
       if (this.branchForm.valid) {
         this.branches.push(this.branchForm.value);
         this.dataSource.data = this.branches;
-        //this.branchForm.reset();
+        this.branchForm.reset();
         this.clearFormErrors(this.branchForm);
+
       }
     }
-
+    
     clearFormErrors(formGroup: FormGroup) {
       Object.keys(formGroup.controls).forEach(key => {
-        formGroup.get(key)?.setErrors(null);
-        formGroup.get(key)?.markAsUntouched(); 
+        const control = formGroup.get(key);
+        if (control instanceof FormGroup) {
+          this.clearAddressErrors(control);
+        } else {
+          control?.setErrors(null);
+        }
       });
-      this.cdr.detectChanges();
     }
     
-    
+    clearAddressErrors(formGroup: FormGroup) {
+      Object.keys(formGroup.controls).forEach(key => {
+        formGroup.get(key)?.setErrors(null);
+      });
+    }
     
 
     save(){
-      
+      console.log(this.clientForm.value);
+      console.log(this.branches);
     }
 
-
-
+    toggleFormAndTable() {
+      this.showFormAndTable = !this.showFormAndTable;
+    }
 
 
 }

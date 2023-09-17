@@ -4,21 +4,14 @@
   
 
   /* Estilo personalizado para los inputs */
-.custom-input {
-  width: 100%;
-  margin-bottom: 10px; /* Espacio entre los inputs */
-}
 
 .custom-input-address {
   width: 20%;
-  margin-bottom: 5px; /* Espacio entre los inputs */
+  margin-bottom: 10px; /* Espacio entre los inputs */
 }
 
 
-  .custom-card {
-    flex-grow: 1;
-  /*  box-sizing: border-box; */
-  }
+
   
   @media screen and (min-width: 792px) {
     /* Pantallas grandes: El card ocupa la mitad de la pantalla */
