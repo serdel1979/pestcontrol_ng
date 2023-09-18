@@ -19,58 +19,53 @@
       <div *ngIf="!load">
         <div [hidden]="clients.length == 0" style="display: flex; flex-direction: column;">
 
-          <table mat-table [dataSource]="dataSource">
+          <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
 
-            <!-- Name Column -->
             <ng-container matColumnDef="businessName">
               <th mat-header-cell *matHeaderCellDef> Empresa </th>
               <td mat-cell *matCellDef="let element"> {{element.businessName}} </td>
             </ng-container>
-
-            <!-- Weight Column -->
             <ng-container matColumnDef="cuit">
               <th mat-header-cell *matHeaderCellDef> Cuit </th>
               <td mat-cell *matCellDef="let element"> {{element.cuit}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="contact">
-              <th mat-header-cell *matHeaderCellDef> Contacto </th>
-              <td mat-cell *matCellDef="let element"> {{element.contact.email}} </td>
-            </ng-container>
-
-            <!-- Agrega esta sección dentro de la definición de tu tabla -->
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> Contacto </th>
+            <ng-container matColumnDef="expand">
+              <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" (click)="showDetails(element.contact)">
-                  <mat-icon>visibility</mat-icon>
+                <button mat-icon-button aria-label="expand row"
+                  (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                  <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                  <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
                 </button>
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="branchs">
-              <th mat-header-cell *matHeaderCellDef> Sucursales </th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button (click)="newBranch(element.id,element.businessName)" mat-menu-item>
-                    <mat-icon>add</mat-icon>
-                    <span>Agregar</span>
-                  </button>
-                  <button (click)="showBranches(element)" mat-menu-item>
-                    <mat-icon>find_in_page</mat-icon>
-                    <span>Ver</span>
-                  </button>
-                </mat-menu>
+
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+                <div class="example-element-detail"
+                  [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <mat-list>
+                    <mat-list-item>NORTE Calle 23 N° 3211 Depto. 1 La Plata</mat-list-item>
+                    <mat-list-item>JACINTA Calle 11 N° 3211 Depto. 1 La Plata</mat-list-item>
+                    <mat-list-item>ISMAEL Calle 13 N° 3211 Depto. 0 Berisso</mat-list-item>
+                    <mat-list-item><mat-icon>add</mat-icon></mat-list-item>
+                  </mat-list>
+                </div>
               </td>
             </ng-container>
 
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+              [class.example-expanded-row]="expandedElement === element"
+              (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
           </table>
 
           <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>

@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
+import { Router } from '@angular/router';
+import { DialogCancelComponent } from 'src/app/alerts/dialog-cancel/dialog-cancel.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { ClientService } from 'src/app/services/client.service';
 
@@ -11,7 +13,7 @@ import { ClientService } from 'src/app/services/client.service';
   templateUrl: './add-new-client.component.html',
   styleUrls: ['./add-new-client.component.css']
 })
-export class AddNewClientComponent {
+export class AddNewClientComponent implements OnDestroy {
 
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
@@ -58,8 +60,19 @@ export class AddNewClientComponent {
 
 
   constructor(private fb: FormBuilder, private clients: ClientService, public dialog: MatDialog,
+    private router: Router,
     private alertDialogService: AlertService) { }
 
+
+  ngOnDestroy(): void {
+   //this.checkData();
+  }
+
+  checkData(){
+    if(this.branches.length > 0 || this.clientForm.valid || this.branchForm.valid){
+      this.openDialog();
+    }
+  }
 
     get phoneForms() {
       return this.contactForm.get('phones') as FormArray;
@@ -88,7 +101,7 @@ export class AddNewClientComponent {
 
     submitContact(){
       if(this.contactForm.valid){
-        this.tabGroup.selectedIndex = 2;
+        this.tabGroup.selectedIndex = 3;
       }
     }
 
@@ -127,11 +140,29 @@ export class AddNewClientComponent {
     save(){
       console.log(this.clientForm.value);
       console.log(this.branches);
+
+      this.router.navigate(['/clients/allclients']);
     }
 
     toggleFormAndTable() {
       this.showFormAndTable = !this.showFormAndTable;
     }
 
+
+
+    openDialog() {
+      const dialogRef = this.dialog.open(DialogCancelComponent, {
+        data: { message: '¿Desea guardar los datos antes de salir?' }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log('guarda ',this.branches, this.clientForm.value);
+        } else {
+          return;
+        }
+        this.sending = false;
+      });
+    }
 
 }

@@ -8,11 +8,19 @@ import { MatDialog } from '@angular/material/dialog';
 import { SeeDetailComponent } from '../see-detail/see-detail.component';
 import { Contact } from 'src/app/interfaces/contact.interface';
 import { BranchesComponent } from '../branches/branches.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-all-clients',
   templateUrl: './all-clients.component.html',
-  styleUrls: ['./all-clients.component.css']
+  styleUrls: ['./all-clients.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AllClientsComponent implements OnInit {
   public clients: Client[] = [];
@@ -21,7 +29,10 @@ export class AllClientsComponent implements OnInit {
   currentPage: number = 1;
   pageSizeOptions: number[] = [5, 10, 25];
 
-  public displayedColumns: string[] = ['businessName', 'cuit', 'contact', 'actions', 'branchs'];
+  public displayedColumns: string[] = ['businessName', 'cuit'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+
+  expandedElement: any | null;
   public dataSource = new MatTableDataSource<Client>(); // Inicializa el dataSource vacío
 
   //@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;

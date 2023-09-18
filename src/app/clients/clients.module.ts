@@ -11,6 +11,7 @@ import { AddBranchComponent } from './add-branch/add-branch.component';
 import { AddContactComponent } from '../contacts/add-contact/add-contact.component';
 import { BranchesComponent } from './branches/branches.component';
 import { AddNewClientComponent } from './add-new-client/add-new-client.component';
+import { savedGuard } from '../guards/saved.guard';
 
 
 const routes: Routes = [
@@ -18,7 +19,7 @@ const routes: Routes = [
   { path: 'allclients', component: AllClientsComponent },
  // { path: 'addclient', component: AddClientComponent },
  // { path: 'addclient', component: AddClient2Component },
-  { path: 'addclient', component: AddNewClientComponent },
+  { path: 'addclient', component: AddNewClientComponent, canDeactivate: [savedGuard]},
   { path: ':id/newbranch/:clientname', component: AddBranchComponent }
 ];
 
