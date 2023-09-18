@@ -19,6 +19,8 @@ export class AddNewClientComponent implements OnDestroy {
 
   public sending: boolean = false;
 
+  public saved: boolean = false;
+
   public clientForm: FormGroup = this.fb.group({
     businessName: ['', Validators.required],
     cuit: ['', Validators.required],
@@ -68,11 +70,6 @@ export class AddNewClientComponent implements OnDestroy {
    //this.checkData();
   }
 
-  checkData(){
-    if(this.branches.length > 0 || this.clientForm.valid || this.branchForm.valid){
-      this.openDialog();
-    }
-  }
 
     get phoneForms() {
       return this.contactForm.get('phones') as FormArray;
@@ -140,6 +137,9 @@ export class AddNewClientComponent implements OnDestroy {
     save(){
       console.log(this.clientForm.value);
       console.log(this.branches);
+      //guardar
+
+      this.saved = true;
 
       this.router.navigate(['/clients/allclients']);
     }
@@ -150,19 +150,6 @@ export class AddNewClientComponent implements OnDestroy {
 
 
 
-    openDialog() {
-      const dialogRef = this.dialog.open(DialogCancelComponent, {
-        data: { message: '¿Desea guardar los datos antes de salir?' }
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          console.log('guarda ',this.branches, this.clientForm.value);
-        } else {
-          return;
-        }
-        this.sending = false;
-      });
-    }
+    
 
 }

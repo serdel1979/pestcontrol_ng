@@ -63,7 +63,6 @@ export class AllClientsComponent implements OnInit {
   onPageChange(event: any): void {
     this.currentPage = event.pageIndex + 1;
     this.pageSize = event.pageSize;
-    console.log(this.currentPage, this.pageSize);
   }
 
 
