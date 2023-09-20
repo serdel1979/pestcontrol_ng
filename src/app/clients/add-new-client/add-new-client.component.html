@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="sending" mode="indeterminate"></mat-progress-bar>
 <mat-card>
     <mat-card-title>
         Agrega cliente
@@ -135,7 +136,7 @@
 
             </mat-tab>
         </mat-tab-group>
-        <button [disabled]="!clientForm.valid" mat-raised-button color="primary" (click)="save()"><mat-icon>save</mat-icon></button>
+        <button [disabled]="!clientForm.valid || sending" mat-raised-button color="primary" (click)="save()"><mat-icon>save</mat-icon></button>
         <button mat-raised-button color="secundary" (click)="back()"
             style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
     </mat-card-content>
