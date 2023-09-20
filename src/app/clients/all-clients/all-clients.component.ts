@@ -47,6 +47,7 @@ export class AllClientsComponent implements OnInit {
     ) {
     this.load = true;
     this.clientService.getClients().subscribe(resp => {
+      console.log(resp);
       this.clients = resp;
       this.dataSource = new MatTableDataSource<Client>(this.clients); // Actualiza el dataSource con los datos
       this.dataSource.paginator = this.paginator; // Configura el paginador
@@ -85,6 +86,9 @@ export class AllClientsComponent implements OnInit {
     });
   }
 
+  branch(br:string){
+    console.log(br);
+  }
 
   showBranches(client: Client) {
     this.dialog.open(BranchesComponent, {
