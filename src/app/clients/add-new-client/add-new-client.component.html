@@ -25,55 +25,55 @@
 
                 
                     <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
-                        <mat-form-field>
+                        <mat-form-field style="margin: 5px;">
                             <input matInput placeholder="Nombre de la sucursal" formControlName="name">
                             <mat-error *ngIf="branchForm.get('name')?.hasError('required')">Debe especificar un
                                 nombre</mat-error>
                         </mat-form-field>
 
                         <div formGroupName="address">
-                            <mat-form-field >
+                            <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Calle" formControlName="street">
                                 <mat-error *ngIf="branchForm.get('address.street')?.hasError('required')">Debe
                                     especificar
                                     la calle</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field >
+                            <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Número" formControlName="number">
                                 <mat-error *ngIf="branchForm.get('address.number')?.hasError('required')">Debe
                                     especificar
                                     el número</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field>
+                            <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Piso" formControlName="floor">
                                 <mat-error *ngIf="branchForm.get('address.floor')?.hasError('required')">Debe
                                     especificar el
                                     piso</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field >
+                            <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Código Postal" formControlName="zipcode">
                                 <mat-error *ngIf="branchForm.get('address.zipcode')?.hasError('required')">Debe
                                     especificar
                                     el código postal</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field >
+                            <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Departamento" formControlName="apartment">
                                 <mat-error *ngIf="branchForm.get('address.apartment')?.hasError('required')">Debe
                                     especificar el departamento</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field>
+                            <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Ciudad" formControlName="city">
                                 <mat-error *ngIf="branchForm.get('address.city')?.hasError('required')">Debe especificar
                                     la
                                     ciudad</mat-error>
                             </mat-form-field>
                         </div>
-                        <button mat-raised-button color="primary" style="margin-top: 20px;" (click)="addBranche();"><mat-icon>save</mat-icon>Agregar</button>
+                        <button [disabled]="!branchForm.valid" mat-raised-button color="primary" style="margin-top: 20px;" (click)="addBranche();"><mat-icon>save</mat-icon>Agregar</button>
                     </form>
 
                     <!--Tabla de sucursales-->
@@ -135,7 +135,7 @@
 
             </mat-tab>
         </mat-tab-group>
-        <button mat-raised-button color="primary" (click)="save()"><mat-icon>save</mat-icon></button>
+        <button [disabled]="!clientForm.valid" mat-raised-button color="primary" (click)="save()"><mat-icon>save</mat-icon></button>
         <button mat-raised-button color="secundary" (click)="back()"
             style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
     </mat-card-content>

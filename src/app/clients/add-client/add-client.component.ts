@@ -115,7 +115,6 @@ export class AddClientComponent implements OnInit{
         },
       
       };
-      console.log(client);
       this.alertDialogService.openAlertDialog('Error en el formulario');
     }
   }

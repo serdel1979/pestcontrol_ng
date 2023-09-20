@@ -1,9 +1,10 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
+import { debounceTime } from 'rxjs';
 import { DialogCancelComponent } from 'src/app/alerts/dialog-cancel/dialog-cancel.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { ClientService } from 'src/app/services/client.service';
@@ -13,7 +14,7 @@ import { ClientService } from 'src/app/services/client.service';
   templateUrl: './add-new-client.component.html',
   styleUrls: ['./add-new-client.component.css']
 })
-export class AddNewClientComponent implements OnDestroy {
+export class AddNewClientComponent implements OnDestroy, OnInit {
 
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
@@ -62,8 +63,14 @@ export class AddNewClientComponent implements OnDestroy {
 
 
   constructor(private fb: FormBuilder, private clients: ClientService, public dialog: MatDialog,
-    private router: Router,
-    private alertDialogService: AlertService) { }
+    private router: Router, private alertDialogService: AlertService) { }
+
+
+
+  ngOnInit(): void {
+    this.subscribeToInputChanges();
+    this.subscribeToInputChangesBranche();
+  }
 
 
   ngOnDestroy(): void {
@@ -135,11 +142,18 @@ export class AddNewClientComponent implements OnDestroy {
     
 
     save(){
-      console.log(this.clientForm.value);
-      console.log(this.branches);
-      //guardar
+      if(this.branchForm.valid && this.branchForm.touched){
+        this.alertDialogService.openAlertDialog('Tiene datos sin guardar');
+        return;
+      }
 
       this.saved = true;
+      const clientNew = {
+        client: this.clientForm.value,
+        branches: this.branches
+      }
+
+      console.log(clientNew);
 
       this.router.navigate(['/clients/allclients']);
     }
@@ -148,6 +162,46 @@ export class AddNewClientComponent implements OnDestroy {
       this.showFormAndTable = !this.showFormAndTable;
     }
 
+
+  
+
+    private subscribeToInputChanges() {
+      const inputFields = ['businessName','cuit'];
+  
+      inputFields.forEach(fieldName => {
+        const control = this.clientForm.get(fieldName);
+  
+        if (control) {
+          control.valueChanges.pipe(
+            debounceTime(200)
+          ).subscribe(newValue => {
+            const uppercaseValue = newValue.toUpperCase();
+            if (uppercaseValue !== control.value) {
+              control.setValue(uppercaseValue, { emitEvent: false });
+            }
+          });
+        }
+      });
+    }
+
+    private subscribeToInputChangesBranche() {
+      const inputFields = ['name', 'address.street', 'address.number', 'address.floor','address.zipcode','address.apartment','address.city'];
+  
+      inputFields.forEach(fieldName => {
+        const control = this.branchForm.get(fieldName);
+  
+        if (control) {
+          control.valueChanges.pipe(
+            debounceTime(200)
+          ).subscribe(newValue => {
+            const uppercaseValue = newValue.toUpperCase();
+            if (uppercaseValue !== control.value) {
+              control.setValue(uppercaseValue, { emitEvent: false });
+            }
+          });
+        }
+      });
+    }
 
 
     

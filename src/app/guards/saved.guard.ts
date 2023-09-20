@@ -10,7 +10,6 @@ export const savedGuard: CanDeactivateFn<unknown> = (component, currentRoute, cu
 
 
   if (component instanceof AddNewClientComponent && component.branchForm instanceof FormGroup && component.clientForm instanceof FormGroup) {
-    const formBranche = component.branchForm;
     const saved = component.saved;
 
     const dialog = inject(MatDialog);
