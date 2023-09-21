@@ -217,6 +217,14 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     });
   }
 
+  eliminarSucursal(element:any){
+    const index = this.branches.indexOf(element);
+    if (index !== -1) {
+      this.branches.splice(index, 1);
+      this.dataSource = new MatTableDataSource(this.branches);
+    }
+  }
+
 
 
 
