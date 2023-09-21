@@ -1,12 +1,12 @@
 <mat-progress-bar *ngIf="sending" mode="indeterminate"></mat-progress-bar>
-<mat-card>
+<mat-card style="margin: 10px; padding: 10px;">
     <mat-card-title>
         Agrega cliente
     </mat-card-title>
     <mat-card-content>
 
-        <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start">
-            <mat-tab label="Cliente">
+        <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start" style="margin: 10px; padding: 10px;">
+            <mat-tab label="Cliente" style="margin: 10px;">
                 <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%"
                     fxFlex.gt-md="30%" fxFlex.gt-lg="20%">
                     <mat-form-field style="margin: 10px; display: block;">
@@ -24,7 +24,7 @@
             </mat-tab>
             <mat-tab label="Sucursales">
 
-                
+                <div style="width: 100%;">
                     <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
                         <mat-form-field style="margin: 5px;">
                             <input matInput placeholder="Nombre de la sucursal" formControlName="name">
@@ -32,7 +32,7 @@
                                 nombre</mat-error>
                         </mat-form-field>
 
-                        <div formGroupName="address">
+                     <div formGroupName="address"> 
                             <mat-form-field  style="margin: 5px;">
                                 <input matInput placeholder="Calle" formControlName="street">
                                 <mat-error *ngIf="branchForm.get('address.street')?.hasError('required')">Debe
@@ -79,11 +79,11 @@
 
                     <!--Tabla de sucursales-->
 
-                    <div *ngIf="branches.length == 0">
+                    <div *ngIf="branches.length == 0" style="margin: 10px;">
                         <mat-label>No hay sucursales agregadas</mat-label>
                     </div>
 
-                    <table mat-table [dataSource]="dataSource" *ngIf="branches.length > 0">
+                    <table mat-table [dataSource]="dataSource" *ngIf="branches.length > 0" style="margin: 10px;">
 
 
                         <!-- Name Column -->
@@ -133,6 +133,8 @@
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 -
                     </table>
+                </div>
+
 
             </mat-tab>
         </mat-tab-group>
