@@ -154,8 +154,6 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       client: this.clientForm.value,
       branches: this.branches
     }
-
-    console.log(clientNew);
     this.clients.newClient(clientNew)
       .subscribe(res => {
         this.sending = false;
@@ -163,7 +161,12 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       },
         (err) => {
           this.sending = false;
-          this.alertDialogService.openAlertDialog('Error en la solicitud');
+          if(err.status == 400){
+            this.alertDialogService.openAlertDialog(err.error);
+          }else{
+            this.alertDialogService.openAlertDialog("Error desconocido");
+          }
+          
         })
 
   }
