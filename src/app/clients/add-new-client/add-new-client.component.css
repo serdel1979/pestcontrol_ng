@@ -7,6 +7,23 @@
   margin-bottom: 10px; /* Espacio entre los inputs */
 }
 
+.phone-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Alinea los elementos en la parte superior de la fila */
+}
+
+.phone-input {
+  margin-right: 10px; /* Espacio entre los elementos de teléfono */
+  flex: 1; /* Los elementos se expandirán para llenar el espacio disponible */
+  max-width: calc(33.33% - 10px); /* Limita el ancho de cada elemento al 33.33% del contenedor */
+}
+
+.phone-container .mat-button {
+  margin-top: 10px; /* Espacio entre el botón "Agregar Teléfono" y los elementos de teléfono */
+}
+
+
 
 
   

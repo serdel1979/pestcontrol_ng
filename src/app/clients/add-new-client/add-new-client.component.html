@@ -42,38 +42,40 @@
                                         especificar la calle</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field  style="margin: 5px;">
+                                <mat-form-field style="margin: 5px;">
                                     <input matInput placeholder="Número" formControlName="number">
                                     <mat-error *ngIf="branchForm.get('address.number')?.hasError('required')">Debe
                                         especificar el número</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field  style="margin: 5px;">
+                                <mat-form-field style="margin: 5px;">
                                     <input matInput placeholder="Piso" formControlName="floor">
                                     <mat-error *ngIf="branchForm.get('address.floor')?.hasError('required')">Debe
                                         especificar el piso</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field  style="margin: 5px;">
+                                <mat-form-field style="margin: 5px;">
                                     <input matInput placeholder="Código Postal" formControlName="zipcode">
                                     <mat-error *ngIf="branchForm.get('address.zipcode')?.hasError('required')">Debe
                                         especificar el código postal</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field  style="margin: 5px;">
+                                <mat-form-field style="margin: 5px;">
                                     <input matInput placeholder="Departamento" formControlName="apartment">
                                     <mat-error *ngIf="branchForm.get('address.apartment')?.hasError('required')">Debe
                                         especificar el departamento</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field  style="margin: 5px;">
+                                <mat-form-field style="margin: 5px;">
                                     <input matInput placeholder="Ciudad" formControlName="city">
                                     <mat-error *ngIf="branchForm.get('address.city')?.hasError('required')">Debe
                                         especificar la ciudad</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <button [disabled]="!branchForm.valid || !branchForm.touched" mat-raised-button color="primary" style="display: block; margin-top: 20px;" (click)="addBranche();"><mat-icon>add</mat-icon></button>
+                        <button [disabled]="!branchForm.valid || !branchForm.touched" mat-raised-button color="primary"
+                            style="display: block; margin-top: 20px;"
+                            (click)="addBranche();"><mat-icon>add</mat-icon></button>
 
                     </form>
 
@@ -137,6 +139,61 @@
                 </div>
 
 
+            </mat-tab>
+            <mat-tab label="Contactos">
+                <div style="width: 100%;">
+                    <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+
+                        <mat-form-field style="margin: 10px;">
+                            <input matInput placeholder="Nombre del contacto" formControlName="name">
+                            <mat-error *ngIf="contactForm.get('name')?.hasError('required')">Debe especificar el nombre
+                                de
+                                contacto</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field style="margin: 10px;">
+                            <input matInput placeholder="Apellido" formControlName="surname">
+                            <mat-error *ngIf="contactForm.get('surname')?.hasError('required')">Debe especificar el
+                                apellido</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field style="margin: 10px;">
+                            <input matInput placeholder="Email" formControlName="email">
+                            <mat-error *ngIf="contactForm.get('email')?.hasError('required')">Debe especificar un
+                                email</mat-error>
+                            <mat-error *ngIf="contactForm.get('email')?.hasError('email')">El formato de email es
+                                inválido</mat-error>
+                        </mat-form-field>
+
+                        <button title="Agregar teléfono" mat-button type="button" (click)="addPhone()">
+                            <mat-icon>contact_phone</mat-icon>
+                        </button>
+                        <mat-card style="margin-top: 20px;">
+                            <mat-card-content>
+                                <div formArrayName="phones">
+                                    <div *ngFor="let phone of phoneControls.controls; let i = index"
+                                        [formGroupName]="i">
+                                        <mat-form-field style="margin: 10px;">
+                                            <input matInput placeholder="Número de teléfono" formControlName="number"
+                                                type="number" min="1" max="9999999999">
+                                            <button mat-icon-button color="warn" type="button" (click)="removePhone(i)">
+                                                <mat-icon>remove</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <mat-list role="list">
+                                    <mat-list-item *ngFor="let phone of contactForm.get('phones')?.value" role="listitem">
+                                      {{ phone.number }}
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-card-content>
+                        </mat-card>
+
+                        <button mat-raised-button color="primary" type="submit"
+                            style="margin: 10px;"><mat-icon>save</mat-icon></button>
+                    </form>
+                </div>
             </mat-tab>
         </mat-tab-group>
         <button [disabled]="!clientForm.valid || sending" mat-raised-button color="primary"

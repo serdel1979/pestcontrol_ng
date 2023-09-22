@@ -22,6 +22,8 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   public saved: boolean = false;
 
+  newPhoneNumber: string = "";
+
   public clientForm: FormGroup = this.fb.group({
     businessName: ['', Validators.required],
     cuit: ['', Validators.required],
@@ -83,16 +85,6 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
 
-  addPhone() {
-    const phoneFormGroup = this.fb.group({
-      number: ['', Validators.required]
-    });
-    this.phoneForms.push(phoneFormGroup);
-  }
-
-  removePhone(index: number) {
-    this.phoneForms.removeAt(index);
-  }
 
 
 
@@ -229,6 +221,26 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
 
+  saveContact(){
+
+  }
+
+  get phoneControls() {
+    return this.contactForm.get('phones') as FormArray;
+  }
+
+  addPhone() {
+    const phoneGroup = this.fb.group({
+      number: ['', Validators.required]
+    });
+    this.phoneControls.push(phoneGroup);
+  }
+
+  removePhone(index: number) {
+    this.phoneControls.removeAt(index);
+  }
+
+  
 
 
 }
