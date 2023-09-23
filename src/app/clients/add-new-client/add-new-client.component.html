@@ -186,7 +186,7 @@
                             </mat-list-item>
                         </mat-list>
                     </div>
-                    <div style="flex: 1; padding: 10px; max-height: 400px; overflow-y: auto;">
+                    <div *ngIf="clientForm.get('businessName')?.value " style="flex: 1; padding: 10px; max-height: 400px; overflow-y: auto;">
                         <section class="example-section">
                             <span class="example-list-section">
                                 <mat-checkbox class="example-margin">
