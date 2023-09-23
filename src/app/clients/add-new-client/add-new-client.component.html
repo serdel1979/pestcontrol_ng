@@ -144,7 +144,7 @@
                 <div style="display: flex; width: 100%;">
 
                     <!-- Columna izquierda -->
-                    <div style="flex: 3; padding: 10px;">
+                    <div style="flex: 4; padding: 10px;">
                         <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
                             <mat-form-field style="margin: 10px;">
                                 <input matInput placeholder="Nombre del contacto" formControlName="name">
@@ -185,6 +185,24 @@
                                 {{ phone }}
                             </mat-list-item>
                         </mat-list>
+                    </div>
+                    <div style="flex: 1; padding: 10px; max-height: 400px; overflow-y: auto;">
+                        <section class="example-section">
+                            <span class="example-list-section">
+                                <mat-checkbox class="example-margin">
+                                    {{clientForm.get('businessName')}}
+                                </mat-checkbox>
+                            </span>
+                            <span class="example-list-section">
+                                <ul>
+                                    <li *ngFor="let branch of branches">
+                                        <mat-checkbox>
+                                            {{branch.name}}
+                                        </mat-checkbox>
+                                    </li>
+                                </ul>
+                            </span>
+                        </section>
                     </div>
 
                 </div>
