@@ -25,6 +25,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   newPhoneNumber!: string;
   phonesNumber: string[] = [];
 
+  selectedCliValue: any;
   public clientForm: FormGroup = this.fb.group({
     businessName: ['', Validators.required],
     cuit: ['', Validators.required],

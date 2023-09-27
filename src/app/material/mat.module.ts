@@ -19,6 +19,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -49,7 +50,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatMenuModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule
   ]
 })
 export class MatModule { }
