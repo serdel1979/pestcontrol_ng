@@ -172,14 +172,16 @@
                                         inválido</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field style="margin: 10px;">
+                                <mat-form-field>
                                     <mat-label>Cliente</mat-label>
                                     <mat-select>
-                                        <mat-option [value]="branch.name" *ngFor="let branch of branches">
-                                            {{branch.name}}
+                                        <mat-option [value]="branch.name" *ngFor="let branch of branches"
+                                            (click)="selectedBranch(branch)">
+                                            {{ branch.name }}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
+
 
 
                             </form>
@@ -194,8 +196,7 @@
                         </div>
 
                         <!-- Columna derecha -->
-                        <div *ngIf="phonesNumber.length > 0"
-                            class="line-shadow">
+                        <div *ngIf="phonesNumber.length > 0" class="line-shadow">
                             <mat-label>Teléfonos</mat-label>
                             <mat-list role="list" style="height: 100px;">
                                 <mat-list-item *ngFor="let phone of phonesNumber" role="listitem">

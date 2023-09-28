@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,6 @@ import { ClientService } from 'src/app/services/client.service';
 export class AddNewClientComponent implements OnDestroy, OnInit {
 
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
-
   public sending: boolean = false;
 
   public saved: boolean = false;
@@ -28,7 +27,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   selectedCliValue: any;
   public clientForm: FormGroup = this.fb.group({
     businessName: ['', Validators.required],
-    cuit: ['', Validators.required],
+    cuit: ['', Validators.required]
   });
 
   public contactForm: FormGroup = this.fb.group({
@@ -49,6 +48,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       apartment: ['', Validators.required],
       city: ['', Validators.required]
     }),
+    contacts: this.fb.array([])
   });
 
 
@@ -115,6 +115,13 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       this.clearFormErrors(this.branchForm);
 
     }
+  }
+
+  selectedBranch(branch: any){
+    if (this.contactForm.valid){
+      branch.contacts.push(this.contactForm.value)
+    }
+    console.log(branch);
   }
 
   clearFormErrors(formGroup: FormGroup) {
@@ -237,9 +244,13 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     if(this.newPhoneNumber == ''){
       return;
     }
-    console.log(this.newPhoneNumber);
     this.phonesNumber.push(this.newPhoneNumber);
-    this.newPhoneNumber='';
+
+    const phonesArray = this.contactForm.get('phones') as FormArray;
+
+    phonesArray.push(this.fb.control(this.newPhoneNumber));
+
+    this.newPhoneNumber = '';
   }
 
 
