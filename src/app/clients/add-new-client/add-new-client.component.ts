@@ -58,8 +58,15 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   branches: any[] = [];
 
+  contactsList: any[] = [];
+
+  branchSelected!: any;
+
   displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
   public dataSource = new MatTableDataSource<any>();
+
+  displayedColumnsContact: string[] = ['name', 'surname', 'email', 'phones', 'branch' , 'action'];
+  public dataSourceContact = new MatTableDataSource<any>();
 
 
 
@@ -119,9 +126,15 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   selectedBranch(branch: any){
     if (this.contactForm.valid){
-      branch.contacts.push(this.contactForm.value)
+      //branch.contacts.push(this.contactForm.value)
+      this.branchSelected = branch;
     }
-    console.log(branch);
+   // console.log(branch);
+  }
+
+  addContactToBranch(){
+    this.branchSelected.contacts.push(this.contactForm.value)
+    console.log(this.branchSelected);
   }
 
   clearFormErrors(formGroup: FormGroup) {
