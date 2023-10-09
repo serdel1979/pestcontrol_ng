@@ -65,7 +65,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
   public dataSource = new MatTableDataSource<any>();
 
-  displayedColumnsContact: string[] = ['name', 'surname', 'email', 'phones', 'branch' , 'action'];
+  displayedColumnsContact: string[] = ['name', 'surname', 'email', 'action'];
   public dataSourceContact = new MatTableDataSource<any>();
 
 
@@ -133,8 +133,10 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
   addContactToBranch(){
-    this.branchSelected.contacts.push(this.contactForm.value)
     console.log(this.branchSelected);
+    this.branchSelected.contacts.push(this.contactForm.value)
+    this.contactsList.push(this.contactForm.value)
+    console.log(this.contactsList);
   }
 
   clearFormErrors(formGroup: FormGroup) {
@@ -249,6 +251,12 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   get phoneControls() {
     return this.contactForm.get('phones') as FormArray;
+  }
+
+  delPhone(i:number){
+    if (i >= 0 && i < this.phonesNumber.length) {
+      this.phonesNumber.splice(i, 1); // Elimina 1 elemento en la posición i
+    } 
   }
 
 
