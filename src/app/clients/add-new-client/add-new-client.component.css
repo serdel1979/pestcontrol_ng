@@ -28,9 +28,10 @@
   border: 1px solid #ccc; /* Borde sólido de 1px de grosor */
   padding: 10px; /* Espacio interno alrededor del contenido */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Sombra alrededor del div */
-  margin-right: 20px;
+  margin: 20px;
   flex: 1; 
   padding: 10px; 
+  max-width: 30%;
   max-height: 400px; 
   overflow-y: auto;
 }

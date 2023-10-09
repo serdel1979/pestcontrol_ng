@@ -144,10 +144,10 @@
 
                 </mat-tab>
                 <mat-tab label="Contactos">
-                    <div style="display: flex; width: 100%;">
+                    <div style="display: flex; flex-direction: row; width: 100%;">
 
                         <!-- Columna izquierda -->
-                        <div style="flex: 2; padding: 10px;">
+                        <div style="flex: 3; padding: 10px;">
                             <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
                                 <mat-form-field style="margin: 10px;">
                                     <input matInput placeholder="Nombre del contacto" formControlName="name">
@@ -172,7 +172,7 @@
                                         inválido</mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field>
+                                <mat-form-field style="margin: 10px;">
                                     <mat-label>Cliente</mat-label>
                                     <mat-select>
                                         <mat-option [value]="branch.name" *ngFor="let branch of branches"
@@ -181,32 +181,88 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-
-
-
                             </form>
-
-                            <mat-form-field class="example-full-width" style="margin-top: 10px;">
-                                <input matInput placeholder="Número a agregar" [(ngModel)]="newPhoneNumber"
-                                    (keyup.enter)="addNumber()">
-                            </mat-form-field>
-                            <button title="Agregar teléfono" mat-button type="button" (click)="addNumber()">
-                                <mat-icon>contact_phone</mat-icon>
-                            </button>
+                            <div style="display: flex; align-items: center; margin: 10px;">
+                                <mat-form-field>
+                                    <input matInput placeholder="Número a agregar" [(ngModel)]="newPhoneNumber"
+                                        (keyup.enter)="addNumber()">
+                                </mat-form-field>
+                                <button title="Agregar teléfono" mat-button type="button" (click)="addNumber()">
+                                    <mat-icon>contact_phone</mat-icon>
+                                </button>
+                            </div>
                         </div>
 
                         <!-- Columna derecha -->
-                        <div *ngIf="phonesNumber.length > 0" class="line-shadow">
+                        <div class="line-shadow" style="flex: 1; padding: 10px;">
                             <mat-label>Teléfonos</mat-label>
                             <mat-list role="list" style="height: 100px;">
+                                <mat-list-item  *ngIf="phonesNumber.length == 0" role="listitem">
+                                    No hay números
+                                </mat-list-item>
                                 <mat-list-item *ngFor="let phone of phonesNumber" role="listitem">
                                     {{ phone }}
                                 </mat-list-item>
                             </mat-list>
                         </div>
 
+                        <div>
+                            <table mat-table [dataSource]="dataSource" *ngIf="branches.length > 0"
+                                style="margin: 10px;">
+
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>Sucursal</th>
+                                    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="street">
+                                    <th mat-header-cell *matHeaderCellDef>Calle</th>
+                                    <td mat-cell *matCellDef="let element">{{element.address.street}}</td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="number">
+                                    <th mat-header-cell *matHeaderCellDef>N°</th>
+                                    <td mat-cell *matCellDef="let element">{{element.address.number}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="floor">
+                                    <th mat-header-cell *matHeaderCellDef>Piso</th>
+                                    <td mat-cell *matCellDef="let element">{{element.address.floor}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="zipcode">
+                                    <th mat-header-cell *matHeaderCellDef>C.P.</th>
+                                    <td mat-cell *matCellDef="let element">{{element.address.zipcode}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="apartment">
+                                    <th mat-header-cell *matHeaderCellDef>Depto.</th>
+                                    <td mat-cell *matCellDef="let element">{{element.address.apartment}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="city">
+                                    <th mat-header-cell *matHeaderCellDef>Ciudad</th>
+                                    <td mat-cell *matCellDef="let element">{{element.address.city}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef>Accion</th>
+                                    <td mat-cell *matCellDef="let element"><mat-icon
+                                            (click)="eliminarSucursal(element)">delete</mat-icon></td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                -
+                            </table>
+                        </div>
                     </div>
-                    <button mat-raised-button color="primary"(click)="addContactToBranch()"><mat-icon>add</mat-icon></button>
+                    <button mat-raised-button color="primary"
+                        (click)="addContactToBranch()"><mat-icon>add</mat-icon></button>
 
                 </mat-tab>
             </mat-tab-group>
