@@ -216,6 +216,7 @@
                         <mat-label style="margin-top: 10px;" *ngIf="contactsList.length == 0">
 
                             No hay contactos</mat-label>
+                            {{ contactsList | json}}
                         <table mat-table [dataSource]="dataSourceContact" *ngIf="contactsList.length > 0"
                             style="margin: 10px;">
 
@@ -246,7 +247,7 @@
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumnsContact"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumnsContact;"></tr>
-                            -
+                            
                         </table>
                     </div>
 
