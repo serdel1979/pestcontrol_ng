@@ -120,7 +120,6 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       this.dataSource.data = this.branches;
       this.branchForm.reset();
       this.clearFormErrors(this.branchForm);
-
     }
   }
 
@@ -134,8 +133,9 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   addContactToBranch(){
     console.log(this.branchSelected);
-    this.branchSelected.contacts.push(this.contactForm.value)
-    this.contactsList.push(this.contactForm.value)
+    this.branchSelected.contacts.push(this.contactForm.value);
+    this.contactsList.push(this.contactForm.value);
+    this.phonesNumber = [];
     console.log(this.contactsList);
   }
 
@@ -272,6 +272,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     phonesArray.push(this.fb.control(this.newPhoneNumber));
 
     this.newPhoneNumber = '';
+    
   }
 
 

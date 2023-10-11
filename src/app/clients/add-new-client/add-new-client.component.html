@@ -210,10 +210,12 @@
                     <div>
 
                         <button mat-raised-button color="primary"
-                        (click)="addContactToBranch()"><mat-icon>add</mat-icon></button>
+                            (click)="addContactToBranch()"><mat-icon>add</mat-icon></button>
 
+                        <br>
+                        <mat-label style="margin-top: 10px;" *ngIf="contactsList.length == 0">
 
-                        <mat-label *ngIf="contactsList.length == 0">No hay contactos</mat-label>
+                            No hay contactos</mat-label>
                         <table mat-table [dataSource]="dataSourceContact" *ngIf="contactsList.length > 0"
                             style="margin: 10px;">
 
