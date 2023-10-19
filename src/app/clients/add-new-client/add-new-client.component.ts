@@ -81,6 +81,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.subscribeToInputChanges();
     this.subscribeToInputChangesBranche();
+    this.subscribeToInputChangesContact();
   }
 
 
@@ -136,8 +137,19 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.branchSelected.contacts.push(this.contactForm.value);
     this.contactsList.push(this.contactForm.value);
     this.phonesNumber = [];
+    this.contactForm.reset();
+    this.clearFormErrors(this.contactForm);
     console.log(this.contactsList);
   }
+
+
+  handleKeyDown(event: KeyboardEvent, branch: any) {
+    if (event.key === ' ' || event.key === 'Spacebar' || event.keyCode === 32) {
+      console.log(branch);
+      this.selectedBranch(branch); 
+    }
+  }
+
 
   clearFormErrors(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(key => {
@@ -221,6 +233,25 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     inputFields.forEach(fieldName => {
       const control = this.branchForm.get(fieldName);
 
+      if (control) {
+        control.valueChanges.pipe(
+          debounceTime(200)
+        ).subscribe(newValue => {
+          if (newValue) {
+            const uppercaseValue = newValue.toUpperCase();
+            if (uppercaseValue !== control.value) {
+              control.setValue(uppercaseValue, { emitEvent: false });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  private subscribeToInputChangesContact() {
+    const inputFields = ['name', 'surname', 'email'];
+    inputFields.forEach(fieldName => {
+      const control = this.contactForm.get(fieldName);
       if (control) {
         control.valueChanges.pipe(
           debounceTime(200)
