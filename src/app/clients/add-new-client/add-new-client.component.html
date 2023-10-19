@@ -131,7 +131,7 @@
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef>Accion</th>
                                     <td mat-cell *matCellDef="let element"><mat-icon
-                                            (click)="eliminarSucursal(element)">delete</mat-icon></td>
+                                            (click)="deletBranch(element)">delete</mat-icon></td>
                                 </ng-container>
     
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -222,19 +222,16 @@
                         <div *ngIf="contactsList.length > 0" style="margin: 10px;">
                             <table mat-table [dataSource]="dataSourceContact">
 
-                                <!-- Name Column -->
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef>Nombre</th>
                                     <td mat-cell *matCellDef="let element">{{element.name}}</td>
                                 </ng-container>
 
-                                <!-- Weight Column -->
                                 <ng-container matColumnDef="surname">
                                     <th mat-header-cell *matHeaderCellDef>Apellido</th>
                                     <td mat-cell *matCellDef="let element">{{element.surname}}</td>
                                 </ng-container>
 
-                                <!-- Symbol Column -->
                                 <ng-container matColumnDef="email">
                                     <th mat-header-cell *matHeaderCellDef>Email</th>
                                     <td mat-cell *matCellDef="let element">{{element.email}}</td>
@@ -243,7 +240,7 @@
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef>Accion</th>
                                     <td mat-cell *matCellDef="let element"><mat-icon
-                                            (click)="eliminarSucursal(element)">delete</mat-icon></td>
+                                            (click)="deletBranch(element)">delete</mat-icon></td>
                                 </ng-container>
 
                                 <tr mat-header-row *matHeaderRowDef="displayedColumnsContact"></tr>
