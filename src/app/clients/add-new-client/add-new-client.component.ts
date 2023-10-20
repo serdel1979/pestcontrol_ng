@@ -133,12 +133,13 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
   addContactToBranch(){
-    console.log(this.branchSelected);
     this.branchSelected.contacts.push(this.contactForm.value);
     this.contactsList.push(this.contactForm.value);
     this.phonesNumber = [];
     this.contactForm.reset();
     this.clearFormErrors(this.contactForm);
+    this.dataSourceContact.data = this.contactsList;
+    console.log(this.branchSelected);
     console.log(this.contactsList);
   }
 

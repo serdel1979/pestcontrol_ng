@@ -136,7 +136,7 @@
     
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                -
+                                
                             </table>
                         </div>
 
@@ -210,9 +210,8 @@
                     </div>
                     <div>
 
-                        <button mat-raised-button color="primary"
+                        <button mat-raised-button color="primary" [disabled]="!contactForm.valid || !contactForm.touched"
                             (click)="addContactToBranch()"><mat-icon>add</mat-icon></button>
-
                         <br>
 
                         <div style="margin: 10px;" *ngIf="contactsList.length == 0">
