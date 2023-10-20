@@ -139,14 +139,11 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.contactForm.reset();
     this.clearFormErrors(this.contactForm);
     this.dataSourceContact.data = this.contactsList;
-    console.log(this.branchSelected);
-    console.log(this.contactsList);
   }
 
 
   handleKeyDown(event: KeyboardEvent, branch: any) {
     if (event.key === ' ' || event.key === 'Spacebar' || event.keyCode === 32) {
-      console.log(branch);
       this.selectedBranch(branch); 
     }
   }
