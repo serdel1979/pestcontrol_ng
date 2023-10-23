@@ -137,8 +137,10 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.contactsList.push(this.contactForm.value);
     this.phonesNumber = [];
     this.contactForm.reset();
+    this.resetListNumber();
     this.clearFormErrors(this.contactForm);
     this.dataSourceContact.data = this.contactsList;
+    console.log(this.branches);
   }
 
 
@@ -289,6 +291,12 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
 
+  resetListNumber(){
+    const phonesArray = this.contactForm.get('phones') as FormArray;
+    while (phonesArray.length > 0) {
+      phonesArray.removeAt(0);
+    }
+  }
 
   addNumber(){
     if(this.newPhoneNumber == ''){
