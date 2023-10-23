@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +13,14 @@ import { ClientService } from 'src/app/services/client.service';
 @Component({
   selector: 'app-add-new-client',
   templateUrl: './add-new-client.component.html',
-  styleUrls: ['./add-new-client.component.css']
+  styleUrls: ['./add-new-client.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AddNewClientComponent implements OnDestroy, OnInit {
 
@@ -67,6 +75,8 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   displayedColumnsContact: string[] = ['name', 'surname', 'email', 'action'];
   public dataSourceContact = new MatTableDataSource<any>();
+  columnsToDisplayWithExpand = [...this.displayedColumnsContact, 'expand'];
+  expandedElement: any | null;
 
 
 
@@ -140,7 +150,6 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.resetListNumber();
     this.clearFormErrors(this.contactForm);
     this.dataSourceContact.data = this.contactsList;
-    console.log(this.branches);
   }
 
 
