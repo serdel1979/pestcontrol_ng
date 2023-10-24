@@ -87,7 +87,7 @@
                         <div *ngIf="branches.length == 0" style="margin: 10px;">
                             <mat-label>No hay sucursales agregadas</mat-label>
                         </div>
-                        
+
                         <div *ngIf="branches.length > 0" style="margin: 10px;">
                             <table mat-table [dataSource]="dataSource">
                                 <!-- Name Column -->
@@ -95,48 +95,48 @@
                                     <th mat-header-cell *matHeaderCellDef>Sucursal</th>
                                     <td mat-cell *matCellDef="let element">{{element.name}}</td>
                                 </ng-container>
-    
+
                                 <!-- Weight Column -->
                                 <ng-container matColumnDef="street">
                                     <th mat-header-cell *matHeaderCellDef>Calle</th>
                                     <td mat-cell *matCellDef="let element">{{element.address.street}}</td>
                                 </ng-container>
-    
+
                                 <!-- Symbol Column -->
                                 <ng-container matColumnDef="number">
                                     <th mat-header-cell *matHeaderCellDef>N°</th>
                                     <td mat-cell *matCellDef="let element">{{element.address.number}}</td>
                                 </ng-container>
-    
+
                                 <ng-container matColumnDef="floor">
                                     <th mat-header-cell *matHeaderCellDef>Piso</th>
                                     <td mat-cell *matCellDef="let element">{{element.address.floor}}</td>
                                 </ng-container>
-    
+
                                 <ng-container matColumnDef="zipcode">
                                     <th mat-header-cell *matHeaderCellDef>C.P.</th>
                                     <td mat-cell *matCellDef="let element">{{element.address.zipcode}}</td>
                                 </ng-container>
-    
+
                                 <ng-container matColumnDef="apartment">
                                     <th mat-header-cell *matHeaderCellDef>Depto.</th>
                                     <td mat-cell *matCellDef="let element">{{element.address.apartment}}</td>
                                 </ng-container>
-    
+
                                 <ng-container matColumnDef="city">
                                     <th mat-header-cell *matHeaderCellDef>Ciudad</th>
                                     <td mat-cell *matCellDef="let element">{{element.address.city}}</td>
                                 </ng-container>
-    
+
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef>Accion</th>
                                     <td mat-cell *matCellDef="let element"><mat-icon
                                             (click)="deletBranch(element)">delete</mat-icon></td>
                                 </ng-container>
-    
+
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                
+
                             </table>
                         </div>
 
@@ -210,7 +210,8 @@
                     </div>
                     <div>
 
-                        <button mat-raised-button color="primary" [disabled]="!contactForm.valid || !contactForm.touched"
+                        <button mat-raised-button color="primary"
+                            [disabled]="!contactForm.valid || !contactForm.touched"
                             (click)="addContactToBranch()"><mat-icon>add</mat-icon></button>
                         <br>
 
@@ -243,41 +244,48 @@
 
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef>Accion</th>
-                                    <td mat-cell *matCellDef="let element"><mat-icon
-                                            (click)="deletBranch(element)">delete</mat-icon></td>
+                                    <td mat-cell *matCellDef="let element">
+                                        <mat-icon
+                                            (click)="deletContact(element); $event.stopPropagation()">delete</mat-icon>
+                                    </td>
+
                                 </ng-container>
 
                                 <ng-container matColumnDef="expand">
                                     <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
                                     <td mat-cell *matCellDef="let element">
-                                      <button mat-icon-button aria-label="expand row"
-                                        (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
-                                        <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                                        <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
-                                      </button>
+                                        <button mat-icon-button aria-label="expand row"
+                                            (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+                                            <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                                            <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                                        </button>
                                     </td>
-                                  </ng-container>
+                                </ng-container>
 
-                                  <ng-container matColumnDef="expandedDetail">
-                                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-                                      <div class="example-element-detail"
-                                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                        <mat-list>
-                                          <mat-list-item *ngIf="element.phones.length == 0">No hay números</mat-list-item>
-                                          <mat-list-item *ngFor="let number of element.phones">
-                                              Cel.  {{ number }}
-                                          </mat-list-item>
-                                        </mat-list>
-                                      </div>
+                                <ng-container matColumnDef="expandedDetail">
+                                    <td mat-cell *matCellDef="let element"
+                                        [attr.colspan]="columnsToDisplayWithExpand.length">
+                                        <div class="example-element-detail"
+                                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                            <mat-list>
+                                                <mat-list-item *ngIf="element.phones.length == 0">No hay
+                                                    números</mat-list-item>
+                                                <mat-list-item *ngFor="let number of element.phones">
+                                                    Cel. {{ number }}
+                                                </mat-list-item>
+                                            </mat-list>
+                                        </div>
                                     </td>
-                                  </ng-container>
+                                </ng-container>
 
                                 <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-                                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
-                                  [class.example-expanded-row]="expandedElement === element"
-                                  (click)="expandedElement = expandedElement === element ? null : element">
+                                <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+                                    class="example-element-row"
+                                    [class.example-expanded-row]="expandedElement === element"
+                                    (click)="expandedElement = expandedElement === element ? null : element">
                                 </tr>
-                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                    class="example-detail-row"></tr>
 
                             </table>
                         </div>
@@ -288,9 +296,17 @@
                 </mat-tab>
             </mat-tab-group>
         </div>
-        <button [disabled]="!clientForm.valid || sending" mat-raised-button color="primary"
+        <button [disabled]="!clientForm.valid || 
+        ((!branchForm.valid) && (branchForm.touched)) || ((!contactForm.valid)&&(contactForm.touched)) ||
+        sending" mat-raised-button color="primary"
             (click)="save()"><mat-icon>save</mat-icon></button>
         <button mat-raised-button color="secundary" (click)="back()"
             style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
     </mat-card-content>
+    {{ branchForm.valid | json}} - {{ branchForm.touched | json }}
+    {{ contactForm.valid | json }} - {{ contactForm.touched | json}}
+    ---------------
+    {{ !clientForm.valid || 
+        ((!branchForm.valid) && (branchForm.touched)) || ((!contactForm.valid)&&(contactForm.touched)) ||
+        sending }}
 </mat-card>

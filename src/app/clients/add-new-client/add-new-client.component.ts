@@ -156,7 +156,6 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.resetListNumber();
     this.clearFormErrors(this.contactForm);
     this.dataSourceContact.data = this.contactsList;
-    console.log(this.contactsList);
   }
 
 
@@ -185,7 +184,22 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
 
-  save() {
+
+  save(){
+    this.sending = true;
+    const client = this.clientForm.value;
+    const branches = this.branches;
+    const contacts = this.contactsList;
+    const data = {
+      client, branches, contacts
+    }
+
+    console.log('enviar -> ',data);
+  }
+
+
+
+  saveOld() {
     this.sending = true;
     if (this.branchForm.valid && this.branchForm.touched) {
       this.alertDialogService.openAlertDialog('Tiene datos sin guardar');
@@ -282,6 +296,16 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       }
     });
   }
+
+
+  deletContact(element:any){
+    const index = this.contactsList.indexOf(element);
+    if (index !== -1) {
+      this.contactsList.splice(index, 1);
+      this.dataSourceContact = new MatTableDataSource(this.contactsList);
+    }
+  }
+
 
   deletBranch(element:any){
     const index = this.branches.indexOf(element);
