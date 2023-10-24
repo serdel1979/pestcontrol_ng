@@ -42,6 +42,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     name: ['', Validators.required],
     surname: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    businessName: ['', Validators.required],
     phones: this.fb.array([])
   })
 
@@ -73,10 +74,11 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
   public dataSource = new MatTableDataSource<any>();
 
-  displayedColumnsContact: string[] = ['name', 'surname', 'email', 'action'];
-  public dataSourceContact = new MatTableDataSource<any>();
+  displayedColumnsContact: string[] = ['name', 'surname', 'email', 'branch', 'action'];
   columnsToDisplayWithExpand = [...this.displayedColumnsContact, 'expand'];
   expandedElement: any | null;
+  public dataSourceContact = new MatTableDataSource<any>();
+
 
 
 
@@ -135,11 +137,15 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
   selectedBranch(branch: any){
+    const businessNameValue = branch.name;
+    this.contactForm.patchValue({
+      businessName: businessNameValue
+    });
     if (this.contactForm.valid){
       //branch.contacts.push(this.contactForm.value)
       this.branchSelected = branch;
     }
-   // console.log(branch);
+    
   }
 
   addContactToBranch(){
@@ -150,6 +156,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.resetListNumber();
     this.clearFormErrors(this.contactForm);
     this.dataSourceContact.data = this.contactsList;
+    console.log(this.contactsList);
   }
 
 

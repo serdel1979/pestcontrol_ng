@@ -219,7 +219,7 @@
                                 No hay contactos agregados</mat-label>
                         </div>
                         <div *ngIf="contactsList.length > 0" style="margin: 10px;">
-                            <table mat-table [dataSource]="dataSourceContact">
+                            <table mat-table [dataSource]="dataSourceContact" multiTemplateDataRows>
 
                                 <ng-container matColumnDef="name">
                                     <th mat-header-cell *matHeaderCellDef>Nombre</th>
@@ -234,6 +234,17 @@
                                 <ng-container matColumnDef="email">
                                     <th mat-header-cell *matHeaderCellDef>Email</th>
                                     <td mat-cell *matCellDef="let element">{{element.email}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="branch">
+                                    <th mat-header-cell *matHeaderCellDef>Sucursal</th>
+                                    <td mat-cell *matCellDef="let element">{{element.businessName}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef>Accion</th>
+                                    <td mat-cell *matCellDef="let element"><mat-icon
+                                            (click)="deletBranch(element)">delete</mat-icon></td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="expand">
@@ -252,26 +263,14 @@
                                       <div class="example-element-detail"
                                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                                         <mat-list>
-                                          <mat-list-item *ngIf="element.phonesNumber.length == 0">No hay números</mat-list-item>
-                                          <mat-list-item *ngFor="let number of element.phonesNumber">
-                                                {{ number }}
+                                          <mat-list-item *ngIf="element.phones.length == 0">No hay números</mat-list-item>
+                                          <mat-list-item *ngFor="let number of element.phones">
+                                              Cel.  {{ number }}
                                           </mat-list-item>
-                                          <mat-list-item><mat-icon title="Agrega una sucursal">add</mat-icon></mat-list-item>
                                         </mat-list>
                                       </div>
                                     </td>
                                   </ng-container>
-
-                                <ng-container matColumnDef="action">
-                                    <th mat-header-cell *matHeaderCellDef>Accion</th>
-                                    <td mat-cell *matCellDef="let element"><mat-icon
-                                            (click)="deletBranch(element)">delete</mat-icon></td>
-                                </ng-container>
-
-                                <!--
-                                <tr mat-header-row *matHeaderRowDef="displayedColumnsContact"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumnsContact;"></tr> -->
-
 
                                 <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
                                 <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
