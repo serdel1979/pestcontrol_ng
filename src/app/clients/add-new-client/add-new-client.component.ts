@@ -380,7 +380,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
         const phonesArray = this.contactForm.get('phones') as FormArray;
     
-        phonesArray.push(this.fb.control(this.newPhoneNumber));
+        phonesArray.push(this.fb.control(phoneNumberLong));
     
         this.newPhoneNumber = '';
     } else {
