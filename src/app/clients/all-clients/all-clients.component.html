@@ -19,56 +19,34 @@
       <div *ngIf="!load">
         <div [hidden]="clients.length == 0" style="display: flex; flex-direction: column;">
 
-          <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
 
+          <table mat-table [dataSource]="dataSource">
 
             <ng-container matColumnDef="businessName">
               <th mat-header-cell *matHeaderCellDef> Empresa </th>
               <td mat-cell *matCellDef="let element"> {{element.businessName}} </td>
             </ng-container>
+
             <ng-container matColumnDef="cuit">
               <th mat-header-cell *matHeaderCellDef> Cuit </th>
               <td mat-cell *matCellDef="let element"> {{element.cuit}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="expand">
-              <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+            <ng-container matColumnDef="detail">
+              <th mat-header-cell *matHeaderCellDef> Detalle </th>
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button aria-label="expand row"
-                  (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
-                  <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
-                  <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                <button mat-icon-button>
+                  <mat-icon title="Ver datos">keyboard_arrow_right</mat-icon>
                 </button>
               </td>
             </ng-container>
 
 
-            <ng-container matColumnDef="expandedDetail">
-              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
-                <div class="example-element-detail"
-                  [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                  <mat-list>
-                    <mat-list-item *ngIf="element.branches.length == 0">No hay sucursales</mat-list-item>
-                    <mat-list-item *ngFor="let br of element.branches">
-                      Sucursal {{br.name}}, calle {{br.address.street}}, N° {{ br.address.number }}, Depto. {{br.address.floor}}- CP {{br.address.zipCode}}, {{br.address.city}}
-                      <mat-icon title="Contactos de la sucursal" (click)="branch(br.name)">perm_contact_calendar</mat-icon>
-                    </mat-list-item>
-                    <mat-list-item><mat-icon title="Agrega una sucursal">add</mat-icon></mat-list-item>
-                  </mat-list>
-                </div>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
-              [class.example-expanded-row]="expandedElement === element"
-              (click)="expandedElement = expandedElement === element ? null : element">
-            </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-
-
-
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+
+
 
           <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
 

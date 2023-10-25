@@ -29,8 +29,7 @@ export class AllClientsComponent implements OnInit {
   currentPage: number = 1;
   pageSizeOptions: number[] = [5, 10, 25];
 
-  public displayedColumns: string[] = ['businessName', 'cuit'];
-  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  public displayedColumns: string[] = ['businessName', 'cuit', 'detail'];
 
   expandedElement: any | null;
   public dataSource = new MatTableDataSource<Client>(); // Inicializa el dataSource vacío

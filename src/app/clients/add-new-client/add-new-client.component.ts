@@ -16,8 +16,8 @@ import { ClientService } from 'src/app/services/client.service';
   styleUrls: ['./add-new-client.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -136,19 +136,19 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     }
   }
 
-  selectedBranch(branch: any){
+  selectedBranch(branch: any) {
     const businessNameValue = branch.name;
     this.contactForm.patchValue({
       businessName: businessNameValue
     });
-    if (this.contactForm.valid){
+    if (this.contactForm.valid) {
       //branch.contacts.push(this.contactForm.value)
       this.branchSelected = branch;
     }
-    
+
   }
 
-  addContactToBranch(){
+  addContactToBranch() {
     this.branchSelected.contacts.push(this.contactForm.value);
     this.contactsList.push(this.contactForm.value);
     this.phonesNumber = [];
@@ -161,7 +161,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   handleKeyDown(event: KeyboardEvent, branch: any) {
     if (event.key === ' ' || event.key === 'Spacebar' || event.keyCode === 32) {
-      this.selectedBranch(branch); 
+      this.selectedBranch(branch);
     }
   }
 
@@ -185,7 +185,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
 
 
-  save(){
+  save() {
     this.sending = true;
     const client = this.clientForm.value;
     const branches = this.branches;
@@ -194,7 +194,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       client, branches, contacts
     }
 
-    console.log('enviar -> ',data);
+    console.log('enviar -> ', data);
   }
 
 
@@ -219,12 +219,12 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       },
         (err) => {
           this.sending = false;
-          if(err.status == 400){
+          if (err.status == 400) {
             this.alertDialogService.openAlertDialog(err.error);
-          }else{
+          } else {
             this.alertDialogService.openAlertDialog("Error desconocido");
           }
-          
+
         })
 
   }
@@ -298,7 +298,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
 
-  deletContact(element:any){
+  deletContact(element: any) {
     const index = this.contactsList.indexOf(element);
     if (index !== -1) {
       this.contactsList.splice(index, 1);
@@ -307,7 +307,11 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   }
 
 
-  deletBranch(element:any){
+  deletBranch(element: any) {
+    if (this.branchInContact(element.name)) {
+      this.alertDialogService.openAlertDialog('Ésta sucursal está agregada a un cliente');
+      return;
+    }
     const index = this.branches.indexOf(element);
     if (index !== -1) {
       this.branches.splice(index, 1);
@@ -315,8 +319,19 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     }
   }
 
+  branchInContact(name: string): boolean {
+    for (const el of this.contactsList) {
+      if (el.businessName === name) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-  saveContact(){
+
+
+
+  saveContact() {
 
   }
 
@@ -324,22 +339,22 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     return this.contactForm.get('phones') as FormArray;
   }
 
-  delPhone(i:number){
+  delPhone(i: number) {
     if (i >= 0 && i < this.phonesNumber.length) {
       this.phonesNumber.splice(i, 1); // Elimina 1 elemento en la posición i
-    } 
+    }
   }
 
 
-  resetListNumber(){
+  resetListNumber() {
     const phonesArray = this.contactForm.get('phones') as FormArray;
     while (phonesArray.length > 0) {
       phonesArray.removeAt(0);
     }
   }
 
-  addNumber(){
-    if(this.newPhoneNumber == ''){
+  addNumber() {
+    if (this.newPhoneNumber == '') {
       return;
     }
     this.phonesNumber.push(this.newPhoneNumber);
@@ -349,7 +364,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     phonesArray.push(this.fb.control(this.newPhoneNumber));
 
     this.newPhoneNumber = '';
-    
+
   }
 
 
