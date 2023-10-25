@@ -19,6 +19,10 @@ export class ClientService {
     return this.http.post<any>(`${this.baseUrl}/clients/new`,values);
   }
 
+  addClientData(values:any){
+    return this.http.post<any>(`${this.baseUrl}/clients/newclient`,values);
+  }
+
   addBranch(branch:any){
     return this.http.post(`${this.baseUrl}/clients/newbranch`,branch);
   }

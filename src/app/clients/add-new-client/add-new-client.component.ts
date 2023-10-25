@@ -189,12 +189,27 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     this.sending = true;
     const client = this.clientForm.value;
     const branches = this.branches;
-    const contacts = this.contactsList;
+    //const contacts = this.contactsList;
     const data = {
-      client, branches, contacts
+      client, branches
     }
 
-    console.log('enviar -> ', data);
+    console.log(data);
+
+    this.clients.addClientData(data)
+    .subscribe(res => {
+      this.sending = false;
+     // this.router.navigate(['/clients/newclient']);
+      },
+      (err) => {
+        this.sending = false;
+        if (err.status == 400) {
+          this.alertDialogService.openAlertDialog(err.error);
+        } else {
+          this.alertDialogService.openAlertDialog("Error desconocido");
+        }
+
+      })
   }
 
 
@@ -357,13 +372,21 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     if (this.newPhoneNumber == '') {
       return;
     }
-    this.phonesNumber.push(this.newPhoneNumber);
+    const phoneNumberString = this.newPhoneNumber;
+    const phoneNumberLong = parseInt(phoneNumberString, 10);
 
-    const phonesArray = this.contactForm.get('phones') as FormArray;
+    if (!isNaN(phoneNumberLong)) {
+        this.phonesNumber.push(this.newPhoneNumber);
 
-    phonesArray.push(this.fb.control(this.newPhoneNumber));
-
-    this.newPhoneNumber = '';
+        const phonesArray = this.contactForm.get('phones') as FormArray;
+    
+        phonesArray.push(this.fb.control(this.newPhoneNumber));
+    
+        this.newPhoneNumber = '';
+    } else {
+        console.error("La cadena no es un número válido en formato long.");
+    }
+    
 
   }
 
