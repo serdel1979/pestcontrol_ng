@@ -131,9 +131,8 @@
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef>Accion</th>
                                     <td mat-cell *matCellDef="let element">
-                                        <button mat-icon-button>
-                                        <mat-icon title="No guardar ésta sucursal"
-                                            (click)="deletBranch(element)">delete</mat-icon>
+                                        <button mat-icon-button (click)="deletBranch(element)">
+                                            <mat-icon title="No guardar ésta sucursal">delete</mat-icon>
                                         </button>
                                     </td>
                                 </ng-container>
@@ -181,7 +180,7 @@
                                     <mat-label>Cliente</mat-label>
                                     <mat-select>
                                         <mat-option [value]="branch.name" *ngFor="let branch of branches"
-                                            (click)="selectedBranch(branch)" (keydown)="handleKeyDown($event, branch)">
+                                            (click)="selectedBranch(branch)" (keyup.enter)="selectedBranch(branch)" (keydown)="handleKeyDown($event, branch)">
                                             {{ branch.name }}
                                         </mat-option>
                                     </mat-select>
@@ -249,9 +248,9 @@
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef>Accion</th>
                                     <td mat-cell *matCellDef="let element">
-                                        <button mat-icon-button>
-                                            <mat-icon title="No guardar éste contacto"
-                                                (click)="deletContact(element); $event.stopPropagation()">delete</mat-icon>
+                                        <button mat-icon-button
+                                            (click)="deletContact(element); $event.stopPropagation()">
+                                            <mat-icon title="No guardar éste contacto">delete</mat-icon>
                                         </button>
                                     </td>
 
@@ -277,7 +276,7 @@
                                                 <mat-list-item *ngIf="element.phones.length == 0">No hay
                                                     números</mat-list-item>
                                                 <mat-list-item *ngFor="let number of element.phones">
-                                                    Cel. {{ number }}
+                                                    Tel. {{ number }}
                                                 </mat-list-item>
                                             </mat-list>
                                         </div>
