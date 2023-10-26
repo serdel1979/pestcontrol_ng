@@ -71,6 +71,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   branchSelected!: any;
 
+
   displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
   public dataSource = new MatTableDataSource<any>();
 
@@ -150,6 +151,11 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   addContactToBranch() {
     this.branchSelected.contacts.push(this.contactForm.value);
+    const businessNameValue = this.branchSelected.name;
+    this.contactForm.patchValue({
+      businessName: businessNameValue
+    });
+
     this.contactsList.push(this.contactForm.value);
     this.phonesNumber = [];
     this.contactForm.reset();
@@ -194,12 +200,12 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       client, branches
     }
 
-    console.log(data);
 
     this.clients.addClientData(data)
     .subscribe(res => {
       this.sending = false;
      // this.router.navigate(['/clients/newclient']);
+        console.log(res);
       },
       (err) => {
         this.sending = false;
@@ -214,35 +220,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
 
 
-  saveOld() {
-    this.sending = true;
-    if (this.branchForm.valid && this.branchForm.touched) {
-      this.alertDialogService.openAlertDialog('Tiene datos sin guardar');
-      this.sending = false;
-      return;
-    }
 
-    this.saved = true;
-    const clientNew = {
-      client: this.clientForm.value,
-      branches: this.branches
-    }
-    this.clients.newClient(clientNew)
-      .subscribe(res => {
-        this.sending = false;
-        this.router.navigate(['/clients/allclients']);
-      },
-        (err) => {
-          this.sending = false;
-          if (err.status == 400) {
-            this.alertDialogService.openAlertDialog(err.error);
-          } else {
-            this.alertDialogService.openAlertDialog("Error desconocido");
-          }
-
-        })
-
-  }
 
   toggleFormAndTable() {
     this.showFormAndTable = !this.showFormAndTable;
@@ -316,6 +294,12 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   deletContact(element: any) {
     const index = this.contactsList.indexOf(element);
     if (index !== -1) {
+
+      const emailToRemove = element.email; 
+
+      this.branchSelected.contacts = this.branchSelected.contacts.filter((contact: { email: string; }) => contact.email !== emailToRemove);
+
+
       this.contactsList.splice(index, 1);
       this.dataSourceContact = new MatTableDataSource(this.contactsList);
     }
@@ -374,24 +358,25 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     }
     const phoneNumberString = this.newPhoneNumber;
     const phoneNumberLong = parseInt(phoneNumberString, 10);
-
+  
     if (!isNaN(phoneNumberLong)) {
-        this.phonesNumber.push(this.newPhoneNumber);
-
-        const phonesArray = this.contactForm.get('phones') as FormArray;
-    
-        const objPhone = {  //creo el objeto phone esperado en backend
-          number : this.fb.control(phoneNumberLong)
-        }
-        phonesArray.push(objPhone);
-    
-        this.newPhoneNumber = '';
+      this.phonesNumber.push(this.newPhoneNumber);
+      const phonesArray = this.contactForm.get('phones') as FormArray;
+  
+      // Crear un FormGroup que contenga el número de teléfono
+      const phoneFormGroup = this.fb.group({
+        number: phoneNumberLong
+      });
+  
+      // Agregar el FormGroup al FormArray
+      phonesArray.push(phoneFormGroup);
+  
+      this.newPhoneNumber = '';
     } else {
-        console.error("La cadena no es un número válido en formato long.");
+      console.error("La cadena no es un número válido en formato long.");
     }
-    
-
   }
+  
 
 
 }
