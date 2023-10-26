@@ -205,7 +205,7 @@
                                     No hay números
                                 </mat-list-item>
                                 <mat-list-item *ngFor="let phone of phonesNumber; let i = index" role="listitem">
-                                    <div> {{ phone }} <mat-icon (click)="delPhone(i)">delete</mat-icon> </div>
+                                    <div> {{ phone }} <mat-icon (click)="delPhone(i)" style="margin-right: 5px;">delete</mat-icon> </div>
                                 </mat-list-item>
                             </mat-list>
                         </div>
