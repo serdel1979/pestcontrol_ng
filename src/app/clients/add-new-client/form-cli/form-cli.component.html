@@ -1,0 +1,14 @@
+<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" fxFlex.gt-xs="50%" fxFlex.gt-sm="40%" fxFlex.gt-md="30%"
+    fxFlex.gt-lg="20%">
+    <mat-form-field style="margin: 10px; display: block;">
+        <input matInput placeholder="Nombre de la empresa" formControlName="businessName">
+        <mat-error *ngIf="clientForm.get('businessName')?.hasError('required')">Debe especificar un
+            nombre</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="margin: 10px; display: block;">
+        <input matInput placeholder="CUIT" formControlName="cuit" (keyup.enter)="onSubmit()">
+        <mat-error *ngIf="clientForm.get('cuit')?.hasError('required')">Debe especificar el
+            cuit</mat-error>
+    </mat-form-field>
+</form>

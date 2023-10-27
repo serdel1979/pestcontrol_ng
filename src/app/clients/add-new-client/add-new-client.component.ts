@@ -118,6 +118,10 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     }
   }
 
+  changeTab(index: number) {
+    this.tabGroup.selectedIndex = index;
+  }
+
   submitContact() {
     if (this.contactForm.valid) {
       this.tabGroup.selectedIndex = 3;

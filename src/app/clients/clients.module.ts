@@ -12,6 +12,9 @@ import { AddContactComponent } from '../contacts/add-contact/add-contact.compone
 import { BranchesComponent } from './branches/branches.component';
 import { AddNewClientComponent } from './add-new-client/add-new-client.component';
 import { savedGuard } from '../guards/saved.guard';
+import { FormCliComponent } from './add-new-client/form-cli/form-cli.component';
+import { FormBranchComponent } from './add-new-client/form-branch/form-branch.component';
+import { TableBranchComponent } from './add-new-client/table-branch/table-branch.component';
 
 
 const routes: Routes = [
@@ -32,7 +35,10 @@ const routes: Routes = [
     SeeDetailComponent,
     AddBranchComponent,
     BranchesComponent,
-    AddNewClientComponent
+    AddNewClientComponent,
+    FormCliComponent,
+    FormBranchComponent,
+    TableBranchComponent
   ],
   imports: [
     CommonModule,

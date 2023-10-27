@@ -1,0 +1,53 @@
+<form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+    <div style="display: inline-block; margin: 5px;">
+        <mat-form-field>
+            <input matInput placeholder="Nombre de la sucursal" formControlName="name">
+            <mat-error *ngIf="branchForm.get('name')?.hasError('required')">Debe especificar un
+                nombre</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div style="display: inline-block; margin: 5px;">
+        <div formGroupName="address">
+            <mat-form-field style="margin: 5px;">
+                <input matInput placeholder="Calle" formControlName="street">
+                <mat-error *ngIf="branchForm.get('address.street')?.hasError('required')">Debe
+                    especificar la calle</mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 5px;">
+                <input matInput placeholder="Número" formControlName="number">
+                <mat-error *ngIf="branchForm.get('address.number')?.hasError('required')">Debe
+                    especificar el número</mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 5px;">
+                <input matInput placeholder="Piso" formControlName="floor">
+                <mat-error *ngIf="branchForm.get('address.floor')?.hasError('required')">Debe
+                    especificar el piso</mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 5px;">
+                <input matInput placeholder="Código Postal" formControlName="zipcode">
+                <mat-error *ngIf="branchForm.get('address.zipcode')?.hasError('required')">Debe
+                    especificar el código postal</mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 5px;">
+                <input matInput placeholder="Departamento" formControlName="apartment">
+                <mat-error *ngIf="branchForm.get('address.apartment')?.hasError('required')">Debe
+                    especificar el departamento</mat-error>
+            </mat-form-field>
+
+            <mat-form-field style="margin: 5px;">
+                <input matInput placeholder="Ciudad" formControlName="city">
+                <mat-error *ngIf="branchForm.get('address.city')?.hasError('required')">Debe
+                    especificar la ciudad</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <button [disabled]="!branchForm.valid || !branchForm.touched" mat-raised-button color="primary"
+        style="display: block; margin-top: 20px;" (click)="addBranch.emit();"><mat-icon>add</mat-icon></button>
+
+</form>
