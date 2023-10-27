@@ -15,6 +15,7 @@ import { savedGuard } from '../guards/saved.guard';
 import { FormCliComponent } from './add-new-client/form-cli/form-cli.component';
 import { FormBranchComponent } from './add-new-client/form-branch/form-branch.component';
 import { TableBranchComponent } from './add-new-client/table-branch/table-branch.component';
+import { FormContactComponent } from './add-new-client/form-contact/form-contact.component';
 
 
 const routes: Routes = [
@@ -38,7 +39,8 @@ const routes: Routes = [
     AddNewClientComponent,
     FormCliComponent,
     FormBranchComponent,
-    TableBranchComponent
+    TableBranchComponent,
+    FormContactComponent
   ],
   imports: [
     CommonModule,
