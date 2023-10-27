@@ -38,7 +38,9 @@
 
                         <!-- Columna izquierda -->
                         <div style="flex: 3; padding: 10px;">
-                            <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
+                            <app-form-contact [contactForm]="contactForm" [branches]="branches"></app-form-contact>
+
+                      <!--     <form [formGroup]="contactForm" (ngSubmit)="saveContact()">
                                 <mat-form-field style="margin: 10px;">
                                     <input matInput placeholder="Nombre del contacto" formControlName="name">
                                     <mat-error *ngIf="contactForm.get('name')?.hasError('required')">Debe especificar el
@@ -71,7 +73,7 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </form>
+                            </form> --> 
                             <div style="display: flex; align-items: center; margin: 10px;">
                                 <mat-form-field>
                                     <input matInput placeholder="Número a agregar" [(ngModel)]="newPhoneNumber"
@@ -97,6 +99,9 @@
                         </div>
 
                     </div>
+                    
+                    {{contactForm.valid}}
+                    {{contactForm.touched}}
                     <div>
 
                         <button mat-raised-button color="primary"

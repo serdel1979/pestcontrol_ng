@@ -1,1 +1,34 @@
-<p>form-contact works!</p>
+<form [formGroup]="contactForm">
+    <mat-form-field style="margin: 10px;">
+        <input matInput placeholder="Nombre del contacto" formControlName="name">
+        <mat-error *ngIf="contactForm.get('name')?.hasError('required')">Debe especificar el
+            nombre de contacto</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="margin: 10px;">
+        <input matInput placeholder="Apellido" formControlName="surname">
+        <mat-error *ngIf="contactForm.get('surname')?.hasError('required')">Debe especificar
+            el
+            apellido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="margin: 10px;">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="contactForm.get('email')?.hasError('required')">Debe especificar
+            un
+            email</mat-error>
+        <mat-error *ngIf="contactForm.get('email')?.hasError('email')">El formato de email
+            es
+            inválido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="margin: 10px;">
+        <mat-label>Cliente</mat-label>
+        <mat-select>
+            <mat-option [value]="branch.name" *ngFor="let branch of branches"
+                (click)="onSelectedBranch(branch)" (keyup.enter)="onSelectedBranch(branch)">
+                {{ branch.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

@@ -46,6 +46,9 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     phones: this.fb.array([])
   })
 
+
+  isContactFormValid = false;
+
   public branchForm: FormGroup = this.fb.group({
     clientId: [0, Validators.required],
     name: ['', Validators.required],
@@ -150,7 +153,6 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       //branch.contacts.push(this.contactForm.value)
       this.branchSelected = branch;
     }
-
   }
 
   addContactToBranch() {
