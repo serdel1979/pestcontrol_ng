@@ -209,9 +209,10 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
     this.clients.addClientData(data)
     .subscribe(res => {
-      this.sending = false;
-     // this.router.navigate(['/clients/newclient']);
-        console.log(res);
+        this.sending = false;
+        this.saved = true;
+        this.router.navigate(['/allclients']);
+        //console.log(res);
       },
       (err) => {
         this.sending = false;
