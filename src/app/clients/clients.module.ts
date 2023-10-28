@@ -16,6 +16,7 @@ import { FormCliComponent } from './add-new-client/form-cli/form-cli.component';
 import { FormBranchComponent } from './add-new-client/form-branch/form-branch.component';
 import { TableBranchComponent } from './add-new-client/table-branch/table-branch.component';
 import { FormContactComponent } from './add-new-client/form-contact/form-contact.component';
+import { TableContactsComponent } from './table-contacts/table-contacts.component';
 
 
 const routes: Routes = [
@@ -40,7 +41,8 @@ const routes: Routes = [
     FormCliComponent,
     FormBranchComponent,
     TableBranchComponent,
-    FormContactComponent
+    FormContactComponent,
+    TableContactsComponent
   ],
   imports: [
     CommonModule,
