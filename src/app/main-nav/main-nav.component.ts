@@ -16,11 +16,13 @@ import { Router } from '@angular/router';
 export class MainNavComponent implements OnInit{
 
 //<mat-icon>perm_contact_calendar</mat-icon>
-  
+
+//<mat-icon>event_note</mat-icon>
+
 public MENU: any[] = [
   { path: '/clients/allclients', title: 'Clientes', icon: 'supervisor_account'},
   { path: '/contacts/allcontacts', title: 'Contactos', icon: 'contacts'},
-  { path: '/tasks/alltasks', title: 'Tareas', icon: 'work'},
+  { path: '/tasks/schedule', title: 'Tareas', icon: 'work'},
   { path: '', title: 'Novedades', icon: 'fiber_new'}
 ];
 

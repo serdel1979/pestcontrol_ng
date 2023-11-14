@@ -7,9 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { SubTaskDetailComponent } from './sub-task-detail/sub-task-detail.component';
 import { AddNoveltieComponent } from './add-noveltie/add-noveltie.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'alltasks', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'schedule', pathMatch: 'full' }, 
+  { path: 'schedule', component: ScheduleComponent },
   { path: 'alltasks', component: AllTasksComponent },
   { path: 'task/:id', component: TaskDetailComponent },
   { path: 'subtask/:id', component: SubTaskDetailComponent },
@@ -20,7 +22,8 @@ const routes: Routes = [
     AllTasksComponent,
     TaskDetailComponent,
     SubTaskDetailComponent,
-    AddNoveltieComponent
+    AddNoveltieComponent,
+    ScheduleComponent
   ],
   imports: [
     CommonModule,
