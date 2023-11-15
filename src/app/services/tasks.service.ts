@@ -27,5 +27,10 @@ export class TasksService {
   addNoveltie(noveltie: any){
     return this.http.post(`${this.baseUrl}/jobs/newnovelty`,noveltie);
   }
+
+
+  getSquedule(){
+    return this.http.get<any[]>(`${this.baseUrl}/jobs/schedules`);
+  }
   
 }
