@@ -4,10 +4,10 @@
         <mat-card-title>Cronograma</mat-card-title>
         <mat-card-subtitle style="margin-top: 10px;">Cronograma de tareas</mat-card-subtitle>
       </mat-card-title-group>
-      <button mat-raised-button color="primary" (click)="addCron()" style="margin-left: auto;"
+      <button mat-raised-button color="primary" (click)="addSchedule()" style="margin-left: auto;"
         matTooltip="Crear cronograma">
         <mat-icon>add_box</mat-icon>
-        <mat-icon>supervisor_account</mat-icon>
+        <mat-icon>work</mat-icon>
       </button>
     </mat-card-header>
     <mat-card-content style="margin-top: 20px;">
@@ -17,14 +17,14 @@
           <mat-spinner></mat-spinner>
         </div>
         <div *ngIf="!load">
-          <div [hidden]="squedules.length == 0" style="display: flex; flex-direction: column;">
+          <div *ngIf="squedules.length > 0" style="display: flex; flex-direction: column;">
   
   
             <table mat-table [dataSource]="dataSource">
   
               <ng-container matColumnDef="client">
                 <th mat-header-cell *matHeaderCellDef> Empresa </th>
-                <td mat-cell *matCellDef="let element"> {{element.client.businessName}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.branch.name}} </td>
               </ng-container>
   
               <ng-container matColumnDef="subJob">

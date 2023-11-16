@@ -8,10 +8,12 @@ import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { SubTaskDetailComponent } from './sub-task-detail/sub-task-detail.component';
 import { AddNoveltieComponent } from './add-noveltie/add-noveltie.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { AddScheduleComponent } from './schedule/add-schedule/add-schedule.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'schedule', pathMatch: 'full' }, 
   { path: 'schedule', component: ScheduleComponent },
+  { path: 'addSchedule', component: AddScheduleComponent },
   { path: 'alltasks', component: AllTasksComponent },
   { path: 'task/:id', component: TaskDetailComponent },
   { path: 'subtask/:id', component: SubTaskDetailComponent },
@@ -23,7 +25,8 @@ const routes: Routes = [
     TaskDetailComponent,
     SubTaskDetailComponent,
     AddNoveltieComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    AddScheduleComponent
   ],
   imports: [
     CommonModule,

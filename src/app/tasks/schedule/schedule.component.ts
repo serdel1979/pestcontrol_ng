@@ -62,8 +62,8 @@ export class ScheduleComponent implements OnInit {
 
 
 
-  addCron(){
-
+  addSchedule(){
+    this.router.navigateByUrl('tasks/addSchedule');
   }
 
 

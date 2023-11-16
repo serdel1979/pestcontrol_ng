@@ -21,8 +21,6 @@ import { TableContactsComponent } from './add-new-client/table-contacts/table-co
 const routes: Routes = [
   { path: '', redirectTo: 'allclients', pathMatch: 'full' }, 
   { path: 'allclients', component: AllClientsComponent },
- // { path: 'addclient', component: AddClientComponent },
- // { path: 'addclient', component: AddClient2Component },
   { path: 'addclient', component: AddNewClientComponent, canDeactivate: [savedGuard]},
   { path: ':id/newbranch/:clientname', component: AddBranchComponent }
 ];

@@ -1,0 +1,42 @@
+<mat-progress-bar *ngIf="sending" mode="indeterminate"></mat-progress-bar>
+<mat-card class="scrolleable-content" style="margin: 10px; padding: 10px;">
+    <mat-card-title>
+        Agrega un cronograma
+    </mat-card-title>
+    <mat-card-content>
+        <div>
+            <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start"
+                style="position: sticky; margin: 10px; padding: 10px;">
+                <mat-tab label="Cliente" style="margin: 10px;">
+
+                  
+                </mat-tab>
+                <mat-tab label="Tarea" style="margin: 10px;">
+                    <div style="width: 100%;">
+
+                      
+
+                    </div>
+                </mat-tab>
+                <mat-tab label="Inicio" style="margin: 10px;">
+                    <div style="width: 100%;">
+
+                      
+
+                    </div>
+                </mat-tab>
+                <mat-tab label="Fin"style="margin: 10px;">
+                    <div style="width: 100%;">
+
+                      
+
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <button [disabled]="sending" mat-raised-button color="primary"
+            (click)="save()"><mat-icon>save</mat-icon></button>
+        <button mat-raised-button color="secundary" (click)="back()"
+            style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
+    </mat-card-content>
+</mat-card>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Job } from '../interfaces/jobs.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,9 @@ export class TasksService {
     return this.http.post(`${this.baseUrl}/jobs/newnovelty`,noveltie);
   }
 
+  getJobs(){
+    return this.http.get<Job[]>(`${this.baseUrl}/jobs`);
+  }
 
   getSquedule(){
     return this.http.get<any[]>(`${this.baseUrl}/jobs/schedules`);
