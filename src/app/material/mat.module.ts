@@ -33,7 +33,6 @@ import {MatNativeDateModule} from '@angular/material/core';
   exports:[
     MatIconModule,
     MatDividerModule,
-    MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -54,7 +53,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatCheckboxModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule
   ]
 })
 export class MatModule { }

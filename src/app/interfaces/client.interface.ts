@@ -10,6 +10,7 @@ export interface Client {
 
 
 export interface Branch {
+    id?: number;
     name:    string;
     address: Address;
 }

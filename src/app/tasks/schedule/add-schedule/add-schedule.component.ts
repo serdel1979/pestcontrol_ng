@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TasksService } from '../../../services/tasks.service';
-import { Job } from 'src/app/interfaces/jobs.interface';
+import { Job, SubJob } from 'src/app/interfaces/jobs.interface';
 import { ClientService } from 'src/app/services/client.service';
-import { Client } from 'src/app/interfaces/client.interface';
+import { Branch, Client } from 'src/app/interfaces/client.interface';
 import { MatTabGroup } from '@angular/material/tabs';
+import { Schedule } from 'src/app/interfaces/schedule.interface';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-add-schedule',
@@ -23,20 +26,26 @@ export class AddScheduleComponent implements OnInit {
 
   public filteredClients: Client[] = [];
 
-
   public selectedClient: Client | undefined;
+
+  public selectedBranch: Branch | undefined;
 
   public selectedJob: Job | undefined;
 
+  public selecSubJob: SubJob | undefined;
+
+  public description: string = "";
 
   public filteredJobs: Job[] = [];
 
   public startDate: Date | null = null;
-  
+
   public endDate: Date | null = null;
 
   constructor(private tasksService: TasksService,
-    public clientService: ClientService) { }
+    public clientService: ClientService,
+    private router: Router,
+    private alertDialogService: AlertService) { }
 
   ngOnInit(): void {
     this.tasksService.getJobs().subscribe(resp => {
@@ -54,8 +63,16 @@ export class AddScheduleComponent implements OnInit {
     this.selectedClient = client;
   }
 
+  selectBranch(branch: Branch): void {
+    this.selectedBranch = branch;
+  }
+
   selectJob(job: Job): void {
     this.selectedJob = job;
+  }
+
+  selectedSubJob(subJob: SubJob) {
+    this.selecSubJob = subJob;
   }
 
 
@@ -85,7 +102,28 @@ export class AddScheduleComponent implements OnInit {
 
 
   save() {
-
+    this.sending = true;
+    const data = {
+      branchId: this.selectedBranch?.id,
+      subJobId: this.selecSubJob?.id,
+      description: this.description,
+      dateInit: this.startDate,
+      dateEnd: this.endDate
+    }
+    this.tasksService.addSquedule(data).subscribe(
+      res => {
+        this.sending = false;
+        this.back();
+      },
+      (err) => {
+        this.sending = false;
+        if (err.status == 400) {
+          this.alertDialogService.openAlertDialog(err.error);
+        } else {
+          this.alertDialogService.openAlertDialog("Error desconocido");
+        }
+      }
+    )
   }
 
   back() {
