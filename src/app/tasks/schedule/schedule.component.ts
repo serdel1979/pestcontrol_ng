@@ -14,6 +14,10 @@ export class ScheduleComponent implements OnInit {
 
 
   public squedules: any[] = [];
+
+
+
+
   public load: boolean = false;
   pageSize: number = 5;
   currentPage: number = 1;

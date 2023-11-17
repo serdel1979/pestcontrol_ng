@@ -4,5 +4,21 @@ export interface Client {
     id?: number;
     businessName: string;
     cuit: string;
-    contact: Contact;
+    contact?: Contact;
+    branches?: Branch[];
+}
+
+
+export interface Branch {
+    name:    string;
+    address: Address;
+}
+
+export interface Address {
+    street:    string;
+    number:    number;
+    floor:     string;
+    zipCode:   string;
+    apartment: string;
+    city:      string;
 }

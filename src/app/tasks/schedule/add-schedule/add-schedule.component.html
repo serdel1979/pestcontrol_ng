@@ -8,33 +8,103 @@
             <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start"
                 style="position: sticky; margin: 10px; padding: 10px;">
                 <mat-tab label="Cliente" style="margin: 10px;">
+                    <div
+                        style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
 
-                  
+                        <!-- Filtro para Clientes -->
+                        <mat-form-field style="width: 50%;">
+                            <input matInput placeholder="Filtrar Clientes" (input)="filterClients($event)">
+                        </mat-form-field>
+
+                        <!-- Contenedor para los dos mat-selection-list -->
+                        <div style="display: flex; width: 100%;">
+
+                            <!-- Primer mat-selection-list para Clientes -->
+                            <mat-selection-list #clientsList [multiple]="false"
+                                style="width: 20%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-option *ngFor="let cli of filteredClients" [value]="cli"
+                                    (click)="selectClient(cli)">
+                                    {{cli.businessName}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
+                            <!-- Segundo mat-selection-list para Branches -->
+                            <mat-selection-list #branchesList [multiple]="false"
+                                style="width: 30%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-option *ngFor="let branch of selectedClient?.branches" [value]="branch">
+                                    {{branch.name}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
+                            <button mat-icon-button (click)="changeTabTask()"
+                                style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+
+                        </div>
+
+                    </div>
+
+
                 </mat-tab>
                 <mat-tab label="Tarea" style="margin: 10px;">
-                    <div style="width: 100%;">
+                    <div
+                        style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
 
-                      
+                        <!-- Filtro para Clientes -->
+                        <mat-form-field style="width: 50%;">
+                            <input matInput placeholder="Filtrar Tareas" (input)="filterJobs($event)">
+                        </mat-form-field>
 
+                        <!-- Contenedor para los dos mat-selection-list -->
+                        <div style="display: flex; width: 100%;">
+
+                            <!-- Primer mat-selection-list para Clientes -->
+                            <mat-selection-list #jobsList [multiple]="false"
+                                style="width: 20%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-option *ngFor="let job of filteredJobs" [value]="job"
+                                    (click)="selectJob(job)">
+                                    {{job.description}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
+                            <!-- Segundo mat-selection-list para Branches -->
+                            <mat-selection-list #subjobList [multiple]="false"
+                                style="width: 30%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-option *ngFor="let subj of selectedJob?.subJobs" [value]="subj">
+                                    {{subj.description}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
+                            <button mat-icon-button (click)="changeTabDateInit()"
+                                style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+
+
+                        </div>
                     </div>
                 </mat-tab>
-                <mat-tab label="Inicio" style="margin: 10px;">
-                    <div style="width: 100%;">
-
-                      
-
-                    </div>
-                </mat-tab>
-                <mat-tab label="Fin"style="margin: 10px;">
-                    <div style="width: 100%;">
-
-                      
+                <mat-tab label="Fechas" style="margin: 10px;">
+                    <div
+                        style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
+                        <mat-form-field class="example-form-field">
+                            <mat-label>Ingrese un rango de fechas</mat-label>
+                            <mat-date-range-input [rangePicker]="rangePicker">
+                                <input matStartDate placeholder="Fecha de inicio"  [(ngModel)]="startDate">
+                                <input matEndDate placeholder="Fecha de fin" [(ngModel)]="endDate">
+                            </mat-date-range-input>
+                            
+                            <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #rangePicker>
+                                <mat-date-range-picker-actions>
+                                    <button mat-button matDateRangePickerCancel>Cancel</button>
+                                    <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                                </mat-date-range-picker-actions>
+                            </mat-date-range-picker>
+                        </mat-form-field>
 
                     </div>
                 </mat-tab>
             </mat-tab-group>
         </div>
-        <button [disabled]="sending" mat-raised-button color="primary"
+        <button [disabled]="sending || !selectJob || !selectClient || !startDate || !endDate" mat-raised-button color="primary"
             (click)="save()"><mat-icon>save</mat-icon></button>
         <button mat-raised-button color="secundary" (click)="back()"
             style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
