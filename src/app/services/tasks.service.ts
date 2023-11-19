@@ -34,8 +34,17 @@ export class TasksService {
     return this.http.get<Job[]>(`${this.baseUrl}/jobs`);
   }
 
-  getSquedule(){
+  getSquedules(){
     return this.http.get<any[]>(`${this.baseUrl}/jobs/schedules`);
+  }
+
+  
+  getSquedule(id:number){
+    return this.http.get<Schedule>(`${this.baseUrl}/jobs/schedule/${id}`);
+  }
+
+  editSquedule(id:number, data: any){
+    return this.http.put(`${this.baseUrl}/jobs/schedule/edit/${id}`,data);
   }
 
   addSquedule(data: any){

@@ -23,7 +23,7 @@ export class ScheduleComponent implements OnInit {
   currentPage: number = 1;
   pageSizeOptions: number[] = [5, 10, 25];
 
-  public displayedColumns: string[] = ['client', 'subJob', 'description','dateInit','dateEnd'];
+  public displayedColumns: string[] = ['client','branch', 'subJob', 'description','dateInit','dateEnd','opciones'];
   public dataSource = new MatTableDataSource<any>(); // Inicializa el dataSource vacío
 
   //@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -35,9 +35,12 @@ export class ScheduleComponent implements OnInit {
   constructor(private router: Router,
     private tasksService: TasksService,
     private dialog: MatDialog
-    ) {
+    ) {}
+
+  
+  ngOnInit(): void {
     this.load = true;
-    this.tasksService.getSquedule().subscribe(resp => {
+    this.tasksService.getSquedules().subscribe(resp => {
       this.squedules = resp;
       this.dataSource = new MatTableDataSource<any[]>(this.squedules); // Actualiza el dataSource con los datos
       this.dataSource.paginator = this.paginator; // Configura el paginador
@@ -46,11 +49,6 @@ export class ScheduleComponent implements OnInit {
       () => {
         this.load = false;
       });
-  }
-
-  
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
   onPageChange(event: any): void {
@@ -64,6 +62,10 @@ export class ScheduleComponent implements OnInit {
   }
 
 
+
+  editSchedule(id:number){
+    this.router.navigateByUrl(`tasks/schedule/${id}`);
+  }
 
 
   addSchedule(){
