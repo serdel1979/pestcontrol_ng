@@ -70,7 +70,7 @@
                     <mat-icon>edit</mat-icon>
                     <span>Editar</span>
                   </button>
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="deletSchedule(element.subJob.id,element.branch.id)">
                     <mat-icon>delete</mat-icon>
                     <span>Borrar</span>
                   </button>

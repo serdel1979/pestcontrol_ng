@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { DialogCancelComponent } from 'src/app/alerts/dialog-cancel/dialog-cancel.component';
+import { AlertService } from 'src/app/services/alert.service';
 import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
@@ -34,11 +37,17 @@ export class ScheduleComponent implements OnInit {
 
   constructor(private router: Router,
     private tasksService: TasksService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private alertDialogService: AlertService,
+    private _snackBar: MatSnackBar
     ) {}
 
   
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(){
     this.load = true;
     this.tasksService.getSquedules().subscribe(resp => {
       this.squedules = resp;
@@ -70,6 +79,33 @@ export class ScheduleComponent implements OnInit {
 
   addSchedule(){
     this.router.navigateByUrl('tasks/addSchedule');
+  }
+
+  deletSchedule(idSubJob:number,idBranch:number){
+    return new Promise<boolean>((resolve) => {
+      const dialogRef = this.dialog.open(DialogCancelComponent, {
+        data: { message: '¿Está seguro de eliminar el registro?' },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.load = true;
+          this.tasksService.deletSquedule(idSubJob,idBranch)
+          .subscribe(
+            resp=>{
+                this._snackBar.open("Registro eliminado", "OK");
+              
+              this.load = false;
+              this.loadData();
+            },
+            (err)=>{
+              this.load = false;
+              this.alertDialogService.openAlertDialog('No se pudo eliminar el registro');
+            }
+          )
+        }
+      });
+    });
   }
 
 

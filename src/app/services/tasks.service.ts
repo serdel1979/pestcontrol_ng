@@ -47,6 +47,10 @@ export class TasksService {
     return this.http.put(`${this.baseUrl}/jobs/schedule/edit/${id}`,data);
   }
 
+  deletSquedule(idSubJob:number,idBranch:number){
+    return this.http.delete(`${this.baseUrl}/jobs/schedule/delete/${idSubJob}/${idBranch}`);
+  }
+
   addSquedule(data: any){
     return this.http.post(`${this.baseUrl}/jobs/newschedule`,data);
   }

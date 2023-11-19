@@ -34,7 +34,7 @@ export class AddScheduleComponent implements OnInit {
 
   public selecSubJob: SubJob | undefined;
 
-  public description: string = "";
+  public description: string = "Sin descripción";
 
   public filteredJobs: Job[] = [];
 
