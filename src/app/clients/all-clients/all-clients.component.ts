@@ -89,7 +89,6 @@ export class AllClientsComponent implements OnInit {
   }
 
   detail(id: any){
-    console.log(id);
     this.router.navigateByUrl(`clients/detail/${id}`);
   }
 

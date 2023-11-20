@@ -41,7 +41,8 @@ const routes: Routes = [
     FormBranchComponent,
     TableBranchComponent,
     FormContactComponent,
-    TableContactsComponent
+    TableContactsComponent,
+    ClientDetailComponent
   ],
   imports: [
     CommonModule,

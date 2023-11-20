@@ -4,7 +4,7 @@ export interface Client {
     id?: number;
     businessName: string;
     cuit: string;
-    contact?: Contact;
+    contacts?: Contact;
     branches?: Branch[];
 }
 

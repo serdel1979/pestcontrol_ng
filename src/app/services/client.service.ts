@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { Client } from '../interfaces/client.interface';
 import { Contact } from '../interfaces/contact.interface';
+import { ClientGet } from '../interfaces/client-get.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,10 @@ export class ClientService {
 
   getClients(){
     return this.http.get<Client[]>(`${this.baseUrl}/clients/allclients`);
+  }
+
+  getClient(id:number){
+    return this.http.get<ClientGet>(`${this.baseUrl}/clients/getClient/${id}`);
   }
 
 
