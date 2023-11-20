@@ -17,12 +17,14 @@ import { FormBranchComponent } from './add-new-client/form-branch/form-branch.co
 import { TableBranchComponent } from './add-new-client/table-branch/table-branch.component';
 import { FormContactComponent } from './add-new-client/form-contact/form-contact.component';
 import { TableContactsComponent } from './add-new-client/table-contacts/table-contacts.component';
+import { ClientDetailComponent } from './client-detail/client-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'allclients', pathMatch: 'full' }, 
   { path: 'allclients', component: AllClientsComponent },
   { path: 'addclient', component: AddNewClientComponent, canDeactivate: [savedGuard]},
-  { path: ':id/newbranch/:clientname', component: AddBranchComponent }
+  { path: ':id/newbranch/:clientname', component: AddBranchComponent },
+  { path: 'detail/:id', component: ClientDetailComponent }
 ];
 
 

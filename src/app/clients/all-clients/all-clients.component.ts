@@ -88,6 +88,11 @@ export class AllClientsComponent implements OnInit {
     console.log(br);
   }
 
+  detail(id: any){
+    console.log(id);
+    this.router.navigateByUrl(`clients/detail/${id}`);
+  }
+
   showBranches(client: Client) {
     this.dialog.open(BranchesComponent, {
       width: '90%',
