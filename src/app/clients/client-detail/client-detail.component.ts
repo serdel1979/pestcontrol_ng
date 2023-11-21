@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogCancelComponent } from 'src/app/alerts/dialog-cancel/dialog-cancel.component';
 import { Branch } from 'src/app/interfaces/client.interface';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-client-detail',
@@ -20,19 +22,55 @@ export class ClientDetailComponent implements OnInit{
 
   public client!: ClientGet;
 
+  public addBranch: boolean = false;
+
+  public addContact: boolean = false;
+
   public dataSource = new MatTableDataSource<any>();
   public dataSourceContacts = new MatTableDataSource<any>();
 
   public branchSelected: string = "...";
 
+  public idBranchSelected!:number;
+
+
+  newPhoneNumber!: string;
+  phonesNumber: string[] = [];
+
+  public branchForm: FormGroup = this.fb.group({
+    clientId: [0, Validators.required],
+    name: ['', Validators.required],
+    address: this.fb.group({
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      floor: ['', Validators.required],
+      zipcode: ['', Validators.required],
+      apartment: ['', Validators.required],
+      city: ['', Validators.required]
+    }),
+    contacts: this.fb.array([])
+  });
+
+  public contactForm: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    surname: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    phones: this.fb.array([])
+  })
+
+
+
   constructor(private route: ActivatedRoute,
     private alertDialogService: AlertService,
     private clientService: ClientService,
-    private dialog: MatDialog){}
+    private dialog: MatDialog,
+    private fb: FormBuilder){}
 
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];    
+    this.subscribeToInputChangesBranche();
+    this.subscribeToInputChangesContact();
     this.loadData();
   }
 
@@ -53,7 +91,13 @@ export class ClientDetailComponent implements OnInit{
 
   selectBranch(element:any){
     this.branchSelected = element.name;
+    this.idBranchSelected = element.id;
     this.dataSourceContacts.data = element.contacts;
+  }
+
+  saveContact(id:number){
+    console.log(this.contactForm.value,' para branch ',id);
+    this.resetFormContact();
   }
 
   deletContact(element:any){
@@ -88,6 +132,128 @@ export class ClientDetailComponent implements OnInit{
       });
     });
     
+  }
+
+  addBranchToggle(){
+    this.addBranch = !this.addBranch;
+    if(!this.addBranch)this.resetFormBranch();
+  }
+
+  addContactToggle(){
+    this.addContact = !this.addContact;
+    console.log(this.idBranchSelected);
+  }
+
+
+  clearFormErrors(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup) {
+        this.clearAddressErrors(control);
+      } else {
+        control?.setErrors(null);
+      }
+    });
+  }
+
+  clearAddressErrors(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      formGroup.get(key)?.setErrors(null);
+    });
+  }
+
+  saveBranche(){
+    console.log(this.branchForm.value,' para client ',this.client.id);
+    this.resetFormBranch();
+  }
+
+  resetFormBranch(){
+    this.branchForm.reset();
+    this.clearFormErrors(this.branchForm);
+  }
+
+
+
+  resetFormContact(){
+    this.phonesNumber=[];
+    this.contactForm.reset();
+    this.clearFormErrors(this.contactForm);
+  }
+
+  addNumber() {
+    if (this.newPhoneNumber == '') {
+      return;
+    }
+    const phoneNumberString = this.newPhoneNumber;
+    const phoneNumberLong = parseInt(phoneNumberString, 10);
+  
+    if (!isNaN(phoneNumberLong)) {
+      this.phonesNumber.push(this.newPhoneNumber);
+      const phonesArray = this.contactForm.get('phones') as FormArray;
+  
+      // Crear un FormGroup que contenga el número de teléfono
+      const phoneFormGroup = this.fb.group({
+        number: phoneNumberLong
+      });
+  
+      // Agregar el FormGroup al FormArray
+      phonesArray.push(phoneFormGroup);
+  
+      this.newPhoneNumber = '';
+    } else {
+      console.error("La cadena no es un número válido en formato long.");
+    }
+  }
+
+
+  delPhone(i: number) {
+    if (i >= 0 && i < this.phonesNumber.length) {
+      this.phonesNumber.splice(i, 1); // Elimina 1 elemento en la posición i
+    }
+  }
+
+
+
+
+
+  private subscribeToInputChangesBranche() {
+    const inputFields = ['name', 'address.street', 'address.number', 'address.floor', 'address.zipcode', 'address.apartment', 'address.city'];
+
+    inputFields.forEach(fieldName => {
+      const control = this.branchForm.get(fieldName);
+
+      if (control) {
+        control.valueChanges.pipe(
+          debounceTime(200)
+        ).subscribe(newValue => {
+          if (newValue) {
+            const uppercaseValue = newValue.toUpperCase();
+            if (uppercaseValue !== control.value) {
+              control.setValue(uppercaseValue, { emitEvent: false });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  private subscribeToInputChangesContact() {
+    const inputFields = ['name', 'surname', 'email'];
+    inputFields.forEach(fieldName => {
+      const control = this.contactForm.get(fieldName);
+      if (control) {
+        control.valueChanges.pipe(
+          debounceTime(200)
+        ).subscribe(newValue => {
+          if (newValue) {
+            const uppercaseValue = newValue.toUpperCase();
+            if (uppercaseValue !== control.value) {
+              control.setValue(uppercaseValue, { emitEvent: false });
+            }
+          }
+        });
+      }
+    });
   }
 
 

@@ -34,9 +34,19 @@
                     </mat-card-title-group>
                 </mat-card-header>
                 <mat-card-content>
+                    <div style="margin: 10px;">
+                        <button mat-raised-button color="primary"
+                            (click)="addBranchToggle()"><mat-icon>add</mat-icon></button>
+                    </div>
+                    <div *ngIf="addBranch">
+                        <app-form-branch [branchForm]="branchForm" (addBranch)="saveBranche()"></app-form-branch>
+
+                    </div>
                     <div *ngIf="!loading">
-                        <app-table-branch *ngIf="dataSource.data.length > 0" (deleteBranchClicked)="deletBranch($event)" (selectedBranchClicked)="selectBranch($event)" [dataSource]="dataSource"></app-table-branch>
-                        <mat-label style="margin-top: 10px;" *ngIf="dataSource.data.length == 0">No hay sucursales para mostrar</mat-label>
+                        <app-table-branch *ngIf="dataSource.data.length > 0" (deleteBranchClicked)="deletBranch($event)"
+                            (selectedBranchClicked)="selectBranch($event)" [dataSource]="dataSource"></app-table-branch>
+                        <mat-label style="margin-top: 10px;" *ngIf="dataSource.data.length == 0">No hay sucursales para
+                            mostrar</mat-label>
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -48,13 +58,75 @@
         <mat-card-header>
             <mat-card-title-group>
                 <mat-card-title>Contactos</mat-card-title>
-                <mat-card-subtitle style="margin-top: 10px;">Contactos de sucursal {{branchSelected}}</mat-card-subtitle>
+                <mat-card-subtitle style="margin-top: 10px;">Contactos de sucursal
+                    {{branchSelected}}</mat-card-subtitle>
             </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
+            <div style="margin: 10px;">
+                <button [disabled]="branchSelected == '...'" mat-raised-button color="primary"
+                    (click)="addContactToggle()"><mat-icon>add</mat-icon></button>
+            </div>
+            <div *ngIf="addContact">
+
+                <div style="flex: 3; padding: 10px;">
+                    <form [formGroup]="contactForm">
+                        <mat-form-field style="margin: 10px;">
+                            <input matInput placeholder="Nombre del contacto" formControlName="name">
+                            <mat-error *ngIf="contactForm.get('name')?.hasError('required')">Debe especificar el
+                                nombre de contacto</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field style="margin: 10px;">
+                            <input matInput placeholder="Apellido" formControlName="surname">
+                            <mat-error *ngIf="contactForm.get('surname')?.hasError('required')">Debe especificar
+                                el
+                                apellido</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field style="margin: 10px;">
+                            <input matInput placeholder="Email" formControlName="email">
+                            <mat-error *ngIf="contactForm.get('email')?.hasError('required')">Debe especificar
+                                un
+                                email</mat-error>
+                            <mat-error *ngIf="contactForm.get('email')?.hasError('email')">El formato de email
+                                es
+                                inválido</mat-error>
+                        </mat-form-field>
+
+                    </form>
+
+
+                    <div style="display: flex; align-items: center; margin: 10px;">
+                        <mat-form-field>
+                            <input matInput placeholder="Número a agregar" [(ngModel)]="newPhoneNumber"
+                                (keyup.enter)="addNumber()">
+                        </mat-form-field>
+                        <button title="Agregar teléfono" mat-button type="button" (click)="addNumber()">
+                            <mat-icon>contact_phone</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="line-shadow" style="flex: 1; padding: 10px;">
+                    <mat-label>Teléfonos</mat-label>
+                    <mat-list role="list" style="height: 100px;">
+                        <mat-list-item *ngIf="phonesNumber.length == 0" role="listitem">
+                            No hay números
+                        </mat-list-item>
+                        <mat-list-item *ngFor="let phone of phonesNumber; let i = index" role="listitem">
+                            <div> {{ phone }} <mat-icon (click)="delPhone(i)"
+                                    style="margin-right: 5px;">delete</mat-icon> </div>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+                <button [disabled]="!contactForm.valid" mat-raised-button color="primary"
+                (click)="saveContact(this.client.id)">
+                    <mat-icon>save</mat-icon></button>
+            </div>
             <div *ngIf="!loading">
                 <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length > 0">
-                    <app-table-contacts [dataSourceContact]="dataSourceContacts" (deleteContactClicked)="deletContact($event)" ></app-table-contacts>
+                    <app-table-contacts [dataSourceContact]="dataSourceContacts"
+                        (deleteContactClicked)="deletContact($event)"></app-table-contacts>
                 </div>
                 <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length == 0">
                     <mat-label>No hay contactos para mostrar</mat-label>

@@ -5,7 +5,7 @@
       <mat-card-subtitle style="margin-top: 10px;">Lista de clientes</mat-card-subtitle>
     </mat-card-title-group>
     <button mat-raised-button color="primary" (click)="addClient()" style="margin-left: auto;"
-      matTooltip="Agregar un nuevo contacto">
+      matTooltip="Agregar un nuevo cliente">
       <mat-icon>add_box</mat-icon>
       <mat-icon>supervisor_account</mat-icon>
     </button>
@@ -17,7 +17,7 @@
         <mat-spinner></mat-spinner>
       </div>
       <div *ngIf="!load">
-        <div [hidden]="clients.length == 0" style="display: flex; flex-direction: column;">
+        <div *ngIf="clients.length > 0" style="display: flex; flex-direction: column;">
 
 
           <table mat-table [dataSource]="dataSource">
