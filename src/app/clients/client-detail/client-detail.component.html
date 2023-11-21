@@ -1,24 +1,68 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-<mat-card class="custom-card" style="margin: 10px; padding: 10px;">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>Cliente</mat-card-title>
-        <mat-card-subtitle style="margin-top: 10px;">Detalles del cliente</mat-card-subtitle>
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content>
-        <div *ngIf="!loading">
-            <div style="margin: 10px; padding: 10px;">
-                {{ client.businessName }}
-            </div>
-            <div style="margin: 10px; padding: 10px;">
-                {{ client.cuit }}
-            </div>
-            <div style="margin: 10px; padding: 10px;">
-                {{ client.branches| json }}
-            </div>
+
+<div style="display: flex; flex-wrap: wrap;">
+
+    <div style="display: flex; flex-direction: row; width: 100%;">
+
+        <div style="flex: 1">
+            <mat-card style="margin: 10px; padding: 10px; height: 95%;">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>Cliente</mat-card-title>
+                        <mat-card-subtitle style="margin-top: 10px;">Detalles del cliente</mat-card-subtitle>
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngIf="!loading">
+                        <div style="margin: 10px; padding: 10px;">
+                            {{ client.businessName }}
+                        </div>
+                        <div style="margin: 10px; padding: 10px;">
+                            {{ client.cuit }}
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         </div>
-        <button mat-raised-button color="secundary" (click)="back()"
-            style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
-    </mat-card-content>
-</mat-card>
+
+        <div style="flex: 3">
+            <mat-card style="margin: 10px; padding: 10px; height: 95%; overflow-y: auto;">
+                <mat-card-header>
+                    <mat-card-title-group>
+                        <mat-card-title>Sucursales</mat-card-title>
+                        <mat-card-subtitle style="margin-top: 10px;">Sucursales del cliente</mat-card-subtitle>
+                    </mat-card-title-group>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngIf="!loading">
+                        <app-table-branch *ngIf="dataSource.data.length > 0" (deleteBranchClicked)="deletBranch($event)" (selectedBranchClicked)="selectBranch($event)" [dataSource]="dataSource"></app-table-branch>
+                        <mat-label style="margin-top: 10px;" *ngIf="dataSource.data.length == 0">No hay sucursales para mostrar</mat-label>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+
+    <mat-card style="width: 100%; margin: 10px; padding: 10px;">
+        <mat-card-header>
+            <mat-card-title-group>
+                <mat-card-title>Contactos</mat-card-title>
+                <mat-card-subtitle style="margin-top: 10px;">Contactos de sucursal {{branchSelected}}</mat-card-subtitle>
+            </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="!loading">
+                <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length > 0">
+                    <app-table-contacts [dataSourceContact]="dataSourceContacts" (deleteContactClicked)="deletContact($event)" ></app-table-contacts>
+                </div>
+                <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length == 0">
+                    <mat-label>No hay contactos para mostrar</mat-label>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <button mat-raised-button color="secundary" (click)="back()"
+        style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
+</div>

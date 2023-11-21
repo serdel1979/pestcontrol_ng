@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TableBranchComponent {
   
   @Output() deleteBranchClicked = new EventEmitter<any>();
+  @Output() selectedBranchClicked = new EventEmitter<any>();
   @Input() dataSource!: MatTableDataSource<any>;
 
   displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
