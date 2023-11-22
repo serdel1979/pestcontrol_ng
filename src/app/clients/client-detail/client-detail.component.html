@@ -125,7 +125,7 @@
                 (click)="saveContact()">
                     <mat-icon>save</mat-icon></button>
                 <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length > 0">
-                    <app-table-contacts [dataSourceContact]="dataSourceContacts"
+                    <app-table-contacts [dataSourceContact]="dataSourceContacts" [branchOverride]="branchSelected"
                         (deleteContactClicked)="deletContact($event)"></app-table-contacts>
                 </div>
                 <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length == 0">

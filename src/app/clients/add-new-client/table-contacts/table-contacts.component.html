@@ -17,7 +17,7 @@
 
     <ng-container matColumnDef="branch">
         <th mat-header-cell *matHeaderCellDef>Sucursal</th>
-        <td mat-cell *matCellDef="let element">{{element.businessName}}</td>
+        <td mat-cell *matCellDef="let element">{{branchOverride || element.businessName}}</td>
     </ng-container>
 
     <ng-container matColumnDef="action">

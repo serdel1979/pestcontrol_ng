@@ -17,6 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TableContactsComponent {
 
 
+  @Input() branchOverride: string | undefined;
   @Input() dataSourceContact = new MatTableDataSource<any>();
   @Output() deleteContactClicked = new EventEmitter<any>();
 
