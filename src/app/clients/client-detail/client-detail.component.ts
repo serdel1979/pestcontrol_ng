@@ -31,6 +31,8 @@ export class ClientDetailComponent implements OnInit{
 
   public branchSelected: string = "...";
 
+  public branch!: Branch | any;
+
   public idBranchSelected!:number;
 
   phonesArray!: FormArray;
@@ -57,7 +59,7 @@ export class ClientDetailComponent implements OnInit{
     name: ['', Validators.required],
     surname: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    businessName: ['', Validators.required],
+    businessName: [''],
     phones: this.fb.array([])
   })
 
@@ -85,6 +87,14 @@ export class ClientDetailComponent implements OnInit{
     .subscribe(resp=>{
       this.client=resp;
       this.dataSource.data=this.client.branches;
+      if(this.branchSelected != '...'){
+        const foundBranch = this.client.branches.find(branch => branch.name === this.branchSelected);
+        if (foundBranch) {
+            this.dataSourceContacts.data = foundBranch.contacts;
+        } else {
+            console.log('No se encontró el branch con el nombre deseado.');
+        }
+      }
       this.loading=false;
     },
     err=>{
@@ -94,15 +104,39 @@ export class ClientDetailComponent implements OnInit{
 
 
 
+
+
   selectBranch(element:any){
     this.branchSelected = element.name;
+    this.branch = element;
     this.idBranchSelected = element.id;
     this.dataSourceContacts.data = element.contacts;
   }
 
   saveContact(){
-    console.log(this.contactForm.value,' para branch ',this.idBranchSelected );
-    this.resetFormContact();
+    const  { name, surname, email, phones } = this.contactForm.value;
+    const data = {
+      name,surname,email,phones,
+      branchId : this.idBranchSelected
+    }
+
+    this.loading = true
+    this.clientService.addContact(data)
+    .subscribe(resp=>{
+      this.loading = false;
+      this.loadData();
+      this.resetFormContact();
+    },
+    err=>{
+      this.loading = false;
+      if (err.status === 400) {
+        this.alertDialogService.openAlertDialog('No se puede agregar el contacto');
+      } else {
+        // Otro tipo de error (error de red u otro)
+        this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+      }
+    })
+
   }
 
   deletContact(element:any){
@@ -114,8 +148,20 @@ export class ClientDetailComponent implements OnInit{
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.loading = true;
-          console.log('elimina sucursal ', element);
-          this.loading = false;
+          this.clientService.deleteContact(element.id)
+          .subscribe(resp=>{
+            this.loading = false;
+            this.loadData();
+          },
+          err=>{
+            this.loading = false;
+            if (err.status === 400) {
+              this.alertDialogService.openAlertDialog('No se puede borrar el contacto');
+            } else {
+              this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+            }
+          })
+          
         }
       });
     });
@@ -125,14 +171,30 @@ export class ClientDetailComponent implements OnInit{
   deletBranch(element: any) {
     return new Promise<boolean>((resolve) => {
       const dialogRef = this.dialog.open(DialogCancelComponent, {
-        data: { message: '¿Está seguro de eliminar sucursal?' },
+        data: { message: '¿Está seguro de eliminar sucursal con sus contactos?' },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
           this.loading = true;
-          console.log('elimina sucursal ', element);
-          this.loading = false;
+          this.clientService.deleteBranch(element.id)
+          .subscribe(
+            resp=>{
+              this.loading = false;
+              this.loadData();
+            },
+            err=>{
+              this.loading = false;
+              if (err.status === 400) {
+                console.log(err);
+                this.alertDialogService.openAlertDialog('No se puede agregar la sucursal');
+              } else {
+                // Otro tipo de error (error de red u otro)
+                this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+              }
+
+            }
+          )
         }
       });
     });
@@ -168,8 +230,23 @@ export class ClientDetailComponent implements OnInit{
 
   saveBranche(){
     this.branchForm.value['clientId']=this.client.id;
-    console.log(this.branchForm.value,' para client ',this.client.id);
-    this.resetFormBranch();
+    this.loading = true;
+    this.clientService.addBranch(this.branchForm.value)
+    .subscribe(resp=>{
+      this.loading = false;
+      this.loadData();
+      this.resetFormBranch();
+    },
+    err=>{
+      this.loading = false;
+      if (err.status === 400) {
+        this.alertDialogService.openAlertDialog('No se puede agregar la sucursal');
+      } else {
+        // Otro tipo de error (error de red u otro)
+        this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+      }
+    })
+
   }
 
   resetFormBranch(){

@@ -9,6 +9,8 @@ import { FormGroup } from '@angular/forms';
 export class FormBranchComponent {
 
   @Input() branchForm!: FormGroup;
+  @Input() iconSave: boolean = false;
+
   @Output() addBranch = new EventEmitter<void>();
   
 

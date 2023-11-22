@@ -1,4 +1,4 @@
-<form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="branchForm">
     <div style="display: inline-block; margin: 5px;">
         <mat-form-field>
             <input matInput placeholder="Nombre de la sucursal" formControlName="name">
@@ -46,8 +46,8 @@
             </mat-form-field>
         </div>
     </div>
-
+    
     <button [disabled]="!branchForm.valid || !branchForm.touched" mat-raised-button color="primary"
-        style="display: block; margin-top: 20px;" (click)="addBranch.emit();"><mat-icon>add</mat-icon></button>
+        style="display: block; margin-top: 20px;" (click)="addBranch.emit();"><mat-icon *ngIf="!iconSave">add</mat-icon><mat-icon *ngIf="iconSave">save</mat-icon></button>
 
 </form>

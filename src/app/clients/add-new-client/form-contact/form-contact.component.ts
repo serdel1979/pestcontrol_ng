@@ -10,7 +10,8 @@ export class FormContactComponent {
 
   @Input() contactForm!: FormGroup;
   @Input() branches!: any[];
-  
+
+
   @Output() selectedBranch = new EventEmitter<any>();
   @Output() formValidityChanged = new EventEmitter<boolean>();
 

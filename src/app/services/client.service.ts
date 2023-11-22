@@ -41,8 +41,20 @@ export class ClientService {
     return this.http.get<Contact[]>(`${this.baseUrl}/clients/allcontacts`);
   }
 
+  addContact(data:any){
+    return this.http.post<Contact[]>(`${this.baseUrl}/clients/addContact`,data);
+  }
+
   getBranches(clientId: number){
     return this.http.get<any[]>(`${this.baseUrl}/clients/branches/${clientId}`);
+  }
+
+  deleteBranch(id:number){
+    return this.http.delete(`${this.baseUrl}/clients/branch/delete/${id}`);
+  }
+
+  deleteContact(id:number){
+    return this.http.delete(`${this.baseUrl}/clients/contact/delete/${id}`);
   }
 
 

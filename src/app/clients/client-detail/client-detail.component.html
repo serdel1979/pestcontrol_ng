@@ -39,7 +39,7 @@
                             (click)="addBranchToggle()"><mat-icon>add</mat-icon></button>
                     </div>
                     <div *ngIf="addBranch">
-                        <app-form-branch [branchForm]="branchForm" (addBranch)="saveBranche()"></app-form-branch>
+                        <app-form-branch [branchForm]="branchForm" (addBranch)="saveBranche()" [iconSave]="true" ></app-form-branch>
 
                     </div>
                     <div *ngIf="!loading">
@@ -120,6 +120,7 @@
                     </mat-list>
                 </div>
             </div>
+            
             <div *ngIf="!loading">
                 <button *ngIf="addContact" [disabled]="!contactForm.valid" mat-raised-button color="primary"
                 (click)="saveContact()">
