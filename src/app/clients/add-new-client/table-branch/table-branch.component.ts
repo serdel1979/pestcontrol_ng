@@ -12,7 +12,7 @@ export class TableBranchComponent {
   @Output() selectedBranchClicked = new EventEmitter<any>();
   @Input() dataSource!: MatTableDataSource<any>;
 
-  displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
+  displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipCode', 'apartment', 'city', 'action'];
 
   
 

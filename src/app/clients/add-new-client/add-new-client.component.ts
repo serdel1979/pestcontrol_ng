@@ -46,6 +46,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     phones: this.fb.array([])
   })
 
+  phonesArray!: FormArray;
 
   isContactFormValid = false;
 
@@ -56,7 +57,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
       street: ['', Validators.required],
       number: ['', Validators.required],
       floor: ['', Validators.required],
-      zipcode: ['', Validators.required],
+      zipCode: ['', Validators.required],
       apartment: ['', Validators.required],
       city: ['', Validators.required]
     }),
@@ -75,7 +76,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   branchSelected!: any;
 
 
-  displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipcode', 'apartment', 'city', 'action'];
+  displayedColumns: string[] = ['name', 'street', 'number', 'floor', 'zipCode', 'apartment', 'city', 'action'];
   public dataSource = new MatTableDataSource<any>();
 
   displayedColumnsContact: string[] = ['name', 'surname', 'email', 'branch', 'action'];
@@ -90,7 +91,9 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
 
   constructor(private fb: FormBuilder, private clients: ClientService, public dialog: MatDialog,
-    private router: Router, private alertDialogService: AlertService) { }
+    private router: Router, private alertDialogService: AlertService) {
+      this.phonesArray = this.contactForm.get('phones') as FormArray;
+    }
 
 
 
@@ -348,6 +351,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
   delPhone(i: number) {
     if (i >= 0 && i < this.phonesNumber.length) {
       this.phonesNumber.splice(i, 1); // Elimina 1 elemento en la posición i
+      this.phonesArray.removeAt(i);
     }
   }
 

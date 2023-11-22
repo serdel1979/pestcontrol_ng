@@ -67,7 +67,7 @@
                 <button [disabled]="branchSelected == '...'" mat-raised-button color="primary"
                     (click)="addContactToggle()"><mat-icon>add</mat-icon></button>
             </div>
-            <div *ngIf="addContact">
+            <div *ngIf="addContact" style="display: flex; flex-direction: row; width: 100%;">
 
                 <div style="flex: 3; padding: 10px;">
                     <form [formGroup]="contactForm">
@@ -119,11 +119,11 @@
                         </mat-list-item>
                     </mat-list>
                 </div>
-                <button [disabled]="!contactForm.valid" mat-raised-button color="primary"
-                (click)="saveContact(this.client.id)">
-                    <mat-icon>save</mat-icon></button>
             </div>
             <div *ngIf="!loading">
+                <button *ngIf="addContact" [disabled]="!contactForm.valid" mat-raised-button color="primary"
+                (click)="saveContact()">
+                    <mat-icon>save</mat-icon></button>
                 <div style="margin: 10px; padding: 10px;" *ngIf="dataSourceContacts.data.length > 0">
                     <app-table-contacts [dataSourceContact]="dataSourceContacts"
                         (deleteContactClicked)="deletContact($event)"></app-table-contacts>

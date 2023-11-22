@@ -33,6 +33,8 @@ export class ClientDetailComponent implements OnInit{
 
   public idBranchSelected!:number;
 
+  phonesArray!: FormArray;
+
 
   newPhoneNumber!: string;
   phonesNumber: string[] = [];
@@ -44,7 +46,7 @@ export class ClientDetailComponent implements OnInit{
       street: ['', Validators.required],
       number: ['', Validators.required],
       floor: ['', Validators.required],
-      zipcode: ['', Validators.required],
+      zipCode: ['', Validators.required],
       apartment: ['', Validators.required],
       city: ['', Validators.required]
     }),
@@ -55,6 +57,7 @@ export class ClientDetailComponent implements OnInit{
     name: ['', Validators.required],
     surname: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    businessName: ['', Validators.required],
     phones: this.fb.array([])
   })
 
@@ -64,7 +67,9 @@ export class ClientDetailComponent implements OnInit{
     private alertDialogService: AlertService,
     private clientService: ClientService,
     private dialog: MatDialog,
-    private fb: FormBuilder){}
+    private fb: FormBuilder){
+      this.phonesArray = this.contactForm.get('phones') as FormArray;
+    }
 
 
   ngOnInit(): void {
@@ -95,8 +100,8 @@ export class ClientDetailComponent implements OnInit{
     this.dataSourceContacts.data = element.contacts;
   }
 
-  saveContact(id:number){
-    console.log(this.contactForm.value,' para branch ',id);
+  saveContact(){
+    console.log(this.contactForm.value,' para branch ',this.idBranchSelected );
     this.resetFormContact();
   }
 
@@ -141,7 +146,6 @@ export class ClientDetailComponent implements OnInit{
 
   addContactToggle(){
     this.addContact = !this.addContact;
-    console.log(this.idBranchSelected);
   }
 
 
@@ -163,6 +167,7 @@ export class ClientDetailComponent implements OnInit{
   }
 
   saveBranche(){
+    this.branchForm.value['clientId']=this.client.id;
     console.log(this.branchForm.value,' para client ',this.client.id);
     this.resetFormBranch();
   }
@@ -177,7 +182,15 @@ export class ClientDetailComponent implements OnInit{
   resetFormContact(){
     this.phonesNumber=[];
     this.contactForm.reset();
+    this.resetListNumber();
     this.clearFormErrors(this.contactForm);
+  }
+
+  resetListNumber() {
+    const phonesArray = this.contactForm.get('phones') as FormArray;
+    while (phonesArray.length > 0) {
+      phonesArray.removeAt(0);
+    }
   }
 
   addNumber() {
@@ -209,6 +222,7 @@ export class ClientDetailComponent implements OnInit{
   delPhone(i: number) {
     if (i >= 0 && i < this.phonesNumber.length) {
       this.phonesNumber.splice(i, 1); // Elimina 1 elemento en la posición i
+      this.phonesArray.removeAt(i);
     }
   }
 

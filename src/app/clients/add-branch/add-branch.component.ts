@@ -32,7 +32,7 @@ export class AddBranchComponent implements OnInit {
         street: ['', Validators.required],
         number: ['', Validators.required],
         floor: ['', Validators.required],
-        zipcode: ['', Validators.required],
+        zipCode: ['', Validators.required],
         apartment: ['', Validators.required],
         city: ['', Validators.required]
       }),
