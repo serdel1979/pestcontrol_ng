@@ -186,8 +186,7 @@ export class ClientDetailComponent implements OnInit{
             err=>{
               this.loading = false;
               if (err.status === 400) {
-                console.log(err);
-                this.alertDialogService.openAlertDialog('No se puede agregar la sucursal');
+                this.alertDialogService.openAlertDialog(err.error);
               } else {
                 // Otro tipo de error (error de red u otro)
                 this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
