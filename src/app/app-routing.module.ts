@@ -13,7 +13,7 @@ export const AppRoutes: Routes = [
     path: 'clients', 
     loadChildren: () => import('./clients/clients.module').then(m => m.ClientsModule),
     canActivate: [loginGuard]
-  },
+   },
   { 
     path: 'contacts', 
     loadChildren: () => import('./contacts/contacts.module').then(m => m.ContactsModule),

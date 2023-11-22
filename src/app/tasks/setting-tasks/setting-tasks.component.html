@@ -1,0 +1,70 @@
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+<mat-card class="scrolleable-content" style="margin: 10px; padding: 10px;">
+    <mat-card-title>
+        Administración de tareas
+    </mat-card-title>
+    <mat-card-content>
+
+        <div>
+            <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start"
+                style="position: sticky; margin: 10px; padding: 10px;">
+                <mat-tab label="Tipos" style="margin: 10px;">
+                    <div
+                        style="max-height: 75%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
+                        <div style="display: flex; width: 100%;">
+                            <div style="margin: 10;padding: 10;">
+                                <mat-label>Tipos definidos</mat-label>
+                                <mat-form-field style="width: 100%; margin: 5px;">
+                                    <input matInput placeholder="Agregar tipo" [(ngModel)]="newJobType" (keyup.enter)="onEnter()">
+                                </mat-form-field> 
+                                <div class="line-shadow" style="display: flex; width: 100%;">
+                                    <mat-list role="list">
+                                        <mat-list-item *ngFor="let type of typeJobs" role="listitem">{{
+                                            type.description }}</mat-list-item>
+                                    </mat-list>
+                                </div> 
+                                <button [disabled]="loading"
+                                mat-raised-button color="primary" (click)="saveTypes()"><mat-icon>save</mat-icon></button>                              
+                            </div>
+                            <button mat-icon-button (click)="changeTabTask()"
+                                style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+
+                        </div>
+
+                    </div>
+
+
+                </mat-tab>
+                <mat-tab label="Tarea" style="margin: 10px;">
+                    <div
+                        style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
+                        <mat-label style="margin: 10px;">Definir tareas</mat-label>
+                        <div style="display: flex; width: 100%;">
+
+
+
+
+                            <button mat-icon-button (click)="changeTabSubTask()"
+                                style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Subtareas" style="margin: 10px;">
+                    <div
+                        style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
+                        <mat-label style="margin: 10px;">Definir subtareas para las tareas</mat-label>
+
+
+                        <div style="display: flex; width: 100%;">
+                            <button mat-icon-button
+                                style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+        <button mat-raised-button color="secundary" (click)="back()"
+            style="margin: 10px;"><mat-icon>arrow_back</mat-icon></button>
+    </mat-card-content>
+</mat-card>

@@ -10,10 +10,12 @@ import { AddNoveltieComponent } from './add-noveltie/add-noveltie.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { AddScheduleComponent } from './schedule/add-schedule/add-schedule.component';
 import { EditScheduleComponent } from './schedule/edit-schedule/edit-schedule.component';
+import { SettingTasksComponent } from './setting-tasks/setting-tasks.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'schedule', pathMatch: 'full' }, 
   { path: 'schedule', component: ScheduleComponent },
+  { path: 'setting', component: SettingTasksComponent},
   { path: 'addSchedule', component: AddScheduleComponent },
   { path: 'schedule/:id', component: EditScheduleComponent },
   { path: 'alltasks', component: AllTasksComponent },
@@ -29,7 +31,8 @@ const routes: Routes = [
     AddNoveltieComponent,
     ScheduleComponent,
     AddScheduleComponent,
-    EditScheduleComponent
+    EditScheduleComponent,
+    SettingTasksComponent
   ],
   imports: [
     CommonModule,
