@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { TasksService } from '../../services/tasks.service';
-import { JobType } from 'src/app/interfaces/jobs.interface';
+import { Job, JobType } from 'src/app/interfaces/jobs.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -14,9 +14,15 @@ export class SettingTasksComponent implements OnInit {
 
   public typeJobs: JobType[]=[];
 
+  public listJobs: Job[] = [];
+
   public loading: boolean = false;
 
   public newJobType: string = '';
+
+  public newJob: string = '';
+
+  public typeSelected!: JobType;
 
   constructor(private taskServices: TasksService, private _snackBar: MatSnackBar){}
 
@@ -29,6 +35,15 @@ export class SettingTasksComponent implements OnInit {
     this.taskServices.getTypeTasks()
     .subscribe(resp=>{
       this.typeJobs = resp;
+      this.loading = false;
+    },
+    err=>{
+      this.loading = false;
+    });
+    this.loading = true;
+    this.taskServices.getJobs()
+    .subscribe(resp=>{
+      this.listJobs = resp;
       this.loading = false;
     },
     err=>{
@@ -57,6 +72,41 @@ export class SettingTasksComponent implements OnInit {
     }
   }
 
+
+  onEnterJob(){
+    const trimmedDescription = this.newJob.trim();
+
+    if (trimmedDescription !== '' && !this.listJobs.some(job => job.description === trimmedDescription)) {
+      const jobNew: Job = {
+        id: 0,
+        jobType: { id: 0, description: ''},
+        subJobs: [],
+        description: trimmedDescription
+      };
+
+      this.listJobs.push(jobNew);
+      this.listJobs.sort((a, b) => a.description.localeCompare(b.description));
+      this.newJob = ''; 
+    }
+  }
+  
+  addJobType(){
+    const trimmedDescription = this.newJob.trim();
+
+    if (trimmedDescription !== '' && !this.listJobs.some(job => job.description === trimmedDescription)) {
+      const jobNew: Job = {
+        id: 0,
+        jobType: this.typeSelected,
+        subJobs: [],
+        description: trimmedDescription
+      };
+
+      this.listJobs.push(jobNew);
+      this.listJobs.sort((a, b) => a.description.localeCompare(b.description));
+      this.newJob = ''; 
+    }
+  }
+
   saveTypes(){
     this.loading=true;
     this.taskServices.saveTypes(this.typeJobs)
@@ -77,6 +127,14 @@ export class SettingTasksComponent implements OnInit {
 
   changeTabSubTask(): void {
     this.tabGroup.selectedIndex = 2;
+  }
+
+  selectJob(job: Job){
+    console.log(job);
+  }
+
+  selectJobType(jobType: JobType){
+    this.typeSelected = jobType;
   }
 
 

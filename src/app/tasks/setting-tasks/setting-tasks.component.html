@@ -11,21 +11,22 @@
                 style="position: sticky; margin: 10px; padding: 10px;">
                 <mat-tab label="Tipos" style="margin: 10px;">
                     <div
-                        style="max-height: 75%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
+                        style="max-height: 100%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
                         <div style="display: flex; width: 100%;">
                             <div style="margin: 10;padding: 10;">
-                                <mat-label>Tipos definidos</mat-label>
+                                <mat-label>Definir tipos de tarea</mat-label>
                                 <mat-form-field style="width: 100%; margin: 5px;">
-                                    <input matInput placeholder="Agregar tipo" [(ngModel)]="newJobType" (keyup.enter)="onEnter()">
-                                </mat-form-field> 
-                                <div class="line-shadow" style="display: flex; width: 100%;">
-                                    <mat-list role="list">
+                                    <input matInput placeholder="Agregar tipo" [(ngModel)]="newJobType"
+                                        (keyup.enter)="onEnter()">
+                                </mat-form-field>
+                                <div style="display: flex; width: 100%;">
+                                    <mat-list style="width: 50%; max-height: 250px; overflow-y: auto;">
                                         <mat-list-item *ngFor="let type of typeJobs" role="listitem">{{
                                             type.description }}</mat-list-item>
                                     </mat-list>
-                                </div> 
-                                <button [disabled]="loading"
-                                mat-raised-button color="primary" (click)="saveTypes()"><mat-icon>save</mat-icon></button>                              
+                                </div>
+                                <button [disabled]="loading" mat-raised-button color="primary"
+                                    (click)="saveTypes()"><mat-icon>save</mat-icon></button>
                             </div>
                             <button mat-icon-button (click)="changeTabTask()"
                                 style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
@@ -37,26 +38,70 @@
 
                 </mat-tab>
                 <mat-tab label="Tarea" style="margin: 10px;">
+
                     <div
-                        style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
-                        <mat-label style="margin: 10px;">Definir tareas</mat-label>
-                        <div style="display: flex; width: 100%;">
+                        style="max-height: 100%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
 
+                        <div style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
 
+                            <mat-form-field style="flex: 1; margin-right: 10px;">
+                                <input matInput placeholder="Defina una tarea" [(ngModel)]="newJob">
+                            </mat-form-field>
 
+                            <mat-form-field style="flex: 1; margin-right: 10px;">
+                                <mat-label>Tipo</mat-label>
+                                <mat-select>
+                                    <mat-option [value]="type.description" *ngFor="let type of typeJobs"
+                                        (click)="selectJobType(type)">
+                                        {{ type.description }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <button [disabled]="loading || newJob=='' || !typeSelected" mat-raised-button
+                                color="primary" (click)="addJobType()"><mat-icon>add</mat-icon></button>
+                            <!-- Contenedor para los dos mat-selection-list -->
+                        </div>
+
+                        <div style="display: flex; width: 50%;">
+
+                            <!-- Primer mat-selection-list para Clientes -->
+                            <mat-list style="width: 50%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-item *ngFor="let job of listJobs">
+                                    {{job.description}} {{ job.jobType.description }}
+                                </mat-list-item>
+                            </mat-list>
 
                             <button mat-icon-button (click)="changeTabSubTask()"
-                                style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+                            style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
+
                         </div>
+
+                        <button mat-raised-button color="primary"><mat-icon>save</mat-icon></button>
+
                     </div>
+
                 </mat-tab>
                 <mat-tab label="Subtareas" style="margin: 10px;">
                     <div
                         style="max-height: 50%; margin: 10px; padding: 10px; display: flex; flex-direction: column; align-items: flex-start;">
                         <mat-label style="margin: 10px;">Definir subtareas para las tareas</mat-label>
-
-
                         <div style="display: flex; width: 100%;">
+
+                            <mat-selection-list #branchesList [multiple]="false"
+                                style="width: 30%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-option *ngFor="let job of listJobs" [value]="job" (click)="selectJob(job)">
+                                    {{job.description}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
+                            <mat-selection-list #branchesList [multiple]="false"
+                                style="width: 30%; max-height: 250px; overflow-y: auto;">
+                                <mat-list-option *ngFor="let type of typeJobs" [value]="type"
+                                    (click)="selectJobType(type)">
+                                    {{type.description}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
                             <button mat-icon-button
                                 style="align-self: flex-end; margin-top: 10px;"><mat-icon>navigate_next</mat-icon></button>
                         </div>

@@ -1,5 +1,5 @@
 export interface Job {
-    id:          string;
+    id:          number;
     description: string;
     jobType:     JobType;
     subJobs:     SubJob[];
