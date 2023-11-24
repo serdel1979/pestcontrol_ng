@@ -63,5 +63,9 @@ export class TasksService {
   addSquedule(data: any){
     return this.http.post(`${this.baseUrl}/jobs/newschedule`,data);
   }
+
+  saveJobs(jobs: Job[]){
+    return this.http.post(`${this.baseUrl}/jobs/saveJobs`,jobs)
+  }
   
 }

@@ -144,6 +144,15 @@ export class SettingTasksComponent implements OnInit {
 
   saveJobsSubJobs(){
     console.log(this.listJobs);
+    this.loading=true;
+    this.taskServices.saveJobs(this.listJobs)
+    .subscribe(resp=>{
+      this.loading=false;
+      this.loadData();
+    },
+    err=>{
+      this.loading=false;
+    })
   }
 
 
