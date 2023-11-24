@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTabGroup } from '@angular/material/tabs';
 import { TasksService } from '../../services/tasks.service';
-import { Job, JobType } from 'src/app/interfaces/jobs.interface';
+import { Job, JobType, SubJob } from 'src/app/interfaces/jobs.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -23,6 +23,11 @@ export class SettingTasksComponent implements OnInit {
   public newJob: string = '';
 
   public typeSelected!: JobType;
+
+  public jobSelected!: Job;
+
+  public newSubJob!: string;
+
 
   constructor(private taskServices: TasksService, private _snackBar: MatSnackBar){}
 
@@ -69,6 +74,23 @@ export class SettingTasksComponent implements OnInit {
       this.typeJobs.push(jobType);
       this.typeJobs.sort((a, b) => a.description.localeCompare(b.description));
       this.newJobType = ''; 
+    }
+  }
+
+  onEnterSubJob(){
+    if(this.jobSelected){
+      const trimmedDescription = this.newSubJob.trim();
+
+      if (trimmedDescription !== '' && !this.jobSelected.subJobs.some(subj => subj.description === trimmedDescription)) {
+        const subjobNew: SubJob = {
+          id: 0,
+          description: trimmedDescription
+        };
+  
+        this.jobSelected.subJobs.push(subjobNew);
+        this.jobSelected.subJobs.sort((a, b) => a.description.localeCompare(b.description));
+        this.newSubJob = ''; 
+      }
     }
   }
 
@@ -120,6 +142,10 @@ export class SettingTasksComponent implements OnInit {
     })
   }
 
+  saveJobsSubJobs(){
+    console.log(this.listJobs);
+  }
+
 
   changeTabTask(): void {
     this.tabGroup.selectedIndex = 1;
@@ -130,7 +156,7 @@ export class SettingTasksComponent implements OnInit {
   }
 
   selectJob(job: Job){
-    console.log(job);
+    this.jobSelected = job;
   }
 
   selectJobType(jobType: JobType){
