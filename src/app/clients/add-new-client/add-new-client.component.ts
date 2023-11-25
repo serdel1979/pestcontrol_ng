@@ -140,6 +140,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
 
   addBranche() {
     if (this.branchForm.valid) {
+      this.branchForm.value['clientId']=0;
       this.branches.push(this.branchForm.value);
       this.dataSource.data = this.branches;
       this.branchForm.reset();
@@ -205,6 +206,7 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     const client = this.clientForm.value;
     const branches = this.branches;
     //const contacts = this.contactsList;
+    console.log(this.branches);
     const data = {
       client, branches
     }
