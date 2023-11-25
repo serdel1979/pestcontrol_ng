@@ -8,6 +8,8 @@ import { DialogCancelComponent } from 'src/app/alerts/dialog-cancel/dialog-cance
 import { AlertService } from 'src/app/services/alert.service';
 import { TasksService } from 'src/app/services/tasks.service';
 
+
+
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
@@ -45,6 +47,15 @@ export class ScheduleComponent implements OnInit {
   
   ngOnInit(): void {
     this.loadData();
+  }
+
+  isDateGreaterThanToday(date: string): string {
+    const dateEnd = new Date(date);
+    const today = new Date();
+    dateEnd.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    const isGreaterThanToday = dateEnd > today;    
+    return isGreaterThanToday ? 'green' : 'black';
   }
 
   loadData(){

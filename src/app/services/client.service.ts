@@ -32,6 +32,10 @@ export class ClientService {
     return this.http.get<Client[]>(`${this.baseUrl}/clients/allclients`);
   }
 
+  getClientsDate(){
+    return this.http.get<Client[]>(`${this.baseUrl}/clients/allclientsdate`);
+  }
+
   getClient(id:number){
     return this.http.get<ClientGet>(`${this.baseUrl}/clients/getClient/${id}`);
   }

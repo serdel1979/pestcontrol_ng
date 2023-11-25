@@ -3,6 +3,7 @@ import { MatTabGroup } from '@angular/material/tabs';
 import { TasksService } from '../../services/tasks.service';
 import { Job, JobType, SubJob } from 'src/app/interfaces/jobs.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-setting-tasks',
@@ -29,7 +30,8 @@ export class SettingTasksComponent implements OnInit {
   public newSubJob!: string;
 
 
-  constructor(private taskServices: TasksService, private _snackBar: MatSnackBar){}
+  constructor(private taskServices: TasksService, private _snackBar: MatSnackBar,
+    private alertDialogService: AlertService){}
 
   ngOnInit(): void {
    this.loadData();
@@ -139,6 +141,13 @@ export class SettingTasksComponent implements OnInit {
     },
     err=>{
       this.loading = false;
+      console.log(err);
+      if (err.status === 400) {
+        this.alertDialogService.openAlertDialog('Error al guardar');
+      } else {
+        // Otro tipo de error (error de red u otro)
+        this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+      }
     })
   }
 
@@ -148,13 +157,33 @@ export class SettingTasksComponent implements OnInit {
     this.taskServices.saveJobs(this.listJobs)
     .subscribe(resp=>{
       this.loading=false;
+      this._snackBar.open("Tareas y subtareas guardadas", "OK");
       this.loadData();
     },
     err=>{
       this.loading=false;
+      console.log(err);
+      if (err.status === 400) {
+        this.alertDialogService.openAlertDialog('Error al guardar');
+      } else {
+        // Otro tipo de error (error de red u otro)
+        this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+      }
     })
   }
 
+
+  delType(id:number){
+    console.log(id);
+  }
+
+  delJob(id:number){
+    console.log(id);
+  }
+
+  delSubJob(id:number){
+    console.log(id);
+  }
 
   changeTabTask(): void {
     this.tabGroup.selectedIndex = 1;

@@ -103,7 +103,6 @@ export class AddScheduleComponent implements OnInit {
 
   save() {
     this.sending = true;
-    console.log(this.selectedBranch);
     const data = {
       branchId: this.selectedBranch?.id,
       subJobId: this.selecSubJob?.id,

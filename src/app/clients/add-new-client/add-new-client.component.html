@@ -24,7 +24,8 @@
 
                         <div *ngIf="branches.length > 0" style="margin: 10px;">
 
-                            <app-table-branch (deleteBranchClicked)="deletBranch($event)"  [dataSource]="dataSource"></app-table-branch>
+                            <app-table-branch (deleteBranchClicked)="deletBranch($event)"
+                                [dataSource]="dataSource"></app-table-branch>
 
                         </div>
 
@@ -37,8 +38,9 @@
 
                         <!-- Columna izquierda -->
                         <div style="flex: 3; padding: 10px;">
-                     
-                            <app-form-contact [contactForm]="contactForm" [branches]="branches" (selectedBranch)="selectedBranch($event)"></app-form-contact>
+
+                            <app-form-contact [contactForm]="contactForm" [branches]="branches"
+                                (selectedBranch)="selectedBranch($event)"></app-form-contact>
 
                             <div style="display: flex; align-items: center; margin: 10px;">
                                 <mat-form-field>
@@ -59,13 +61,17 @@
                                     No hay números
                                 </mat-list-item>
                                 <mat-list-item *ngFor="let phone of phonesNumber; let i = index" role="listitem">
-                                    <div> {{ phone }} <mat-icon (click)="delPhone(i)" style="margin-right: 5px;">delete</mat-icon> </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div> {{ phone }} </div>
+                                        <mat-icon (click)="delPhone(i)"
+                                                style="cursor: pointer;">delete</mat-icon>
+                                    </div>
                                 </mat-list-item>
                             </mat-list>
                         </div>
 
                     </div>
-                    
+
                     <div>
 
                         <button mat-raised-button color="primary"
@@ -79,7 +85,8 @@
                         </div>
                         <div *ngIf="contactsList.length > 0" style="margin: 10px;">
 
-                            <app-table-contacts [dataSourceContact]="dataSourceContact" (deleteContactClicked)="deletContact($event)" ></app-table-contacts>
+                            <app-table-contacts [dataSourceContact]="dataSourceContact"
+                                (deleteContactClicked)="deletContact($event)"></app-table-contacts>
 
                         </div>
 

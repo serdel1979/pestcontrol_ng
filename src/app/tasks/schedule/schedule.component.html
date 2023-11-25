@@ -1,10 +1,4 @@
-<mat-toolbar>
-  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Nueva</button>
-    <button mat-menu-item>Editar</button>
-  </mat-menu>
-</mat-toolbar>
+<mat-progress-bar *ngIf="load" mode="indeterminate"></mat-progress-bar>
 <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
   <mat-card-header>
     <mat-card-title-group>
@@ -56,8 +50,11 @@
 
             <ng-container matColumnDef="dateEnd">
               <th mat-header-cell *matHeaderCellDef> Fin </th>
-              <td mat-cell *matCellDef="let element"> {{element.dateEnd | date}} </td>
+              <td mat-cell *matCellDef="let element" [ngStyle]="{ color: isDateGreaterThanToday(element.dateEnd) }">
+                {{ element.dateEnd | date }}
+              </td>    
             </ng-container>
+
 
             <ng-container matColumnDef="opciones">
               <th mat-header-cell *matHeaderCellDef> Opciones </th>
@@ -67,8 +64,8 @@
                 </button>
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item (click)="editSchedule(element.id)">
-                    <mat-icon>edit</mat-icon>
-                    <span>Editar</span>
+                    <mat-icon>loupe</mat-icon>
+                    <span>Ver</span>
                   </button>
                   <button mat-menu-item (click)="deletSchedule(element.subJob.id,element.branch.id)">
                     <mat-icon>delete</mat-icon>

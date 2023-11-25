@@ -43,7 +43,23 @@ export class AllClientsComponent implements OnInit {
   constructor(private router: Router,
     private clientService: ClientService,
     private dialog: MatDialog
-    ) {
+    ) {}
+
+
+  earring(){
+    this.load = true;
+    this.clientService.getClientsDate().subscribe(resp => {
+      this.clients = resp;
+      this.dataSource = new MatTableDataSource<Client>(this.clients); // Actualiza el dataSource con los datos
+      this.dataSource.paginator = this.paginator; // Configura el paginador
+      this.load = false;
+    },
+      () => {
+        this.load = false;
+      });
+  }
+
+  alls(){
     this.load = true;
     this.clientService.getClients().subscribe(resp => {
       this.clients = resp;
@@ -56,7 +72,10 @@ export class AllClientsComponent implements OnInit {
       });
   }
 
+
+
   ngOnInit(): void {
+    this.earring();
   }
 
   onPageChange(event: any): void {

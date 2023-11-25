@@ -31,7 +31,7 @@
             <mat-form-field class="example-form-field" style="margin-top: 20px;">
                 <mat-label>Ingrese fecha de inicio y fin</mat-label>
 
-                <mat-date-range-input [rangePicker]="rangePicker">
+                <mat-date-range-input [disabled]="!edit" [rangePicker]="rangePicker">
                     <input matStartDate placeholder="Fecha de inicio" [(ngModel)]="schedule.dateInit">
                     <input matEndDate placeholder="Fecha de fin" [(ngModel)]="schedule.dateEnd">
                 </mat-date-range-input>
@@ -44,6 +44,11 @@
                     </mat-date-range-picker-actions>
                 </mat-date-range-picker>
             </mat-form-field>
+            <button *ngIf="!edit" (click)="editDate()" mat-icon-button title="Editar fechas"
+            style="align-self: flex-end; margin-top: 10px;"><mat-icon>edit</mat-icon></button>
+            <button *ngIf="edit" (click)="editDate()" mat-icon-button title="Deshabilita edición"
+            style="align-self: flex-end; margin-top: 10px;"><mat-icon>edit</mat-icon></button>
+
         </div>
         <button [disabled]="loading" mat-raised-button color="primary"
             (click)="save()"><mat-icon>save</mat-icon></button>

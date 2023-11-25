@@ -18,6 +18,7 @@ export class EditScheduleComponent implements OnInit{
 
   public schedule!: Schedule;
 
+  public edit:boolean=false;
 
 
 
@@ -64,6 +65,10 @@ export class EditScheduleComponent implements OnInit{
     )
   }
 
+
+  editDate(){
+    this.edit = !this.edit;
+  }
 
   back() {
     window.history.back();

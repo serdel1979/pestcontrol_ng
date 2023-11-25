@@ -1,3 +1,12 @@
+<mat-progress-bar *ngIf="load"></mat-progress-bar>
+<div style="position: sticky;">
+  <button mat-button [matMenuTriggerFor]="belowMenu">Consultar</button>
+  <mat-menu #belowMenu="matMenu" yPosition="below">
+    <button mat-menu-item (click)="alls()">Todos</button>
+    <button mat-menu-item (click)="earring()">Pendientes</button>
+  </mat-menu>
+</div>
+
 <mat-card class="custom-card" style="margin: 10px; padding: 10px;">
   <mat-card-header>
     <mat-card-title-group>
