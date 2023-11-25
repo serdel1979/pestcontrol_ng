@@ -67,5 +67,17 @@ export class TasksService {
   saveJobs(jobs: Job[]){
     return this.http.post(`${this.baseUrl}/jobs/saveJobs`,jobs)
   }
+
+  delteTypeJob(id: number){
+    return this.http.delete(`${this.baseUrl}/jobs/deleteTypeJob/${id}`);
+  }
+
+  delteJob(id: number){
+    return this.http.delete(`${this.baseUrl}/jobs/deleteJob/${id}`);
+  }
+
+  delteSubJob(id: number){
+    return this.http.delete(`${this.baseUrl}/jobs/deleteSubJob/${id}`);
+  }
   
 }

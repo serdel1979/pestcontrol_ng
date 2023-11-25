@@ -29,7 +29,7 @@
                                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                         
                                                 <div>{{type.description }}</div>
-                                                <mat-icon (click)="delType(type.id)"
+                                                <mat-icon (click)="delType(type)"
                                                 style="cursor: pointer;">delete</mat-icon>
                                         
                                             </div>
@@ -87,7 +87,7 @@
                                 <mat-list-item *ngFor="let job of listJobs">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
                                         <div>{{job.description}} {{ job.jobType.description }}</div>
-                                        <mat-icon (click)="delJob(job.id)"
+                                        <mat-icon (click)="delJob(job)"
                                         style="cursor: pointer;">delete</mat-icon>
                                     </div>
                                 </mat-list-item>
@@ -132,7 +132,7 @@
                             <mat-list-item *ngFor="let subJob of jobSelected.subJobs">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div>{{subJob.description}}</div>
-                                    <mat-icon (click)="delSubJob(subJob.id)" style="cursor: pointer;">delete</mat-icon>
+                                    <mat-icon (click)="delSubJob(subJob,jobSelected.subJobs)" style="cursor: pointer;">delete</mat-icon>
                                 </div>
                             </mat-list-item>
                         </mat-list>

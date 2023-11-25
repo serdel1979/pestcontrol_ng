@@ -25,7 +25,7 @@ export class SettingTasksComponent implements OnInit {
 
   public typeSelected!: JobType;
 
-  public jobSelected!: Job;
+  public jobSelected!: Job | undefined;
 
   public newSubJob!: string;
 
@@ -62,9 +62,16 @@ export class SettingTasksComponent implements OnInit {
   @ViewChild('tabGroup') tabGroup!: MatTabGroup;
 
 
+  formatToUppercase(value: string): string {
+    return value.toUpperCase();
+  }
+
+
+  
 
 
   onEnter(): void {
+    this.newJobType = this.newJobType.toUpperCase();
     const trimmedDescription = this.newJobType.trim();
 
     if (trimmedDescription !== '' && !this.typeJobs.some(jobType => jobType.description === trimmedDescription)) {
@@ -81,6 +88,7 @@ export class SettingTasksComponent implements OnInit {
 
   onEnterSubJob(){
     if(this.jobSelected){
+      this.newSubJob = this.newSubJob.toUpperCase();
       const trimmedDescription = this.newSubJob.trim();
 
       if (trimmedDescription !== '' && !this.jobSelected.subJobs.some(subj => subj.description === trimmedDescription)) {
@@ -98,6 +106,7 @@ export class SettingTasksComponent implements OnInit {
 
 
   onEnterJob(){
+    this.newJob = this.newJob.toUpperCase();
     const trimmedDescription = this.newJob.trim();
 
     if (trimmedDescription !== '' && !this.listJobs.some(job => job.description === trimmedDescription)) {
@@ -115,6 +124,7 @@ export class SettingTasksComponent implements OnInit {
   }
   
   addJobType(){
+    this.newJob = this.newJob.toUpperCase();
     const trimmedDescription = this.newJob.trim();
 
     if (trimmedDescription !== '' && !this.listJobs.some(job => job.description === trimmedDescription)) {
@@ -173,25 +183,85 @@ export class SettingTasksComponent implements OnInit {
   }
 
 
-  delType(id:number){
-    console.log(id);
+  delType(jobType: JobType): void {
+    if (jobType.id === 0) {
+      const index = this.typeJobs.findIndex(t => t.description === jobType.description);
+
+      if (index !== -1) {
+        this.typeJobs.splice(index, 1);
+      }
+    }else{
+      this.loading = true;
+      this.taskServices.delteTypeJob(jobType.id)
+      .subscribe((resp)=>{
+        this.loading = false;
+        this.loadData();
+        this._snackBar.open("Tipo eliminado","OK");
+      },
+      (err) => {
+        this.loading = false;
+        if (err.status === 400) {
+          this.alertDialogService.openAlertDialog(err.error);
+        } else {
+          // Otro tipo de error (error de red u otro)
+          this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+        }
+      })
+    }
   }
 
-  delJob(id:number){
-    console.log(id);
+  delJob(job:Job){
+    if (job.id === 0) {
+      const index = this.listJobs.findIndex(t => t.description === job.description);
+      if (index !== -1) {
+        this.listJobs.splice(index, 1);
+      }
+    }else{
+      this.loading = true;
+      this.taskServices.delteJob(job.id)
+      .subscribe(resp=>{
+        this.loading = false;
+        this.loadData();
+        this._snackBar.open("Tarea borrada","OK");
+      },
+      (err)=>{
+        this.loading = false;
+        if (err.status === 400) {
+          this.alertDialogService.openAlertDialog(err.error);
+        } else {
+          this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+        }
+      })
+    }
   }
 
-  delSubJob(id:number){
-    console.log(id);
+  delSubJob(subJob:SubJob, jobs: SubJob[]){
+    if (subJob.id === 0) {
+      const index = jobs.findIndex(t => t.description === subJob.description);
+      if (index !== -1) {
+        jobs.splice(index, 1);
+      }
+    }else{
+      this.loading = true;
+      this.taskServices.delteSubJob(subJob.id)
+      .subscribe(resp=>{
+        this.loading = false;
+        this.loadData();
+        this.jobSelected = undefined;
+        this._snackBar.open("Subtarea borrada","OK");
+      },
+      (err)=>{
+        this.loading = false;
+        if (err.status === 400) {
+          this.alertDialogService.openAlertDialog(err.error);
+        } else {
+          this.alertDialogService.openAlertDialog('Se ha producido un error. Por favor, inténtalo de nuevo más tarde.');
+        }
+      })
+    }
   }
 
-  changeTabTask(): void {
-    this.tabGroup.selectedIndex = 1;
-  }
-
-  changeTabSubTask(): void {
-    this.tabGroup.selectedIndex = 2;
-  }
+ 
 
   selectJob(job: Job){
     this.jobSelected = job;
@@ -200,6 +270,11 @@ export class SettingTasksComponent implements OnInit {
   selectJobType(jobType: JobType){
     this.typeSelected = jobType;
   }
+
+
+
+
+
 
 
   back() {
