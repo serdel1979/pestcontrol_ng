@@ -35,6 +35,11 @@ export class ClientDetailComponent implements OnInit{
 
   public idBranchSelected!:number;
 
+
+  public addContactIcon :boolean = true;
+
+  public addBranchIcon :boolean = true;
+
   phonesArray!: FormArray;
 
 
@@ -47,9 +52,9 @@ export class ClientDetailComponent implements OnInit{
     address: this.fb.group({
       street: ['', Validators.required],
       number: ['', Validators.required],
-      floor: ['', Validators.required],
+      floor: [''],
       zipCode: ['', Validators.required],
-      apartment: ['', Validators.required],
+      apartment: [''],
       city: ['', Validators.required]
     }),
     contacts: this.fb.array([])
@@ -202,10 +207,12 @@ export class ClientDetailComponent implements OnInit{
 
   addBranchToggle(){
     this.addBranch = !this.addBranch;
+    this.addBranchIcon = !this.addBranchIcon;
     if(!this.addBranch)this.resetFormBranch();
   }
 
   addContactToggle(){
+    this.addContactIcon = !this.addContactIcon;
     this.addContact = !this.addContact;
   }
 

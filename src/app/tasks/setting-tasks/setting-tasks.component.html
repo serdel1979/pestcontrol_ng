@@ -20,7 +20,7 @@
                         <div style="display: flex; width: 100%;">
                             <div style="margin: 10;padding: 10;">
                                 <mat-form-field style="width: 100%; margin: 5px;">
-                                    <input matInput placeholder="Agregar tipo" [(ngModel)]="newJobType"
+                                    <input title="Escriba el tipo y presione Enter" matInput placeholder="Agregar tipo" [(ngModel)]="newJobType"
                                         (keyup.enter)="onEnter()">
                                 </mat-form-field>
                                 <div style="display: flex; width: 100%;">
@@ -36,7 +36,7 @@
                                         </mat-list-item>
                                     </mat-list>
                                 </div>
-                                <button [disabled]="loading" mat-raised-button color="primary"
+                                <button title="Guardar tareas y tipos" [disabled]="loading" mat-raised-button color="primary"
                                     (click)="saveTypes()"><mat-icon>save</mat-icon></button>
                             </div>
 
@@ -64,7 +64,7 @@
                         <div style="display: flex; flex-wrap: wrap; margin-bottom: 10px;">
 
                             <mat-form-field style="flex: 1; margin-right: 10px;">
-                                <input matInput placeholder="Defina una tarea" [(ngModel)]="newJob">
+                                <input title="Escribir una tarea nueva y seleccionar tipo" matInput placeholder="Defina una tarea" [(ngModel)]="newJob">
                             </mat-form-field>
 
                             <mat-form-field style="flex: 1; margin-right: 10px;">
@@ -125,7 +125,7 @@
                     </div>
                     <div style="flex: 1; margin-left: 10px;">
                         <mat-form-field style="width: 100%; margin: 5px;">
-                            <input matInput placeholder="Agregar subtarea" [(ngModel)]="newSubJob"
+                            <input title="Escriba una subtarea y preione Enter para agregar" matInput placeholder="Agregar subtarea" [(ngModel)]="newSubJob"
                                 (keyup.enter)="onEnterSubJob()">
                         </mat-form-field>
                         <mat-list *ngIf="jobSelected" style="width: 100%; max-height: 250px; overflow-y: auto;">
@@ -141,7 +141,7 @@
                     </div>
 
                 </div>
-                <button [disabled]="loading" style="margin-top: 20px;" mat-raised-button color="primary"
+                <button title="Guardar subtareas de tareas" [disabled]="loading" style="margin-top: 20px;" mat-raised-button color="primary"
                     (click)="saveJobsSubJobs()"><mat-icon>save</mat-icon></button>
 
             </div>

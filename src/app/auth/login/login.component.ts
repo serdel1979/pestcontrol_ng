@@ -45,7 +45,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('usrlog', JSON.stringify(resp));
           this.userService.loginOk();
           this.router.navigateByUrl('/clients/allclients');
-        },
+        }
+        ,
         (err) => {
           this.showSpinner = false;
           if (err.status === 400) {

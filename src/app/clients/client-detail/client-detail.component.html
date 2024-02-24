@@ -35,8 +35,10 @@
                 </mat-card-header>
                 <mat-card-content>
                     <div style="margin: 10px;">
-                        <button mat-raised-button color="primary"
-                            (click)="addBranchToggle()"><mat-icon>add</mat-icon></button>
+                        <button *ngIf="addBranchIcon" mat-raised-button color="primary"
+                            (click)="addBranchToggle()"><mat-icon>arrow_drop_down</mat-icon></button>
+                        <button *ngIf="!addBranchIcon" mat-raised-button color="primary"
+                            (click)="addBranchToggle()"><mat-icon>arrow_drop_up</mat-icon></button>
                     </div>
                     <div *ngIf="addBranch">
                         <app-form-branch [branchForm]="branchForm" (addBranch)="saveBranche()" [iconSave]="true" ></app-form-branch>
@@ -64,8 +66,10 @@
         </mat-card-header>
         <mat-card-content>
             <div style="margin: 10px;">
-                <button [disabled]="branchSelected == '...'" mat-raised-button color="primary"
-                    (click)="addContactToggle()"><mat-icon>add</mat-icon></button>
+                <button *ngIf="addContactIcon" [disabled]="branchSelected == '...'" mat-raised-button color="primary"
+                    (click)="addContactToggle()"><mat-icon>arrow_drop_down</mat-icon></button>
+                <button *ngIf="!addContactIcon"  [disabled]="branchSelected == '...'" mat-raised-button color="primary"
+                    (click)="addContactToggle()"><mat-icon>arrow_drop_up</mat-icon></button>
             </div>
             <div *ngIf="addContact" style="display: flex; flex-direction: row; width: 100%;">
 

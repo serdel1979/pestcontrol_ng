@@ -56,9 +56,9 @@ export class AddNewClientComponent implements OnDestroy, OnInit {
     address: this.fb.group({
       street: ['', Validators.required],
       number: ['', Validators.required],
-      floor: ['', Validators.required],
+      floor: [''],
       zipCode: ['', Validators.required],
-      apartment: ['', Validators.required],
+      apartment: [''],
       city: ['', Validators.required]
     }),
     contacts: this.fb.array([])

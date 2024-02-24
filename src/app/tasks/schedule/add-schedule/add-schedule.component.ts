@@ -72,6 +72,8 @@ export class AddScheduleComponent implements OnInit {
   }
 
   selectedSubJob(subJob: SubJob) {
+  
+    console.log(subJob.id);
     this.selecSubJob = subJob;
   }
 
